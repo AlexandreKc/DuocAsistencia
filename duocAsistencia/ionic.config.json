@@ -1,0 +1,7 @@
+{
+  "name": "duocAsistencia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
