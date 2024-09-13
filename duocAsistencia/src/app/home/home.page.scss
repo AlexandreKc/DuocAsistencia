@@ -14,5 +14,23 @@
 //modificaciones main
 .tit-bienv{
   margin-top: 25px;
-  margin-left: 15vh;
+  margin-left: 20px;
+}
+.texto-cerrar-ses{
+  color: red;
+}
+//fix para colores modo blanco
+@media (prefers-color-scheme: light) {
+  ion-card-title{
+    color: white;
+  }
+  .texto-boton{
+    color: black;
+  }
+
+}
+//para la animacion
+.texto-desvanecido{
+  opacity: 0;
+  text-align: center;
 }

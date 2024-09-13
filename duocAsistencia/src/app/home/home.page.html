@@ -17,16 +17,16 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item routerLink="/inicio">Iniciar Sesión</ion-item>
       <ion-item routerLink="/#">Registrar asistencia</ion-item>
       <ion-item routerLink="/#">Asistencias</ion-item>
       <ion-item routerLink="/configuraciones">Configuración</ion-item>
+      <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
 <!-- Contenido pag -->
 <ion-content id="main-content" [fullscreen]="true">
-  <h2 class="tit-bienv">¡Bienvenido!</h2>
+  <h2 class="tit-bienv texto-desvanecido">¡Bienvenido/a {{ username }}!</h2>
   <div class="container">
     <!-- Tarjeta -->
     <ion-card>
@@ -39,8 +39,8 @@
         <p>
           Aquí podrás registrar tu asistencia (Necesita acceso a la camara)
         </p>
-        <ion-button expand="full" color="success">
-          Registrar asistencia
+        <ion-button expand="full" color="success" class="boton-registrar-as">
+          <span class="texto-boton">Registrar asistencia</span>
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -56,7 +56,7 @@
           Aquí podrás ver tu asistencia en las materias
         </p>
         <ion-button expand="full" color="primary">
-          Asistencias
+          <span class="texto-boton">Asistencias</span>
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -72,7 +72,7 @@
           Aquí podrás modificar tus preferencias
         </p>
         <ion-button expand="full" color="tertiary">
-          Configurar
+          <span class="texto-boton">Configurar</span>
         </ion-button>
       </ion-card-content>
     </ion-card>

@@ -14,15 +14,18 @@ ion-input{
 ion-item {
     --background: #eeeeee; /* Fondo del input */
 }
+ion-card{
+  justify-self: 50vh;
+}
+
 ion-content {
-    --background: #000000; 
+    --background: #000000; /* Opcional: añade un fondo */
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center;     /* Centra verticalmente */
-    height: 100vh;         
+    height: 100vh;           /* Asegura que ocupe toda la altura de la ventana */
     padding: 20px;
   }
-
   
   .login-content {
     display: flex;
