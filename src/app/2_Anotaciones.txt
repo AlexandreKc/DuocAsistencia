@@ -1,0 +1,11 @@
+Si existe algun error de mysql
+npm install mysql2 --legacy-peer-deps
+
+
+Actualizar angular 
+ng update @angular/core @angular/cli
+
+***************Ejecutar la base de datos - Para persistencia de datos / Hace falta abrir 2 terminales por ahora
+Una para ejecutar la pagina y otra para el database *****************************************
+cd src/app/databasee
+node server.js
