@@ -1,0 +1,11 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+//esto es para poner todo en modo oscuro
+:root {
+    --ion-background-color: #000000; /* Fondo de la aplicación */
+    --ion-text-color: #ffffff; /* Color del texto */
+    --ion-toolbar-background: #333333; /* Fondo del toolbar */
+    --ion-toolbar-color: #ffffff; /* Color del texto en el toolbar */
+    --ion-item-background: #444444; /* Fondo de los ítems del menú */
+    --ion-item-color: #ffffff; /* Color del texto en los ítems del menú */
+  }

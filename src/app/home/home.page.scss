@@ -1,0 +1,36 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
+//Desde aqui mis modificaciones
+.logo-main{
+  height: 45px;
+  margin-right: 25px;
+}
+.tit-asis{
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: #c3c6c8!important;
+}
+//modificaciones main
+.tit-bienv{
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.texto-cerrar-ses{
+  color: red;
+}
+//fix para colores modo blanco
+@media (prefers-color-scheme: light) {
+  ion-card-title{
+    color: white;
+  }
+  .texto-boton{
+    color: black;
+  }
+
+}
+//para la animacion
+.texto-desvanecido{
+  opacity: 0;
+  text-align: center;
+}
