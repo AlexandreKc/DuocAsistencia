@@ -1,22 +1,21 @@
-// Importación de los módulos necesarios
+// Modulos necesarios
 const express = require('express');
-const cors = require('cors'); // Importar CORS
+const cors = require('cors');
 const mysql = require('mysql2');
 
-// Crear una instancia de Express
+// Instancia express
 const app = express();
-const PORT = 3000; // Puedes usar el puerto que prefieras
-
-// Middleware para permitir CORS y parsear el cuerpo de las solicitudes en formato JSON
+const PORT = 3000; // Modificable en caso de que no sirve el que pones
+//Para realizar consultas sin importar el port
 app.use(cors());
 app.use(express.json());
 
 // Configuración de la conexión a MySQL
 const connection = mysql.createConnection({
-  host: 'localhost',        // Dirección del servidor MySQL (por defecto es localhost)
-  user: 'root',             // Tu usuario de MySQL Workbench
-  password: '1111',         // Tu contraseña de MySQL
-  database: 'duocasistencia' // El nombre de la base de datos que quieres conectar
+  host: 'localhost',        // Dirección server sql
+  user: 'root',             // Usuario a utilizar en mysql
+  password: '1111',         // Contrasena
+  database: 'duocasistencia' // Nombre de la base de datos que vas a utilizar / Revisar Script
 });
 
 // Establecer la conexión con MySQL
@@ -31,23 +30,25 @@ connection.connect((err) => {
 // Ruta para manejar el login
 app.post('/login', (req, res) => {
   const { correo, password } = req.body;
-  console.log('Datos recibidos:', req.body); // Verificar qué datos se reciben
 
+  // Verificar que se proporcionaron el correo y la contraseña
   if (!correo || !password) {
     return res.status(400).json({ message: 'Por favor, proporciona correo y contraseña' });
   }
 
-  const query = 'SELECT * FROM usuario WHERE correo = ? AND contrasena = ?';
-  connection.query(query, [correo, password], (err, results) => {
+  // Consulta para verificar las credenciales y obtener el nombre
+  connection.query('SELECT nombre FROM usuario WHERE correo = ? AND contrasena = ?', [correo, password], (err, results) => {
     if (err) {
       console.error('Error en la consulta:', err.stack);
-      return res.status(500).json({ message: 'Error en el servidor' });
+      return res.status(500).send('Error en la consulta');
     }
 
     if (results.length > 0) {
-      res.json({ valid: true, message: 'Inicio de sesión exitoso' });
+      // Si el usuario existe, devolver el nombre
+      res.json({ valid: true, nombre: results[0].nombre });
     } else {
-      res.status(401).json({ valid: false, message: 'Correo o contraseña incorrectos' });
+      // Si no se encuentra el usuario, devolver respuesta inválida
+      res.json({ valid: false });
     }
   });
 });

@@ -11,7 +11,7 @@ import { DatabaseService } from '../database/database.service'; // Importa el se
 export class LoginPage implements OnInit {
   correo: string = "";
   password: string = "";
-  nombre: string ="";
+  username: string ="";
 
   constructor(
     private router: Router,
@@ -36,18 +36,19 @@ export class LoginPage implements OnInit {
     console.log('Correo:', this.correo); // Para verificar el valor de correo
     console.log('Contraseña:', this.password); // Para verificar el valor de password
   
-    // Verifica que los valores sean correctos
     if (this.correo && this.password) {
       this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {
           if (response.valid) {
-            this.router.navigate(['/home'], { queryParams: { username: this.correo } });
+            // Almacena el nombre del usuario para usarlo en home
+            const nombreUsuario = response.nombre; 
+            this.router.navigate(['/home'], { queryParams: { username: nombreUsuario } });
           } else {
             this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
           }
         },
         async (error) => {
-          console.error('Error en el servidor:', error); // Para verificar el error
+          console.error('Error en el servidor:', error);
           this.mostrarAlerta('Error', 'Hubo un problema con el servidor');
         }
       );
