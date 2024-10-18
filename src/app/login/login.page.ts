@@ -9,10 +9,9 @@ import { DatabaseService } from '../database/database.service'; // Importa el se
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  // Almacenar el nombre y el pass del user
+  // Variables para almacenar el nombre de usuario y contraseña
   username: string = "";
   password: string = "";
-  alertButtons = ['Action'];
 
   constructor(
     private router: Router,
@@ -22,7 +21,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
-  // Método para mostrar la alerta
+  // Método para mostrar alertas
   async mostrarAlerta(header: string, message: string) {
     const alert = await this.alertController.create({
       header,
@@ -36,19 +35,19 @@ export class LoginPage implements OnInit {
   // Método para iniciar sesión
   login() {
     if (this.username.length >= 5 && this.username.length <= 15 && this.password.length >= 6 && this.password.length <= 15) {
-      // Validar las credenciales a través del servicio de base de datos
+      // Llamar al servicio para validar las credenciales
       this.database.validateUser(this.username, this.password).subscribe(
         async (response: any) => {
           if (response.valid) {
-            // Redirigir a la página home si es válido
+            // Redirigir a la página de inicio si la validación es correcta
             this.router.navigate(['/home'], { queryParams: { username: this.username } });
           } else {
-            // Mostrar alerta de error de credenciales
+            // Mostrar alerta si las credenciales son incorrectas
             this.mostrarAlerta('Error', 'Usuario o contraseña incorrectos');
           }
         },
         async (error) => {
-          // Mostrar alerta de error en el servidor
+          // Mostrar alerta si hay un error con el servidor
           this.mostrarAlerta('Error', 'Hubo un problema con el servidor');
         }
       );
