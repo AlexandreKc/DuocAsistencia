@@ -1,0 +1,18 @@
+-- -----------------------------------------------------
+-- Schema duocasistencia
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `duocasistencia` ;
+
+-- -----------------------------------------------------
+-- Schema duocasistencia
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `duocasistencia`;
+USE `duocasistencia` ;
+
+
+CREATE TABLE usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,  -- Clave primaria autoincremental
+  correo VARCHAR(100) NOT NULL UNIQUE, -- Correo único
+  nombre VARCHAR(15) NOT NULL,         -- Nombre del usuario
+  contrasena VARCHAR(15) NOT NULL     -- Contraseña del usuario
+);

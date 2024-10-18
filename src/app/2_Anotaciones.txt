@@ -7,5 +7,17 @@ ng update @angular/core @angular/cli
 
 ***************Ejecutar la base de datos - Para persistencia de datos / Hace falta abrir 2 terminales por ahora
 Una para ejecutar la pagina y otra para el database *****************************************
-cd src/app/databasee
+cd src
+cd app
+cd database
 node server.js
+
+
+** si forms da error en app.ts **
+npm install @angular/forms
+
+**actualizar npm si alguna dependencia da error**
+npm update
+
++++++++++++++++++++++++ Instalar Cors si o si
+npm install cors

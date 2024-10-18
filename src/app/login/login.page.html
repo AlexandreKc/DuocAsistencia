@@ -8,13 +8,13 @@
       <ion-item lines="none" class="input-item">
         <ion-icon name="person-circle-outline" slot="start"></ion-icon> <!-- icono del usuario -->
         <ion-label position="floating">Usuario</ion-label>
-        <ion-input [(ngModel)]="username" maxlength="12" minlength="3" required></ion-input>
+        <ion-input [(ngModel)]="username" maxlength="15" minlength="5" required></ion-input>
       </ion-item>
       <!-- Input de contraseña con icono -->
       <ion-item lines="none" class="input-item">
         <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
         <ion-label position="floating">Contraseña</ion-label>
-        <ion-input [(ngModel)]="password" maxlength="4" minlength="4" required type="password"></ion-input> 
+        <ion-input [(ngModel)]="password" maxlength="15" minlength="6" required type="password"></ion-input> 
       </ion-item>
       <br>
       <!-- Botón Ingresar con estilo redondeado -->
