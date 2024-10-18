@@ -1,0 +1,2 @@
+Si existe algun error de mysql
+npm install mysql2 --legacy-peer-deps
