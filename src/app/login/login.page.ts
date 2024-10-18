@@ -9,9 +9,9 @@ import { DatabaseService } from '../database/database.service'; // Importa el se
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  // Variables para almacenar el nombre de usuario y contraseña
-  username: string = "";
+  correo: string = "";
   password: string = "";
+  nombre: string ="";
 
   constructor(
     private router: Router,
@@ -31,28 +31,27 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
-
-  // Método para iniciar sesión
+  //inicio de sesión
   login() {
-    if (this.username.length >= 5 && this.username.length <= 15 && this.password.length >= 6 && this.password.length <= 15) {
-      // Llamar al servicio para validar las credenciales
-      this.database.validateUser(this.username, this.password).subscribe(
+    console.log('Correo:', this.correo); // Para verificar el valor de correo
+    console.log('Contraseña:', this.password); // Para verificar el valor de password
+  
+    // Verifica que los valores sean correctos
+    if (this.correo && this.password) {
+      this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {
           if (response.valid) {
-            // Redirigir a la página de inicio si la validación es correcta
-            this.router.navigate(['/home'], { queryParams: { username: this.username } });
+            this.router.navigate(['/home'], { queryParams: { username: this.correo } });
           } else {
-            // Mostrar alerta si las credenciales son incorrectas
-            this.mostrarAlerta('Error', 'Usuario o contraseña incorrectos');
+            this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
           }
         },
         async (error) => {
-          // Mostrar alerta si hay un error con el servidor
+          console.error('Error en el servidor:', error); // Para verificar el error
           this.mostrarAlerta('Error', 'Hubo un problema con el servidor');
         }
       );
     } else {
-      // Mostrar alerta si los campos no son válidos
       this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
     }
   }

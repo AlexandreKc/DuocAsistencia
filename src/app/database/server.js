@@ -30,26 +30,24 @@ connection.connect((err) => {
 
 // Ruta para manejar el login
 app.post('/login', (req, res) => {
-  const { username, password } = req.body; // Extraer username y password del body
+  const { correo, password } = req.body;
+  console.log('Datos recibidos:', req.body); // Verificar qué datos se reciben
 
-  // Verificar que username y password no estén vacíos
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Por favor, proporciona nombre de usuario y contraseña' });
+  if (!correo || !password) {
+    return res.status(400).json({ message: 'Por favor, proporciona correo y contraseña' });
   }
 
-  // Consulta para verificar las credenciales del usuario
-  const query = 'SELECT * FROM usuario WHERE nombre = ? AND contrasena = ?';
-  connection.query(query, [username, password], (err, results) => {
+  const query = 'SELECT * FROM usuario WHERE correo = ? AND contrasena = ?';
+  connection.query(query, [correo, password], (err, results) => {
     if (err) {
       console.error('Error en la consulta:', err.stack);
       return res.status(500).json({ message: 'Error en el servidor' });
     }
 
-    // Verificar si se encontró algún usuario con esas credenciales
     if (results.length > 0) {
       res.json({ valid: true, message: 'Inicio de sesión exitoso' });
     } else {
-      res.status(401).json({ valid: false, message: 'Usuario o contraseña incorrectos' });
+      res.status(401).json({ valid: false, message: 'Correo o contraseña incorrectos' });
     }
   });
 });

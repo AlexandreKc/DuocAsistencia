@@ -1,30 +1,28 @@
 <ion-content [fullscreen]="true" class="login-content">
-  
   <div class="container">
-  <ion-title class="text-center titulo"><span class="white-text">Asist</span>App</ion-title>
-  <ion-card class="login-card m-1">
-    <ion-card-content>
-      <!-- Input del usuario con icono -->
-      <ion-item lines="none" class="input-item">
-        <ion-icon name="person-circle-outline" slot="start"></ion-icon> <!-- icono del usuario -->
-        <ion-label position="floating">Usuario</ion-label>
-        <ion-input [(ngModel)]="username" maxlength="15" minlength="5" required></ion-input>
-      </ion-item>
-      <!-- Input de contraseña con icono -->
-      <ion-item lines="none" class="input-item">
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input [(ngModel)]="password" maxlength="15" minlength="6" required type="password"></ion-input> 
-      </ion-item>
-      <br>
-      <!-- Botón Ingresar con estilo redondeado -->
-      <ion-button color="warning" expand="block" (click)="login()" shape="round" class="boton-login">Ingresar</ion-button>
-      <!-- Botón para recuperar contraseña -->
-      <ion-button color="danger" expand="block" shape="round" class="boton-recuperar" href="/recuperacion">Recuperar contraseña</ion-button>
-      <!-- Botón para registro -->
-      <ion-button color="tertiary" expand="block" shape="round" class="boton-recuperar" href="#">Registro</ion-button>
-    </ion-card-content>
-  </ion-card>
+    <ion-title class="text-center titulo"><span class="white-text">Asist</span>App</ion-title>
+    <ion-card class="login-card m-1">
+      <ion-card-content>
+        <!-- Input del correo con icono -->
+        <ion-item lines="none" class="input-item">
+          <ion-icon name="mail-outline" slot="start"></ion-icon> <!-- icono del correo -->
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input [(ngModel)]="correo" maxlength="70" minlength="12" required type="email"></ion-input>
+        </ion-item>
+        <!-- Input de contraseña con icono -->
+        <ion-item lines="none" class="input-item">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [(ngModel)]="password" maxlength="15" minlength="6" required type="password"></ion-input> 
+        </ion-item>
+        <br>
+        <!-- Botón Ingresar con estilo redondeado -->
+        <ion-button color="warning" expand="block" (click)="login()" shape="round" class="boton-login">Ingresar</ion-button>
+        <!-- Botón para recuperar contraseña -->
+        <ion-button color="danger" expand="block" shape="round" class="boton-recuperar" href="/recuperacion">Recuperar contraseña</ion-button>
+        <!-- Botón para registro -->
+        <ion-button color="tertiary" expand="block" shape="round" class="boton-recuperar" href="#">Registro</ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
-
 </ion-content>
