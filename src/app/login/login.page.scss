@@ -29,6 +29,7 @@ ion-content {
     justify-content: center;
     align-items: center;
     padding: 20px;
+  
   }
   //esto es para colocar una parte del titulo en blanco en la etiqueta span
   .white-text {
@@ -36,8 +37,6 @@ ion-content {
   }
   
   .login-card {
-    align-items: center;
-    justify-content: center;
     width: 100%;
     max-width: 400px; /* Ancho máximo del login card */
     border-radius: 20px;
