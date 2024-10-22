@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
         },
         async (error) => {
           console.error('Error en el servidor:', error);
-          this.mostrarAlerta('Error', 'Hubo un problema con el servidor');
+          this.mostrarAlerta('Error', 'Error al iniciar sesión, servidor desconectado');
         }
       );
     } else {

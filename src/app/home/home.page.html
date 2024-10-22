@@ -21,8 +21,8 @@
       <ion-item routerLink="/#">Asistencias</ion-item>
       <ion-item routerLink="/configuraciones">Configuración</ion-item>
       <!-- Opción disponible solo para administradores -->
-      <ion-item *ngIf="isAdmin" routerLink="#">Modificar rol</ion-item>
-      <ion-item *ngIf="isAdmin" routerLink="#">Crear QR</ion-item>
+      <ion-item *ngIf="isAdmin" routerLink="#">Administrar cuentas</ion-item>
+      <ion-item *ngIf="isAdmin" routerLink="#">Clases y Creación de QR</ion-item>
       <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
     </ion-list>
   </ion-content>
@@ -79,5 +79,38 @@
         </ion-button>
       </ion-card-content>
     </ion-card>
+    <!-- tarjeta -->
+    <ion-card *ngIf="isAdmin"> <!-- Mostrar solo si es administrador -->
+      <ion-card-header>
+        <ion-card-title>
+          Administrar cuentas
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          Aquí podrás modificar otras cuentas de usuario para definir roles
+        </p>
+        <ion-button expand="full" color="warning">
+          <span class="texto-boton">Administrar</span>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+    <!-- tarjeta -->
+    <ion-card *ngIf="isAdmin"> <!-- Mostrar solo si es administrador -->
+      <ion-card-header>
+        <ion-card-title>
+          Secciones y generación de QR
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          Aquí podrás ver las secciones y generar los respectivos QR
+        </p>
+        <ion-button expand="full" color="medium">
+          <span class="texto-boton">Gestionar asistencia</span>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+    
   </div>
 </ion-content>
