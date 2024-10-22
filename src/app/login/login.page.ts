@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
             const nombreUsuario = response.nombre; 
             const id_user = response.id_tp_usuario; 
             this.router.navigate(['/home'], { queryParams: { username: nombreUsuario, id_Tp_Usuario: id_user } });
+            this.mostrarAlerta('Ingreso con éxito', 'Has iniciado sesión correctamente.');
           } else {
             this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
           }
