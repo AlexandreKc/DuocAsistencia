@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'cambiar-contrasena',
     loadChildren: () => import('./cambiar-contrasena/cambiar-contrasena.module').then( m => m.CambiarContrasenaPageModule)
   },
+  {
+    path: 'registro',
+    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
 
 ];
 
