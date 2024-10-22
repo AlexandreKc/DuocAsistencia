@@ -12,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   contador: number = 0;
   username: string = "";
+  isAdmin: boolean = false;
 
   constructor(
     private estadoService: EstadosService,

@@ -20,6 +20,9 @@
       <ion-item routerLink="/#">Registrar asistencia</ion-item>
       <ion-item routerLink="/#">Asistencias</ion-item>
       <ion-item routerLink="/configuraciones">Configuración</ion-item>
+      <!-- Opción disponible solo para administradores -->
+      <ion-item *ngIf="isAdmin" routerLink="#">Modificar rol</ion-item>
+      <ion-item *ngIf="isAdmin" routerLink="#">Crear QR</ion-item>
       <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
     </ion-list>
   </ion-content>
