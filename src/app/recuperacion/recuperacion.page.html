@@ -7,16 +7,16 @@
         <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
           <!-- Input del usuario con icono -->
           <ion-item lines="none" class="input-item">
-            <ion-icon name="person-circle-outline" slot="start"></ion-icon> <!-- icono del usuario -->
-            <ion-label position="floating">Usuario</ion-label>
-            <ion-input name="username" [(ngModel)]="username" maxlength="12" minlength="3" required #usernameInput="ngModel"> </ion-input>
+            <ion-icon name="mail-outline" slot="start"></ion-icon> <!-- icono del usuario -->
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input name="username" [(ngModel)]="username" maxlength="25" minlength="3" required #usernameInput="ngModel"> </ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
             <p *ngIf="usernameInput.errors?.['required']">El nombre de usuario es requerido.</p>
             <p *ngIf="usernameInput.errors?.['minlength']">El nombre de usuario debe tener al menos 3 caracteres.</p>
           </ion-text>
           <ion-button color="success" expand="block" shape="round" class="boton-login" type="submit" [disabled]="loginForm.invalid">
-            Recuperar
+            Recuperar Contraseña
           </ion-button>
         </form>
       </ion-card-content>

@@ -1,0 +1,51 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="container">
+    <ion-title class="text-center titulo"><span class="white-text">Asist</span>App</ion-title>
+    <ion-card class="login-card">
+      <ion-card-content>
+        <!-- Formulario para validación -->
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <!-- Input de la nueva contraseña con icono -->
+          <ion-item lines="none" class="input-item">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
+            <ion-label position="floating">Nueva contraseña</ion-label>
+            <ion-input
+              type="password"
+              name="newpassword"
+              [(ngModel)]="newpassword"
+              maxlength="15"
+              minlength="5"
+              required
+              #newpasswordInput="ngModel">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="newpasswordInput.invalid && (newpasswordInput.dirty || newpasswordInput.touched)">
+            <p *ngIf="newpasswordInput.errors?.['minlength']">La contraseña debe tener al menos 5 caracteres.</p>
+          </ion-text>
+
+          <!-- Input para confirmar la nueva contraseña -->
+          <ion-item lines="none" class="input-item">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la confirmación -->
+            <ion-label position="floating">Confirmar contraseña</ion-label>
+            <ion-input
+              type="password"
+              name="confirmpassword"
+              [(ngModel)]="confirmpassword"
+              maxlength="15"
+              minlength="5"
+              required
+              #confirmpasswordInput="ngModel">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="confirmpasswordInput.invalid && (confirmpasswordInput.dirty || confirmpasswordInput.touched)">
+            <p *ngIf="confirmpasswordInput.errors?.['required']">Debe confirmar la nueva contraseña.</p>
+          </ion-text>
+
+          <ion-button color="success" expand="block" shape="round" class="boton-login" type="submit" [disabled]="loginForm.invalid">
+            Recuperar Contraseña
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

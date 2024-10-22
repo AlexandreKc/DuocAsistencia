@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
+.titulo{
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-size: 45px;
+    padding-bottom: 20px;
+    color: #FFB800;
+    margin-top: 50px;
+}
+ion-input{
+  margin-top: 25px;
+}
+ion-item {
+    --background: #eeeeee; /* Fondo del input */
+}
+ion-card{
+  justify-self: 50vh;
+}
+
+ion-content {
+    --background: #000000; /* Opcional: añade un fondo */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    height: 100vh;           /* Asegura que ocupe toda la altura de la ventana */
+    padding: 20px;
+  }
+  
+  .login-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  //esto es para colocar una parte del titulo en blanco en la etiqueta span
+  .white-text {
+    color: white !important;
+  }
+  
+  .login-card {
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px; /* Ancho máximo del login card */
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #eeeeee;
+  }
+  
+  .input-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .boton-restablecer-contraseña {
+    min-width: 150px;  /* Establece un ancho mínimo */
+    width: 400px;       /* Ajusta el ancho al contenido */
+    height: 35px;      /* Ajusta la altura */
+    font-size: 12px;   /* Tamaño de texto más pequeño */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    --border-radius: 20px;
+    padding-right: 150px;
+    padding-left: 25px;
+  }
+  
+  ion-card-content ion-label{
+    color: black;
+  }
+  ion-card-content ion-icon{
+    color: black;
+  }
+  ion-card-content ion-input{
+    color: black;
+  }
+  

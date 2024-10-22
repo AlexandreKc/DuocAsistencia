@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'recuperacion',
     loadChildren: () => import('./recuperacion/recuperacion.module').then( m => m.RecuperacionPageModule)
   },
+  {
+    path: 'cambiar-contrasena',
+    loadChildren: () => import('./cambiar-contrasena/cambiar-contrasena.module').then( m => m.CambiarContrasenaPageModule)
+  },
 
 ];
 
