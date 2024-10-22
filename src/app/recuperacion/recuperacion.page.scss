@@ -11,6 +11,14 @@
 ion-input{
   margin-top: 25px;
 }
+ion-label {
+  color: black !important; // Color fijo del label que no cambiará
+  transition: none !important; // Desactivar cualquier transición
+
+  &:focus {
+    color: black !important; // Mantener el mismo color al enfocar
+  }
+}
 ion-item {
     --background: #eeeeee; /* Fondo del input */
 }

@@ -7,21 +7,38 @@
     padding-bottom: 20px;
     color: #FFB800;
     margin-top: 50px;
+    padding-top: 10px;
+    background-color: rgba(177, 177, 205, 0.4); // Color semitransparente (50% de opacidad)
+    border-radius: 50px;
 }
+
+
+//configuración del input
 ion-input{
   margin-top: 25px;
 }
+
+ion-label {
+  color: black !important; // Color fijo del label que no cambiará
+  transition: none !important; // Desactivar cualquier transición
+
+  &:focus {
+    color: black !important; // Mantener el mismo color al enfocar
+  }
+}
+
 ion-item {
     --background: #eeeeee; /* Fondo del input */
 }
 ion-content {
-    --background: #000000; 
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center;     /* Centra verticalmente */
-    height: 100vh;         
-    padding: 20px;
-  }
+  --background: url('../../assets/icon/background_1.png');
+  background-size:contain;
+  background-position: 20%; 
+  justify-content: center;
+  align-items: center; 
+  height: 100vh; 
+  padding: 20px;
+}
 
   
   .login-content {

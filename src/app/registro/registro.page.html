@@ -9,35 +9,35 @@
 
 <ion-content [fullscreen]="true" class="login-content">
   <div class="container">
-    <ion-card class="login-card" style="margin: auto;">
+    <ion-card class="login-card">
       <ion-card-content>
         <!-- Input del nombre con icono -->
         <ion-item lines="none" class="input-item">
-          <ion-icon name="person-outline" slot="start"></ion-icon> <!-- icono del nombre -->
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input maxlength="50" required></ion-input>
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input maxlength="50" required class="input-escribir"></ion-input>
         </ion-item>
         <!-- Input del correo con icono -->
         <ion-item lines="none" class="input-item">
-          <ion-icon name="mail-outline" slot="start"></ion-icon> <!-- icono del correo -->
-          <ion-label position="floating">Correo</ion-label>
-          <ion-input maxlength="70" required type="email"></ion-input>
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Correo</ion-label>
+          <ion-input maxlength="70" required type="email" class="input-escribir"></ion-input>
         </ion-item>
         <!-- Input de contraseña con icono -->
         <ion-item lines="none" class="input-item">
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
-          <ion-label position="floating">Contraseña</ion-label>
-          <ion-input maxlength="15" minlength="6" required type="password"></ion-input> 
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input maxlength="15" minlength="6" required type="password" class="input-escribir"></ion-input> 
         </ion-item>
         <!-- Input de confirmar contraseña con icono -->
         <ion-item lines="none" class="input-item">
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de confirmar contraseña -->
-          <ion-label position="floating">Confirmar Contraseña</ion-label>
-          <ion-input maxlength="15" minlength="6" required type="password"></ion-input> 
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Confirmar Contraseña</ion-label>
+          <ion-input maxlength="15" minlength="6" required type="password" class="input-escribir"></ion-input> 
         </ion-item>
         <br>
-        <!-- Botón Registrarse con estilo redondeado -->
-        <ion-button color="success" expand="block"  shape="round" class="boton-login">Registrarse</ion-button>
+        <!-- Botón Registrarse -->
+        <ion-button color="success" expand="block" shape="round" class="boton-login">Registrarse</ion-button>
         <!-- Botón para volver al login -->
         <ion-button color="tertiary" expand="block" shape="round" class="boton-recuperar" href="/login">Volver al Login</ion-button>
       </ion-card-content>

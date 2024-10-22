@@ -1,0 +1,42 @@
+// Ajustar el padding del ion-item y la alineación
+.input-item {
+  display: flex;
+  align-items: center; // Alinear íconos e inputs verticalmente
+  --padding-start: 0px; // Eliminar padding
+  --inner-padding-start: 0px;
+  
+  ion-icon {
+    font-size: 22px; // Tamaño del ícono
+    margin-right: 10px; // Separación del input
+  }
+  ion-label {
+    color: black !important; // Color fijo del label que no cambiará
+    transition: none !important; // Desactivar cualquier transición
+  
+    &:focus {
+      color: black !important; // Mantener el mismo color al enfocar
+    }
+  }
+
+  ion-label {
+    margin-left: 10px; // Mantener el label centrado al inicio
+    &.sc-ion-label-md-h {
+      transform: translateX(10px); // Alinear cuando flota
+    }
+  }
+
+  ion-input {
+    margin-left: 10px; // Separar el input del ícono
+  }
+}
+
+// Estilos para centrar la tarjeta y el contenido
+.login-card {
+  margin: auto;
+  width: 90%; // Ajustar el ancho de la tarjeta
+}
+
+// Estilos para los botones
+.boton-login, .boton-recuperar {
+  margin-top: 10px; // Espacio entre botones
+}
