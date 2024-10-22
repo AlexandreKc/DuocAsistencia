@@ -11,7 +11,8 @@ import { DatabaseService } from '../database/database.service'; // Importa el se
 export class LoginPage implements OnInit {
   correo: string = "";
   password: string = "";
-  username: string ="";
+  passwordType: string = 'password'; // Para manejar la visibilidad de la contraseña
+  username: string = "";
 
   constructor(
     private router: Router,
@@ -31,11 +32,17 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
-  //inicio de sesión
+
+  // Método para alternar la visibilidad de la contraseña
+  togglePasswordVisibility() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+
+  // Inicio de sesión
   login() {
     console.log('Correo:', this.correo); // Para verificar el valor de correo
     console.log('Contraseña:', this.password); // Para verificar el valor de password
-  
+
     if (this.correo && this.password) {
       this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {

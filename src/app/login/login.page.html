@@ -11,9 +11,12 @@
         </ion-item>
         <!-- Input de contraseña con icono -->
         <ion-item lines="none" class="input-item">
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
           <ion-label position="floating" class="txt-lb">Contraseña</ion-label>
-          <ion-input [(ngModel)]="password" maxlength="15" minlength="6" required type="password"></ion-input> 
+          <ion-input [(ngModel)]="password" [type]="passwordType" maxlength="15" minlength="6" required></ion-input>
+          <ion-button slot="end" (click)="togglePasswordVisibility()" class="boton-contra">
+            <ion-icon [name]="passwordType === 'password' ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
         </ion-item>
         <br>
         <!-- Botón Ingresar con estilo redondeado -->

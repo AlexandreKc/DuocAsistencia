@@ -120,3 +120,22 @@ ion-icon{
   padding: 10px;
   margin-right: 10px;
 }
+//boton ver contraseña
+.boton-contra {
+  position: absolute; /* O usa fixed si deseas que se mantenga en su lugar al hacer scroll */
+  top: 10%; /* Ajusta la posición vertical */
+  right: 11px; /* Ajusta la posición horizontal */
+  z-index: 10; /* Asegúrate de que esté sobre otros elementos */
+  --background:none;
+  --border: none;
+  --box-shadow: none;
+  padding: 0px;
+}
+//efectos hover
+ion-button {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.10); /* Aumenta el tamaño del botón */
+  }
+}
