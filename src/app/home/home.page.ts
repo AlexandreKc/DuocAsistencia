@@ -12,7 +12,8 @@ import { ChangeDetectorRef } from '@angular/core';
 export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   contador: number = 0;
   username: string = "";
-  isAdmin: boolean = false;
+  isAdmin: boolean = false;  // Inicializamos isAdmin en false
+  id_user: number | null = null;  // Para almacenar el tipo de usuario
 
   constructor(
     private estadoService: EstadosService,
@@ -28,14 +29,30 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
       this.contador = valor;
       console.log('ngOnInit - Contador está actualizado', this.contador);
     });
-
+  
     this.route.queryParams.subscribe(params => {
+      console.log('Parámetros de consulta recibidos:', params);
       if (params['username']) {
         this.username = params['username'];
         console.log('ngOnInit - Usuario recuperado', this.username);
       }
+      if (params['id_Tp_Usuario']) {
+        this.id_user = +params['id_Tp_Usuario'];  // Convertimos a número
+        // Establecer isAdmin dependiendo del valor de id_Tp_Usuario
+        if (this.id_user === 2) {
+          this.isAdmin = true;  // Es administrador
+        } else {
+          this.isAdmin = false; // Es usuario común
+        }
+        console.log('ngOnInit - Tipo de usuario:', this.id_user);
+        console.log('ngOnInit - Es administrador:', this.isAdmin);
+      }
     });
   }
+  
+  
+  
+  
 
   ngAfterViewInit() {
     // Forzar la detección de cambios para iniciarlo

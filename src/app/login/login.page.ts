@@ -42,7 +42,8 @@ export class LoginPage implements OnInit {
           if (response.valid) {
             // Almacena el nombre del usuario para usarlo en home
             const nombreUsuario = response.nombre; 
-            this.router.navigate(['/home'], { queryParams: { username: nombreUsuario } });
+            const id_user = response.id_tp_usuario; 
+            this.router.navigate(['/home'], { queryParams: { username: nombreUsuario, id_Tp_Usuario: id_user } });
           } else {
             this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
           }

@@ -36,22 +36,27 @@ app.post('/login', (req, res) => {
     return res.status(400).json({ message: 'Por favor, proporciona correo y contraseña' });
   }
 
-  // Consulta para verificar las credenciales y obtener el nombre
-  connection.query('SELECT nombre FROM usuario WHERE correo = ? AND contrasena = ?', [correo, password], (err, results) => {
+  // Consulta para verificar las credenciales y obtener el nombre y el tipo de usuario
+  connection.query('SELECT nombre, id_tp_usuario FROM usuario WHERE correo = ? AND contrasena = ?', [correo, password], (err, results) => {
     if (err) {
       console.error('Error en la consulta:', err.stack);
       return res.status(500).send('Error en la consulta');
     }
 
     if (results.length > 0) {
-      // Si el usuario existe, devolver el nombre
-      res.json({ valid: true, nombre: results[0].nombre });
+      // Si el usuario existe, devolver el nombre y el id_tp_usuario
+      res.json({
+        valid: true,
+        nombre: results[0].nombre,
+        id_tp_usuario: results[0].id_tp_usuario // Incluir el tipo de usuario en la respuesta
+      });
     } else {
       // Si no se encuentra el usuario, devolver respuesta inválida
       res.json({ valid: false });
     }
   });
 });
+
 
 // Ruta para obtener todos los usuarios (ejemplo)
 app.get('/usuarios', (req, res) => {

@@ -1,18 +1,26 @@
 -- -----------------------------------------------------
--- Schema duocasistencia
+-- Schema Duocasistencia
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `duocasistencia` ;
 
 -- -----------------------------------------------------
--- Schema duocasistencia
+-- Schema Duocasistencia
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `duocasistencia`;
-USE `duocasistencia` ;
+USE `duocasistencia`;
 
 
+-- Crear la tabla tp_usuario para definir tipos de usuario
+CREATE TABLE tp_usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,    -- Clave primaria autoincremental
+  tipo VARCHAR(20) NOT NULL             -- Nombre del tipo de usuario
+);
+-- Crear la tabla usuario
 CREATE TABLE usuario (
-  id INT AUTO_INCREMENT PRIMARY KEY,  -- Clave primaria autoincremental
-  correo VARCHAR(100) NOT NULL UNIQUE, -- Correo único
-  nombre VARCHAR(15) NOT NULL,         -- Nombre del usuario
-  contrasena VARCHAR(15) NOT NULL     -- Contraseña del usuario
+  id INT AUTO_INCREMENT PRIMARY KEY,      -- Clave primaria autoincremental
+  correo VARCHAR(100) NOT NULL UNIQUE,    -- Correo único
+  nombre VARCHAR(15) NOT NULL,            -- Nombre del usuario
+  contrasena VARCHAR(15) NOT NULL,        -- Contraseña del usuario
+  id_tp_usuario INT NOT NULL,             -- Clave foránea hacia tp_usuario
+  FOREIGN KEY (id_tp_usuario) REFERENCES tp_usuario(id)  -- Relación con la tabla tp_usuario
 );

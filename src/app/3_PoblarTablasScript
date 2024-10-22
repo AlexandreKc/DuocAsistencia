@@ -1,4 +1,11 @@
-INSERT INTO usuario (correo, nombre, contrasena)
-VALUES ('admin@hotmail.com', 'administrador', 'contra123');
-INSERT INTO usuario (correo, nombre, contrasena)
-VALUES ('seba@duoc.com', 'sebastian', 'contra1234');
+-- Insertar los tipos de usuario
+INSERT INTO tp_usuario (tipo) VALUES ('usuario_comun'), ('administrador');
+
+-- Insertar datos en la tabla usuario, relacionando con los tipos de usuario
+INSERT INTO usuario (correo, nombre, contrasena, id_tp_usuario)
+VALUES ('admin@hotmail.com', 'administrador', 'contra123', 2);  -- 2 es 'administrador'
+INSERT INTO usuario (correo, nombre, contrasena, id_tp_usuario)
+VALUES ('seba@duoc.com', 'sebastian', 'contra1234', 1);         -- 1 es 'usuario_comun'
+
+-- Consulta para obtener todos los usuarios
+SELECT * FROM usuario;
