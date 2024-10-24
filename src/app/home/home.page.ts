@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EstadosService } from '../estado.service';
 import { AnimationController } from '@ionic/angular';
 import { ChangeDetectorRef } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { UserService } from '../user/datos.service';  // Importar UserService
 
 @Component({
   selector: 'app-home',
@@ -10,54 +12,42 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy, AfterViewInit {
-  contador: number = 0;
   username: string = "";
   isAdmin: boolean = false;  // Inicializamos isAdmin en false
   id_user: number | null = null;  // Para almacenar el tipo de usuario
+  correo: string = "";  // Para almacenar el correo del usuario
+  contrasena: string = "" //almacenar la contraseña
 
   constructor(
     private estadoService: EstadosService,
     private router: Router,
     private route: ActivatedRoute,
     private animationCtrl: AnimationController,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private menuController: MenuController,
+    private userService: UserService  // Añadir UserService al constructor
   ) {}
 
   ngOnInit() {
-    console.log('Contador se encuentra inicializado');
-    this.estadoService.contadorActual.subscribe(valor => {
-      this.contador = valor;
-      console.log('ngOnInit - Contador está actualizado', this.contador);
-    });
-  
-    this.route.queryParams.subscribe(params => {
-      console.log('Parámetros de consulta recibidos:', params);
-      if (params['username']) {
-        this.username = params['username'];
-        console.log('ngOnInit - Usuario recuperado', this.username);
-      }
-      if (params['id_Tp_Usuario']) {
-        this.id_user = +params['id_Tp_Usuario'];  // Convertimos a número
-        // Establecer isAdmin dependiendo del valor de id_Tp_Usuario
-        if (this.id_user === 2) {
-          this.isAdmin = true;  // Es administrador
-        } else {
-          this.isAdmin = false; // Es usuario común
-        }
-        console.log('ngOnInit - Tipo de usuario:', this.id_user);
-        console.log('ngOnInit - Es administrador:', this.isAdmin);
-      }
-    });
+    // Obtener los datos del usuario desde el UserService
+    const userData = this.userService.getUserData();
+    if (userData) {
+      this.username = userData.nombre;
+      this.id_user = userData.id_tp_usuario;
+      this.correo = userData.correo;
+      this.contrasena = userData.contrasena;
+
+      // Verifica si el usuario es administrador
+      this.isAdmin = this.id_user === 2; // Ejemplo: Asumimos que el tipo 2 es administrador
+    } else {
+      console.error('No se pudo recuperar la información del usuario');
+    }
   }
   
-  
-  
-  
-
   ngAfterViewInit() {
     // Forzar la detección de cambios para iniciarlo
     this.cdr.detectChanges();
-    //esto es para hacer que la animación espere para entrar
+    // Esto es para hacer que la animación espere para entrar
     setTimeout(() => this.animarTexto(), 30);
   }
 
@@ -76,45 +66,23 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
 
   ionViewWillEnter() {
     console.log('La vista está a punto de ser mostrada en pantalla');
-    this.incrementarContador();
-    console.log('ionViewWillEnter - Contador actualizado a', this.contador);
+    this.menuController.enable(true, 'menuId');  // Activa el menú al entrar a la página
   }
 
   ionViewDidEnter() {
     console.log('La vista ha cargado y es visible en la pantalla');
-    console.log('ionViewDidEnter - Contador actualizado a', this.contador);
   }
 
   ionViewWillLeave() {
     console.log('La vista saldrá de la pantalla');
-    this.decrementarContador();
-    console.log('ionViewWillLeave - Contador actualizado a', this.contador);
+    this.menuController.enable(false, 'menuId');  // Desactiva el menú al salir de la página
   }
 
   ionViewDidLeave() {
     console.log('La vista se ha ido');
-    console.log('ionViewDidLeave - Contador actualizado a', this.contador);
   }
 
   ngOnDestroy() {
     console.log('El componente está a punto de ser destruido');
-    this.incrementarContador();
-    console.log('ngOnDestroy - Contador actualizado a', this.contador);
-  }
-
-  incrementarContador() {
-    this.estadoService.incrementar();
-    // Espera un breve momento hacer el log
-    setTimeout(() => {
-      console.log('Contador después de incrementar:', this.contador);
-    }, 0);
-  }
-
-  decrementarContador() {
-    this.estadoService.decrementar();
-    // Espera un breve momento antes de hacer el log
-    setTimeout(() => {
-      console.log('Contador después de decrementar:', this.contador);
-    }, 0);
   }
 }

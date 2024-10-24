@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatabaseService {
-  private apiUrl = 'http://localhost:3000'; // URL de la API
+  private apiUrl = 'http://localhost:3000'; // URL base de la API
   
   constructor(private http: HttpClient) {}
   
@@ -15,19 +15,20 @@ export class DatabaseService {
     const body = { correo, password }; 
     return this.http.post(`${this.apiUrl}/login`, body);
   }
-  
+
   // Registrar Usuario
   registrarUsuario(nuevoUsuario: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/registro`, nuevoUsuario);
   }
-  
+
   // Verificar si el correo existe
   verificarCorreo(correo: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/validar-correo`, { correo }); // Cambié a '/validar-correo'
+    return this.http.post<any>(`${this.apiUrl}/validar-correo`, { correo });
   }
-//cambiar la contraseña
-cambiarContrasena(correo: string, nuevaContrasena: string): Observable<any> {
-  const body = { correo, nuevaContrasena };
-  return this.http.post(`${this.apiUrl}/cambiar-contrasena`, body);
-}
+
+  // Cambiar la contraseña
+  cambiarContrasena(correo: string, nuevaContrasena: string): Observable<any> {
+    const body = { correo, nuevaContrasena };
+    return this.http.post(`${this.apiUrl}/cambiar-contrasena`, body);
+  }
 }

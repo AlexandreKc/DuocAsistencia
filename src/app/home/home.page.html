@@ -22,7 +22,7 @@
       <ion-item routerLink="/configuraciones">Configuración</ion-item>
       <!-- Opción disponible solo para administradores -->
       <ion-item *ngIf="isAdmin" routerLink="#">Administrar cuentas</ion-item>
-      <ion-item *ngIf="isAdmin" routerLink="#">Clases y Creación de QR</ion-item>
+      <ion-item *ngIf="isAdmin" routerLink="/secciones">Secciones y registro asistencia</ion-item>
       <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
     </ion-list>
   </ion-content>
@@ -106,7 +106,7 @@
         <p>
           Aquí podrás ver las secciones y generar los respectivos QR
         </p>
-        <ion-button expand="full" color="medium">
+        <ion-button expand="full" color="medium" href="/secciones">
           <span class="texto-boton">Gestionar asistencia</span>
         </ion-button>
       </ion-card-content>
