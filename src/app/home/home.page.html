@@ -1,114 +1,71 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button autoHide="false">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+      </ion-menu-button>
     </ion-buttons>
+
+    <!-- Logo y título -->
     <ion-img class="logo-main" src="../../assets/icon/logoduoc.png" alt="logo-duoc"></ion-img>
     <ion-title slot="end" class="tit-asis">ASISTENCIA</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<!-- Esto es para hamburguesa -->
-<ion-menu contentId="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menú</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item routerLink="/#">Registrar asistencia</ion-item>
-      <ion-item routerLink="/#">Asistencias</ion-item>
-      <ion-item routerLink="/configuraciones">Configuración</ion-item>
-      <!-- Opción disponible solo para administradores -->
-      <ion-item *ngIf="isAdmin" routerLink="#">Administrar cuentas</ion-item>
-      <ion-item *ngIf="isAdmin" routerLink="/secciones">Secciones y registro asistencia</ion-item>
-      <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-<!-- Contenido pag -->
-<ion-content id="main-content" [fullscreen]="true">
+<!-- Contenido principal con el id que coincide con el contentId del menú -->
+<ion-content [fullscreen]="true">
   <h2 class="tit-bienv texto-desvanecido">¡Bienvenido/a {{ username }}!</h2>
+  
   <div class="container">
-    <!-- Tarjeta -->
+    <!-- Tarjetas de acciones -->
     <ion-card>
       <ion-card-header>
-        <ion-card-title>
-          Registrar asistencia
-        </ion-card-title>
+        <ion-card-title>Registrar asistencia</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>
-          Aquí podrás registrar tu asistencia (Acceso a cámara requerido)
-        </p>
-        <ion-button expand="full" color="success" class="boton-registrar-as">
-          <span class="texto-boton">Registrar asistencia</span>
-        </ion-button>
+        <p>Aquí podrás registrar tu asistencia (Acceso a cámara requerido)</p>
+        <ion-button expand="full" color="success">Registrar asistencia</ion-button>
       </ion-card-content>
     </ion-card>
-    <!-- Tarjeta -->
+
     <ion-card>
       <ion-card-header>
-        <ion-card-title>
-          Revisar asistencia
-        </ion-card-title>
+        <ion-card-title>Revisar asistencia</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>
-          Aquí podrás ver tu asistencia en las materias
-        </p>
-        <ion-button expand="full" color="primary">
-          <span class="texto-boton">Asistencias</span>
-        </ion-button>
+        <p>Aquí podrás ver tu asistencia en las materias</p>
+        <ion-button expand="full" color="primary">Asistencias</ion-button>
       </ion-card-content>
     </ion-card>
-    <!-- Tarjeta -->
+
     <ion-card>
       <ion-card-header>
-        <ion-card-title>
-          Configuraciones
-        </ion-card-title>
+        <ion-card-title>Configuraciones</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>
-          Aquí podrás modificar tus preferencias
-        </p>
-        <ion-button expand="full" color="tertiary">
-          <span class="texto-boton">Configurar</span>
-        </ion-button>
+        <p>Aquí podrás modificar tus preferencias</p>
+        <ion-button expand="full" color="tertiary">Configurar</ion-button>
       </ion-card-content>
     </ion-card>
-    <!-- tarjeta -->
-    <ion-card *ngIf="isAdmin"> <!-- Mostrar solo si es administrador -->
+
+    <!-- Opciones para administradores -->
+    <ion-card *ngIf="isAdmin">
       <ion-card-header>
-        <ion-card-title>
-          Administrar cuentas
-        </ion-card-title>
+        <ion-card-title>Administrar cuentas</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>
-          Aquí podrás modificar otras cuentas de usuario para definir roles
-        </p>
-        <ion-button expand="full" color="warning">
-          <span class="texto-boton">Administrar</span>
-        </ion-button>
+        <p>Aquí podrás modificar otras cuentas de usuario para definir roles</p>
+        <ion-button expand="full" color="warning">Administrar</ion-button>
       </ion-card-content>
     </ion-card>
-    <!-- tarjeta -->
-    <ion-card *ngIf="isAdmin"> <!-- Mostrar solo si es administrador -->
+
+    <ion-card *ngIf="isAdmin">
       <ion-card-header>
-        <ion-card-title>
-          Secciones y generación de QR
-        </ion-card-title>
+        <ion-card-title>Secciones y generación de QR</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>
-          Aquí podrás ver las secciones y generar los respectivos QR
-        </p>
-        <ion-button expand="full" color="medium" href="/secciones">
-          <span class="texto-boton">Gestionar asistencia</span>
-        </ion-button>
+        <p>Aquí podrás ver las secciones y generar los respectivos QR</p>
+        <ion-button expand="full" color="medium" href="/secciones">Gestionar asistencia</ion-button>
       </ion-card-content>
     </ion-card>
     

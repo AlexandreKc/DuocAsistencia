@@ -4,7 +4,8 @@ import { EstadosService } from '../estado.service';
 import { AnimationController } from '@ionic/angular';
 import { ChangeDetectorRef } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { UserService } from '../user/datos.service';  // Importar UserService
+import { UserService } from '../user/datos.service';  
+import { MenuService } from '../menu.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,11 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   correo: string = "";  // Para almacenar el correo del usuario
   contrasena: string = "" //almacenar la contraseña
 
+
+  openMenu() {
+    this.menuService.openMenu();  // Llama al servicio para abrir el menú
+  }
+
   constructor(
     private estadoService: EstadosService,
     private router: Router,
@@ -25,6 +31,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     private animationCtrl: AnimationController,
     private cdr: ChangeDetectorRef,
     private menuController: MenuController,
+    private menuService: MenuService,
     private userService: UserService  // Añadir UserService al constructor
   ) {}
 

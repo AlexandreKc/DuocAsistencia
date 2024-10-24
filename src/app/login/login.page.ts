@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
   login() {
     console.log('Correo:', this.correo);   // Para verificar el valor del correo en la consola
     console.log('Contraseña:', this.password); // Para verificar el valor de la contraseña en la consola
-
+  
     if (this.correo && this.password) {
       // Llama al método de validación de usuario del servicio DatabaseService
       this.database.validateUser(this.correo, this.password).subscribe(
@@ -56,10 +56,19 @@ export class LoginPage implements OnInit {
               correo: this.correo,
               contrasena: this.password
             };
-
+  
             // Guardar los datos del usuario en el servicio
             this.userService.setUserData(userData);
 
+            // Verifica si el usuario está logueado
+            this.userService.isUserLoggedIn().subscribe(loggedIn => {
+              if (loggedIn) {
+                // Aquí puedes llamar a checkAdminStatus si es necesario
+                // Asegúrate de tener acceso a AppComponent o maneja el estado en otro lugar
+                // this.appComponent.checkAdminStatus();
+              }
+            });
+  
             // Navega a la página de inicio (home)
             this.router.navigate(['/home'], { queryParams: { username: userData.nombre, id_Tp_Usuario: userData.id_tp_usuario } });
             

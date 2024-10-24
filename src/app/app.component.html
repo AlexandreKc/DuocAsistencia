@@ -1,3 +1,21 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content" side="start">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item routerLink="/#">Registrar asistencia</ion-item>
+        <ion-item routerLink="/#">Asistencias</ion-item>
+        <ion-item routerLink="/configuraciones">Configuración</ion-item>
+        <ion-item *ngIf="isAdmin" routerLink="#">Administrar cuentas</ion-item>
+        <ion-item *ngIf="isAdmin" routerLink="/secciones">Secciones y registro asistencia</ion-item>
+        <ion-item href="/login" class="texto-cerrar-ses">Cerrar Sesión</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
