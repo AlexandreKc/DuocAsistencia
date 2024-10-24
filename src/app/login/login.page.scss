@@ -60,7 +60,6 @@ ion-content{
 
 .login-card {
   width: 100%;
-  max-width: 400px; /* Ancho máximo del login card */
   border-radius: 20px;
   box-shadow: 
     0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
@@ -105,6 +104,7 @@ ion-card-content ion-input{
   border-bottom-right-radius: 50px;
   padding-bottom: 20px;
   background-color: rgba(177, 177, 205, 0.4); 
+  margin: auto;
 }
 ion-item {
   --background-color: rgba(177, 177, 205, 0.4); 
@@ -166,4 +166,19 @@ ion-button {
 //ajuste tamaño boton
 ion-button{
   padding-top: 5px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  ion-card-content{
+    width: auto;
+  }
+  ion-content{
+    background-repeat: no-repeat !important; 
+    background-size: contain; 
+    background-position: -20% center; 
+    overflow-y: hidden;
+  }
+  
+
 }

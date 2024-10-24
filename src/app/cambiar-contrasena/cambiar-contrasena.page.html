@@ -7,7 +7,7 @@
         <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
           <!-- Input de la nueva contraseña con icono -->
           <ion-item lines="none" class="input-item">
-            <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la contraseña -->
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
             <ion-label position="floating">Nueva contraseña</ion-label>
             <ion-input
               type="password"
@@ -21,11 +21,12 @@
           </ion-item>
           <ion-text color="danger" *ngIf="newpasswordInput.invalid && (newpasswordInput.dirty || newpasswordInput.touched)">
             <p *ngIf="newpasswordInput.errors?.['minlength']">La contraseña debe tener al menos 5 caracteres.</p>
+            <p *ngIf="newpasswordInput.errors?.['maxlength']">La contraseña no puede exceder los 15 caracteres.</p>
           </ion-text>
-
+          
           <!-- Input para confirmar la nueva contraseña -->
           <ion-item lines="none" class="input-item">
-            <ion-icon name="lock-closed-outline" slot="start"></ion-icon> <!-- icono de la confirmación -->
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
             <ion-label position="floating">Confirmar contraseña</ion-label>
             <ion-input
               type="password"
@@ -39,11 +40,15 @@
           </ion-item>
           <ion-text color="danger" *ngIf="confirmpasswordInput.invalid && (confirmpasswordInput.dirty || confirmpasswordInput.touched)">
             <p *ngIf="confirmpasswordInput.errors?.['required']">Debe confirmar la nueva contraseña.</p>
+            <p *ngIf="newpassword !== confirmpassword">Las contraseñas no coinciden.</p>
           </ion-text>
-
-          <ion-button color="success" expand="block" shape="round" class="boton-login" type="submit" [disabled]="loginForm.invalid">
+          
+          <ion-button color="success" expand="block" shape="round" class="boton-login" type="submit" [disabled]="loginForm.invalid || newpassword !== confirmpassword">
             Recuperar Contraseña
           </ion-button>
+          
+          <!-- Botón para volver al login -->
+          <ion-button expand="block" shape="round" class="boton-recuperar custom-button2" href="/login">Volver al Login</ion-button>
         </form>
       </ion-card-content>
     </ion-card>
