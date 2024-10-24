@@ -122,7 +122,7 @@ ion-input{
 }
 ion-icon{
   margin-top: 15%;
-  background-color:cadetblue;
+  background-color: #5BC2E7;
   border-radius: 15px;
   padding: 10px;
   margin-right: 10px;
@@ -145,4 +145,21 @@ ion-button {
   &:hover {
     transform: scale(1.10); /* Aumenta el tamaño del botón */
   }
+}
+
+//colores botones
+.custom-button1 {
+  --background:  #AC4FC6 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+.custom-button2 {
+  --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white !important; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+.custom-button3 {
+  --background:  #307FE2 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white !important; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
 }
