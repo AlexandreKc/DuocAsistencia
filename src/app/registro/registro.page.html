@@ -1,15 +1,9 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title class="text-center titulo">Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="login-content">
+<ion-content class="login-content">
   <div class="container">
-    <ion-card class="login-card">
+    <ion-title class="text-center titulo">Registro</ion-title>
+
+    <!-- Tarjeta para el formulario -->
+    <ion-card class="form-container">
       <ion-card-content>
         <!-- Input del nombre con icono -->
         <ion-item lines="none" class="input-item">
@@ -41,9 +35,9 @@
 
         <br>
         <!-- Botón Registrarse -->
-        <ion-button color="success" expand="block" shape="round" class="boton-login" (click)="registrarse()">Registrarse</ion-button>
+        <ion-button expand="block" shape="round" class="boton-login custom-button1" (click)="registrarse()">Registrarse</ion-button>
         <!-- Botón para volver al login -->
-        <ion-button color="tertiary" expand="block" shape="round" class="boton-recuperar" href="/login">Volver al Login</ion-button>
+        <ion-button expand="block" shape="round" class="boton-recuperar custom-button2" href="/login">Volver al Login</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

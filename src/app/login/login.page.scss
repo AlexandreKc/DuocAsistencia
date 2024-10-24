@@ -39,7 +39,7 @@ ion-item {
 ion-content{
   --background: url('../../assets/icon/background_1.png');
   background-repeat: no-repeat !important; 
-  background-size: contain; 
+  background-size: cover; 
   background-position: -20% center; 
   height: 100vh; 
   padding: 20px;
@@ -162,4 +162,8 @@ ion-button {
   --background:  #307FE2 !important; /* Cambia este valor al color hexadecimal que desees */
   --color: white !important; /* Cambia el color del texto si es necesario */
   --border-radius: 10px; 
+}
+//ajuste tamaño boton
+ion-button{
+  padding-top: 5px;
 }
