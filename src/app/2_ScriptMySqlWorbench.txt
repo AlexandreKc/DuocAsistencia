@@ -21,6 +21,8 @@ CREATE TABLE usuario (
   correo VARCHAR(100) NOT NULL UNIQUE,    -- Correo único
   nombre VARCHAR(15) NOT NULL,            -- Nombre del usuario
   contrasena VARCHAR(15) NOT NULL,        -- Contraseña del usuario
-  id_tp_usuario INT NOT NULL,             -- Clave foránea hacia tp_usuario
+  id_tp_usuario INT NOT NULL DEFAULT 1,   -- Clave foránea hacia tp_usuario, con valor por defecto
   FOREIGN KEY (id_tp_usuario) REFERENCES tp_usuario(id)  -- Relación con la tabla tp_usuario
 );
+
+

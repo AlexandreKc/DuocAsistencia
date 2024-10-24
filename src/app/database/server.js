@@ -6,7 +6,8 @@ const mysql = require('mysql2');
 // Instancia express
 const app = express();
 const PORT = 3000; // Modificable en caso de que no sirve el que pones
-//Para realizar consultas sin importar el port
+
+// Para realizar consultas sin importar el port
 app.use(cors());
 app.use(express.json());
 
@@ -57,6 +58,24 @@ app.post('/login', (req, res) => {
   });
 });
 
+// Endpoint para registrar un nuevo usuario
+app.post('/registro', (req, res) => {
+  const { nombre, correo, contrasena } = req.body;
+
+  // Validaciones de entrada
+  if (!nombre || !correo || !contrasena) {
+    return res.status(400).json({ error: 'Todos los campos son requeridos.' });
+  }
+
+  // Añadir la lógica para guardar el nuevo usuario en la base de datos
+  const query = 'INSERT INTO usuario (correo, nombre, contrasena, id_tp_usuario) VALUES (?, ?, ?, 1)'; // id_tp_usuario por defecto es 1
+  connection.query(query, [correo, nombre, contrasena], (error, results) => {
+    if (error) {
+      return res.status(500).json({ error: 'Correo ya registrado, recupera tu contraseña' });
+    }
+    res.status(201).json({ message: 'Usuario fue registrado con éxito.' });
+  });
+});
 
 // Ruta para obtener todos los usuarios (ejemplo)
 app.get('/usuarios', (req, res) => {

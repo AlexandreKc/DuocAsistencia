@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
-.titulo{
+.titulo {
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   font-size: 45px;
@@ -8,10 +8,15 @@
   color: #FFB800;
   margin-top: 50px;
   padding-top: 10px;
-  background-color: rgba(177, 177, 205, 0.5); // Color semitransparente (50% de opacidad)
+  background-color: rgba(177, 177, 205, 0.7); /* Color semitransparente (50% de opacidad) */
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
+  box-shadow: 
+    0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
+    4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
+    -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
 }
+
 
 
 //configuración del input
@@ -34,8 +39,8 @@ ion-item {
 ion-content{
   --background: url('../../assets/icon/background_1.png');
   background-repeat: no-repeat !important; 
-  background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste al contenedor */
-  background-position: -20% center; /* Centra la imagen de fondo */
+  background-size: contain; 
+  background-position: -20% center; 
   height: 100vh; 
   padding: 20px;
   overflow-y: hidden;
@@ -57,10 +62,12 @@ ion-content{
   width: 100%;
   max-width: 400px; /* Ancho máximo del login card */
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
+    4px 0 10px rgba(0, 0, 0, 0.1),  /* Sombra derecha */
+    -4px 0 10px rgba(0, 0, 0, 0.1); /* Sombra izquierda */
   background-color: #eeeeee;
 }
-
 .input-item {
   margin-bottom: 20px;
 }
