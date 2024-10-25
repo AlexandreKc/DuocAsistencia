@@ -11,10 +11,22 @@
   font-size: 15px;
   color: #c3c6c8!important;
 }
+//cuerpo
+ion-content {
+  --background: url('../../assets/icon/background_1.png');
+  background-repeat: no-repeat !important; 
+  background-size: cover; 
+  background-position: -20% center; 
+  height: 100vh; 
+  padding: 20px;
+  overflow-y: hidden;
+  }
 //modificaciones main
 .tit-bienv{
   margin-top: 25px !important;
   margin-left: auto !important;
+  color: black;
+  font-weight: bold;
 }
 .texto-cerrar-ses{
   color: red;
