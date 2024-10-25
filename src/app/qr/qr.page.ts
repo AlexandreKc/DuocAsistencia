@@ -8,6 +8,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./qr.page.scss'],
 })
 export class QrPage {
+  qrUrl: string | null = null; // Propiedad para almacenar la URL del QR
+
   constructor(private http: HttpClient, private alertController: AlertController) {}
 
   async generarQR(contenido: string) {
@@ -15,7 +17,6 @@ export class QrPage {
 
     this.http.get(apiUrl, { responseType: 'blob' }).subscribe({
       next: async (data) => {
-        // Mostrar alerta de éxito
         const alert = await this.alertController.create({
           header: 'Éxito',
           message: 'Código QR generado exitosamente.',
@@ -23,13 +24,11 @@ export class QrPage {
         });
         await alert.present();
 
-        // Hacer algo con el QR, por ejemplo, mostrar la imagen
-        const qrUrl = URL.createObjectURL(data);
-        // Aquí podrías mostrar la imagen generada
-        console.log('QR generado:', qrUrl);
+        // Mostrar la imagen generada
+        this.qrUrl = URL.createObjectURL(data);
+        console.log('QR generado:', this.qrUrl);
       },
       error: async (err) => {
-        // Mostrar alerta de error
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'No se pudo generar el código QR. Inténtalo de nuevo.',
