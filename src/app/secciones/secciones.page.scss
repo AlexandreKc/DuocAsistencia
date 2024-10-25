@@ -4,3 +4,41 @@
 .texto-cerrar-ses{
     color: red;
 }
+
+ion-menu {
+    --background: #072757; /* Color de fondo del menú */
+  }
+  
+ion-toolbar {
+    --background: #072757; /* Color de fondo de la barra superior */
+    --color: #ffffff; /* Color del texto en la barra */
+}
+  
+.texto-boton{
+    color: white;
+}
+ion-content {
+    --background: url('../../assets/icon/background_1.png');
+    background-repeat: no-repeat !important; 
+    background-size: cover; 
+    background-position: -20% center; 
+    height: 100vh; 
+    padding: 20px;
+    overflow-y: hidden;
+}
+
+ion-card{
+    background-color:#8bb8e89f;
+}
+
+ion-card-title{
+    color: #073170;
+    font-size: 20px;
+}
+
+//espaciado botones
+ion-button{
+    margin-top: 20px;
+    background-color: #307FE2;
+    color: white;
+}
