@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-secciones',
@@ -11,7 +11,12 @@ export class SeccionesPage implements OnInit {
   username: string = "";  // Para mostrar el nombre del usuario
   id_user: number | null = null;  // Almacena el tipo de usuario
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router
+  ) { }
+  navigateToQrPage() {
+    this.router.navigate(['/qr']); // Navega a la página de QR
+  }
 
   ngOnInit() {
     // Obtener parámetros de consulta para determinar si es administrador
