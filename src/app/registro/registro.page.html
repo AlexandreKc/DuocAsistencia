@@ -8,28 +8,28 @@
         <!-- Input del nombre con icono -->
         <ion-item lines="none" class="input-item">
           <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-label position="stacked">Nombre</ion-label>
+          <ion-label position="stacked" class="required">Nombre</ion-label>
           <ion-input [(ngModel)]="nombre" maxlength="50" required class="input-escribir"></ion-input>
         </ion-item>
 
         <!-- Input del correo con icono -->
         <ion-item lines="none" class="input-item">
           <ion-icon name="mail-outline" slot="start"></ion-icon>
-          <ion-label position="stacked">Correo</ion-label>
+          <ion-label position="stacked" class="required">Correo</ion-label>
           <ion-input [(ngModel)]="correo" minlength="12" maxlength="70" required type="email" class="input-escribir"></ion-input>
         </ion-item>
 
         <!-- Input de contraseña con icono -->
         <ion-item lines="none" class="input-item">
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-label position="stacked" class="required">Contraseña</ion-label>
           <ion-input [(ngModel)]="contrasena" minlength="6" maxlength="15" required type="password" class="input-escribir"></ion-input>
         </ion-item>
 
         <!-- Input de confirmar contraseña con icono -->
         <ion-item lines="none" class="input-item">
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-label position="stacked">Confirmar Contraseña</ion-label>
+          <ion-label position="stacked" class="required">Confirmar Contraseña</ion-label>
           <ion-input [(ngModel)]="confirmarContrasena" minlength="6" maxlength="15" required type="password" class="input-escribir"></ion-input>
         </ion-item>
 

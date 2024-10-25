@@ -155,3 +155,10 @@ ion-content{
 ion-button{
   padding-top: 5px;
 }
+ion-label.required::after {
+  content: "*";
+  color: red; 
+  margin-left: 2px; 
+  font-size: 0.8em; 
+  vertical-align: middle;
+}

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard'; // Importa el AuthGuard
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     loadChildren: () => import('./secciones/secciones.module').then(m => m.SeccionesPageModule),
     canActivate: [AuthGuard]
   },
-  { path: 'qr', loadChildren: () => import('./qr/qr.module').then(m => m.QrPageModule) }  // Cargar la nueva página QR
+  { path: 'qr', loadChildren: () => import('./qr/qr.module').then(m => m.QrPageModule), canActivate: [AuthGuard] } 
 ];
 
 @NgModule({

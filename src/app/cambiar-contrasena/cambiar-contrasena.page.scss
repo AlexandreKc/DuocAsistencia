@@ -3,7 +3,7 @@
 .titulo{
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-  font-size: 35px;
+  font-size: 20px;
   padding-bottom: 20px;
   color: #FFB800;
   margin-top: 50px;
@@ -12,9 +12,9 @@
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   box-shadow: 
-    0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
-    4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
-    -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
+  0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
+  4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
+  -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
 }
 
 ion-input{
@@ -24,14 +24,14 @@ ion-input{
 ion-label {
   color: black !important; // Color fijo del label que no cambiará
   transition: none !important; // Desactivar cualquier transición
-
+  
   &:focus {
     color: black !important; // Mantener el mismo color al enfocar
   }
 }
 
 ion-item {
-    --background: #eeeeee; /* Fondo del input */
+  --background: #eeeeee; /* Fondo del input */
 }
 
 ion-card{
@@ -46,101 +46,113 @@ ion-content {
   height: 100vh; 
   padding: 20px;
   overflow-y: hidden;
-  }
-  
-  .login-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  //esto es para colocar una parte del titulo en blanco en la etiqueta span
-  .white-text {
-    color: white !important;
-  }
-  
-  .login-card {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 
-      0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
-      4px 0 10px rgba(0, 0, 0, 0.1),  /* Sombra derecha */
-      -4px 0 10px rgba(0, 0, 0, 0.1); /* Sombra izquierda */
-    background-color: #eeeeee;
-  }
+}
 
-  .login-card{
-    border-radius: 0px;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    padding-bottom: 20px;
-    background-color: rgba(177, 177, 205, 0.4); 
-    margin: auto;
-  }
-  
-  ion-item {
-    --background-color: rgba(177, 177, 205, 0.4); 
-    --border-radius: 15px; /* Ajusta el radio del borde si es necesario */
-  }
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+//esto es para colocar una parte del titulo en blanco en la etiqueta span
+.white-text {
+  color: white !important;
+}
 
-  .txt-lb{
-    font-size: 20px;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-  }
+.login-card {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 
+  0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
+  4px 0 10px rgba(0, 0, 0, 0.1),  /* Sombra derecha */
+  -4px 0 10px rgba(0, 0, 0, 0.1); /* Sombra izquierda */
+  background-color: #eeeeee;
+}
 
-  .input-item {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
+.login-card{
+  border-radius: 0px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding-bottom: 20px;
+  background-color: rgba(177, 177, 205, 0.4); 
+  margin: auto;
+}
 
-  ion-input{
-    border-color: transparent; /* Elimina el borde del input */
-    border-bottom: 1px solid black; /* Cambia el color y el grosor como desees */
-    margin-bottom: 8px;
-  }
+ion-item {
+  --background-color: rgba(177, 177, 205, 0.4); 
+  --border-radius: 15px; /* Ajusta el radio del borde si es necesario */
+}
 
-  ion-button {
-    transition: transform 0.3s ease;
-  
-    &:hover {
-      transform: scale(1.10); /* Aumenta el tamaño del botón */
-    }
-  }
+.txt-lb{
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
 
-  .custom-button1 {
-    --background:  #AC4FC6 !important; /* Cambia este valor al color hexadecimal que desees */
-    --color: white; /* Cambia el color del texto si es necesario */
-    --border-radius: 10px; 
-  }
+.input-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-  .custom-button2 {
-    --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
-    --color: white !important; /* Cambia el color del texto si es necesario */
-    --border-radius: 10px; 
-  }
+ion-input{
+  border-color: transparent; /* Elimina el borde del input */
+  border-bottom: 1px solid black; /* Cambia el color y el grosor como desees */
+  margin-bottom: 8px;
+}
+
+ion-button {
+  transition: transform 0.3s ease;
   
-  .boton-restablecer-contraseña {
-    min-width: 150px;  /* Establece un ancho mínimo */
-    width: 400px;       /* Ajusta el ancho al contenido */
-    height: 35px;      /* Ajusta la altura */
-    font-size: 12px;   /* Tamaño de texto más pequeño */
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    --border-radius: 20px;
-    padding-right: 150px;
-    padding-left: 25px;
+  &:hover {
+    transform: scale(1.10); /* Aumenta el tamaño del botón */
   }
-  
-  ion-card-content ion-label{
-    color: black;
-  }
-  ion-card-content ion-icon{
-    color: black;
-  }
-  ion-card-content ion-input{
-    color: black;
-  }
-  
-  
+}
+
+.custom-button1 {
+  --background:  #AC4FC6 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+
+.custom-button2 {
+  --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white !important; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+
+.boton-restablecer-contraseña {
+  min-width: 150px;  /* Establece un ancho mínimo */
+  width: 400px;       /* Ajusta el ancho al contenido */
+  height: 35px;      /* Ajusta la altura */
+  font-size: 12px;   /* Tamaño de texto más pequeño */
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  --border-radius: 20px;
+  padding-right: 150px;
+  padding-left: 25px;
+}
+
+ion-card-content ion-label{
+  color: black;
+}
+ion-card-content ion-icon{
+  color: black;
+}
+ion-card-content ion-input{
+  color: black;
+}
+
+//ajuste botones
+ion-button{
+  margin-top: 15px;
+}
+
+//asterisco
+ion-label.required::after {
+  content: "*";
+  color: red; 
+  margin-left: 2px; 
+  font-size: 0.8em; 
+  vertical-align: middle;
+}
