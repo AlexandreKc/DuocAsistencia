@@ -34,6 +34,7 @@ const routes: Routes = [
     loadChildren: () => import('./secciones/secciones.module').then(m => m.SeccionesPageModule),
     canActivate: [AuthGuard]
   },
+  { path: 'qr', loadChildren: () => import('./qr/qr.module').then(m => m.QrPageModule) }  // Cargar la nueva página QR
 ];
 
 @NgModule({

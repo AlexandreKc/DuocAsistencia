@@ -35,6 +35,10 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     private userService: UserService  // Añadir UserService al constructor
   ) {}
 
+  navigateToQrPage() {
+    this.router.navigate(['/qr']); // Navega a la página de QR
+  }
+
   ngOnInit() {
     // Obtener los datos del usuario desde el UserService
     const userData = this.userService.getUserData();
