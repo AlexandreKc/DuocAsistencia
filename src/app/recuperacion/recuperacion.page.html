@@ -10,7 +10,7 @@
           <!-- Input para el correo con icono -->
           <ion-item lines="none" class="input-item">
             <ion-icon name="mail-outline" slot="start"></ion-icon> <!-- Icono del correo -->
-            <ion-label position="floating">Correo</ion-label>
+            <ion-label position="floating" class="txt-lb">Correo</ion-label>
             <ion-input
               type="email"
               name="correo"
@@ -31,7 +31,7 @@
           </ion-text>
 
           <!-- Botón para recuperar la contraseña -->
-          <ion-button color="success" expand="block" shape="round" class="boton-login" type="submit" [disabled]="loginForm.invalid">
+          <ion-button expand="block" shape="round" class="custom-button1" type="submit" [disabled]="loginForm.invalid">
             Recuperar Contraseña
           </ion-button>
 

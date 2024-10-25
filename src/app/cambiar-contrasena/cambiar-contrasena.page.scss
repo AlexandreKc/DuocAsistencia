@@ -1,16 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
 .titulo{
-    font-family: "Roboto", sans-serif;
-    font-weight: 900;
-    font-size: 45px;
-    padding-bottom: 20px;
-    color: #FFB800;
-    margin-top: 50px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 35px;
+  padding-bottom: 20px;
+  color: #FFB800;
+  margin-top: 50px;
+  padding-top: 10px;
+  background-color: rgba(177, 177, 205, 0.7); /* Color semitransparente (50% de opacidad) */
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  box-shadow: 
+    0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
+    4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
+    -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
 }
+
 ion-input{
   margin-top: 25px;
 }
+
 ion-label {
   color: black !important; // Color fijo del label que no cambiará
   transition: none !important; // Desactivar cualquier transición
@@ -19,20 +29,23 @@ ion-label {
     color: black !important; // Mantener el mismo color al enfocar
   }
 }
+
 ion-item {
     --background: #eeeeee; /* Fondo del input */
 }
+
 ion-card{
   justify-self: 50vh;
 }
 
 ion-content {
-    --background: #000000; /* Opcional: añade un fondo */
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center;     /* Centra verticalmente */
-    height: 100vh;           /* Asegura que ocupe toda la altura de la ventana */
-    padding: 20px;
+  --background: url('../../assets/icon/background_1.png');
+  background-repeat: no-repeat !important; 
+  background-size: cover; 
+  background-position: -20% center; 
+  height: 100vh; 
+  padding: 20px;
+  overflow-y: hidden;
   }
   
   .login-content {
@@ -47,19 +60,64 @@ ion-content {
   }
   
   .login-card {
-    margin: auto;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    max-width: 400px; /* Ancho máximo del login card */
     border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
+      4px 0 10px rgba(0, 0, 0, 0.1),  /* Sombra derecha */
+      -4px 0 10px rgba(0, 0, 0, 0.1); /* Sombra izquierda */
     background-color: #eeeeee;
   }
+
+  .login-card{
+    border-radius: 0px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    padding-bottom: 20px;
+    background-color: rgba(177, 177, 205, 0.4); 
+    margin: auto;
+  }
   
+  ion-item {
+    --background-color: rgba(177, 177, 205, 0.4); 
+    --border-radius: 15px; /* Ajusta el radio del borde si es necesario */
+  }
+
+  .txt-lb{
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+  }
+
   .input-item {
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  ion-input{
+    border-color: transparent; /* Elimina el borde del input */
+    border-bottom: 1px solid black; /* Cambia el color y el grosor como desees */
+    margin-bottom: 8px;
+  }
+
+  ion-button {
+    transition: transform 0.3s ease;
+  
+    &:hover {
+      transform: scale(1.10); /* Aumenta el tamaño del botón */
+    }
+  }
+
+  .custom-button1 {
+    --background:  #AC4FC6 !important; /* Cambia este valor al color hexadecimal que desees */
+    --color: white; /* Cambia el color del texto si es necesario */
+    --border-radius: 10px; 
+  }
+
+  .custom-button2 {
+    --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
+    --color: white !important; /* Cambia el color del texto si es necesario */
+    --border-radius: 10px; 
   }
   
   .boton-restablecer-contraseña {
@@ -84,4 +142,5 @@ ion-content {
   ion-card-content ion-input{
     color: black;
   }
+  
   
