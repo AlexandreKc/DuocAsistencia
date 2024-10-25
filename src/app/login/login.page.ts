@@ -63,9 +63,7 @@ export class LoginPage implements OnInit {
             // Verifica si el usuario está logueado
             this.userService.isUserLoggedIn().subscribe(loggedIn => {
               if (loggedIn) {
-                // Aquí puedes llamar a checkAdminStatus si es necesario
-                // Asegúrate de tener acceso a AppComponent o maneja el estado en otro lugar
-                // this.appComponent.checkAdminStatus();
+                // llamar a checkAdminStatus si es necesario
               }
             });
   
