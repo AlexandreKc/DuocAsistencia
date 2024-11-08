@@ -15,7 +15,7 @@ app.use(express.json());
 const connection = mysql.createConnection({
   host: 'localhost',        // Dirección server sql
   user: 'root',             // Usuario a utilizar en mysql
-  password: '1111',         // Contrasena
+  password: 'admin',         // Contrasena
   database: 'duocasistencia' // Nombre de la base de datos que vas a utilizar / Revisar Script
 });
 
