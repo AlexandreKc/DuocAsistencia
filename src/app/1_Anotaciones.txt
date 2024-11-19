@@ -21,3 +21,7 @@ npm update
 
 +++++++++++++++++++++++ Instalar Cors si o si
 npm install cors
+
+
+++++++++++++++++++++++++ LEEECTOR QR
+npm install @zxing/browser

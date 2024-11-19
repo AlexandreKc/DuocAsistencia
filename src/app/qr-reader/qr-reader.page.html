@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button autoHide="false">
+      <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+    </ion-menu-button>
+    <ion-title>
+      Escanear Código QR
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Video Elemento para mostrar la cámara -->
+  <div class="camera-container">
+    <video id="video" width="100%" height="100%" autoplay></video>
+  </div>
+
+  <!-- Botón para iniciar o detener el escaneo -->
+  <ion-button (click)="startScanner()" [disabled]="scanning">Iniciar Escaneo</ion-button>
+
+  <!-- Mensaje de estado del escaneo -->
+  <div *ngIf="scanning">
+    <p>Escaneando...</p>
+  </div>
+  <div *ngIf="!scanning">
+    <p>Listo para escanear</p>
+  </div>
+</ion-content>

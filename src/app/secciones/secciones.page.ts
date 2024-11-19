@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-secciones',
   templateUrl: './secciones.page.html',
