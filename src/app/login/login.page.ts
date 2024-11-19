@@ -41,50 +41,40 @@ export class LoginPage implements OnInit {
 
   // Inicio de sesión
   login() {
-    console.log('Correo:', this.correo);   // Para verificar el valor del correo en la consola
-    console.log('Contraseña:', this.password); // Para verificar el valor de la contraseña en la consola
+    console.log('Correo:', this.correo);
+    console.log('Contraseña:', this.password);
   
     if (this.correo && this.password) {
       // Llama al método de validación de usuario del servicio DatabaseService
       this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {
           if (response.valid) {
-            // Si el inicio de sesión es válido, guarda los datos en el UserService
+            // Si el login es válido, guardar los datos en UserService
             const userData = {
-              nombre: response.nombre, // Nombre de usuario recibido en la respuesta
-              id_tp_usuario: response.id_tp_usuario, // Tipo de usuario
+              nombre: response.nombre,
+              id_tp_usuario: response.id_tp_usuario,
               correo: this.correo,
               contrasena: this.password
             };
   
-            // Guardar los datos del usuario en el servicio
             this.userService.setUserData(userData);
-
-            // Verifica si el usuario está logueado
-            this.userService.isUserLoggedIn().subscribe(loggedIn => {
-              if (loggedIn) {
-                // llamar a checkAdminStatus si es necesario
-              }
-            });
-  
-            // Navega a la página de inicio (home)
             this.router.navigate(['/home'], { queryParams: { username: userData.nombre, id_Tp_Usuario: userData.id_tp_usuario } });
-            
-            // Muestra una alerta de éxito
+  
+            // Alerta de éxito
             this.mostrarAlerta('Ingreso con éxito', 'Has iniciado sesión correctamente.');
           } else {
-            // Si las credenciales son incorrectas, muestra una alerta de error
+            // Si las credenciales son incorrectas
             this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
           }
         },
         async (error) => {
-          // Si ocurre un error de servidor, muestra una alerta de error
+          // Si ocurre un error, muestra alerta de servidor desconectado
           console.error('Error en el servidor:', error);
           this.mostrarAlerta('Error', 'Error al iniciar sesión, servidor desconectado');
         }
       );
     } else {
-      // Si los campos no están completos, muestra una alerta de error
+      // Si no se completan los campos
       this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
     }
   }

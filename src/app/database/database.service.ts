@@ -10,10 +10,9 @@ export class DatabaseService {
   
   constructor(private http: HttpClient) {}
   
-  // Validar Usuario
+  // Método para validar el usuario
   validateUser(correo: string, password: string): Observable<any> {
-    const body = { correo, password }; 
-    return this.http.post(`${this.apiUrl}/login`, body);
+    return this.http.post('http://localhost:3000/login', { correo, password });
   }
 
   // Registrar Usuario
