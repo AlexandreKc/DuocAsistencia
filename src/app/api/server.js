@@ -3,30 +3,32 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 // Instancia express
 const app = express();
-const PORT = 3000; // Modificable en caso de que no sirve el que pones
+const PORT = process.env.PORT || 3000;
 
 // Para realizar consultas sin importar el port
 app.use(cors());
 app.use(express.json());
 
 // Configuración de la conexión a MySQL
+// Configuración de la conexión a MySQL
 const connection = mysql.createConnection({
-  host: 'localhost',        // Dirección server sql
-  user: 'root',             // Usuario a utilizar en mysql
-  password: '1111',         // Contrasena
-  database: 'duocasistencia' // Nombre de la base de datos que vas a utilizar / Revisar Script
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 // Establecer la conexión con MySQL
 connection.connect((err) => {
   if (err) {
-    console.error('Error conectando a MySQL:', err.stack);
+    console.error('Error al conectar con la base de datos:', err.message);
     return;
   }
-  console.log('Conectado a MySQL con ID de conexión:', connection.threadId);
+  console.log('Conectado a la base de datos');
 });
 
 // Ruta para manejar el login
