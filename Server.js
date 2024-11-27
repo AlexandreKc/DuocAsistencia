@@ -6,7 +6,8 @@ require('dotenv').config();
 
 // Instancia express
 const app = express();
-const PORT = 3000; // Modificable en caso de que no sirve el que pones
+// Obtener el puerto de la variable de entorno o usar el puerto 3000 por defecto
+const port = process.env.PORT || 3000;
 
 // Para realizar consultas sin importar el port
 app.use(cors());
@@ -27,6 +28,10 @@ connection.connect((err) => {
     return;
   }
   console.log('Conectado a MySQL con ID de conexión:', connection.threadId);
+});
+
+app.get('/api/test', (req, res) => {
+  res.send('Servidor en línea');
 });
 
 // Ruta para manejar el login
@@ -156,6 +161,11 @@ app.post('/cambiar-contrasena', (req, res) => {
     console.error('Error al cambiar la contraseña:', err);
     res.status(500).send({ error: 'Error en el servidor.' });
   });
+});
+
+// Hacer que la app escuche en el puerto especificado
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
 
