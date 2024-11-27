@@ -110,6 +110,11 @@ app.post('/validar-correo', (req, res) => {
   });
 });
 
+//verificar si esta funcionando
+app.get('/server', (req, res) => {
+  res.send('El servidor está funcionando');
+});
+
 // Ruta para cambiar la contraseña
 app.post('/cambiar-contrasena', async (req, res) => {
   const { correo, nuevaContrasena } = req.body;
@@ -144,3 +149,5 @@ app.post('/cambiar-contrasena', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor en funcionamiento en http://localhost:${PORT}`);
 });
+// Exporta la aplicación para que Vercel la use
+module.exports = app;
