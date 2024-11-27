@@ -24,6 +24,9 @@ app.use('/api', validarCorreoRoutes);
 app.use('/api', cambiarContrasenaRoutes);
 app.use('/api', serverRoutes);
 
+// Asegúrate de usar "/server" en la ruta para que coincida con la estructura esperada.
+router.post('/server/login', login);  // Aquí es donde defines la ruta correctamente
+
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor en funcionamiento en http://localhost:${PORT}`);
