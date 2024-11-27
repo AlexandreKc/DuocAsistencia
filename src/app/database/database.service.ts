@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatabaseService {
-  private apiUrl = 'http://localhost:3000'; // URL base de la API
+  // Cambia la URL base de la API a la de tu backend en Vercel
+  private apiUrl = 'https://duoc-asistencia.vercel.app/api'; // URL base de la API en Vercel
   
   constructor(private http: HttpClient) {}
   
   // Método para validar el usuario
   validateUser(correo: string, password: string): Observable<any> {
-    return this.http.post('http://localhost:3000/login', { correo, password });
+    return this.http.post(`${this.apiUrl}/login`, { correo, password });
   }
 
   // Registrar Usuario
