@@ -1,16 +1,15 @@
 {
   "name": "duocAsistencia",
   "version": "0.0.1",
-  "description": "Backend y Frontend para la app DuocAsistencia",
+  "author": "Ionic Framework",
+  "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",                  
-    "watch": "ng build --watch --configuration development", 
-    "test": "ng test",                        
-    "lint": "ng lint",                       
-    "backend": "node api/server.js",        
-    "deploy": "vercel --prod"                 
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -40,12 +39,7 @@
     "mysql2": "^3.11.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2",
-    "express": "^4.17.1",                  
-    "mysql2": "^3.11.3",           
-    "cors": "^2.8.5",             
-    "bcryptjs": "^2.4.3",                 
-    "dotenv": "^16.4.5"                     
+    "zone.js": "~0.14.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.9",
@@ -75,7 +69,5 @@
     "karma-jasmine-html-reporter": "^1.7.0",
     "typescript": "~5.4.0"
   },
-  "engines": {
-    "node": "16.x"                       
-  }
+  "description": "An Ionic project"
 }
