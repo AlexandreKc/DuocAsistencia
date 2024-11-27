@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatabaseService {
-  // Cambia la URL base de la API a la de tu backend local
-  private apiUrl = 'http://localhost:3000'; // URL base de la API en localhost (cambia el puerto si es necesario)
+  // Cambia esta URL para apuntar a tu servidor de Railway
+  private apiUrl = 'https://backendassistapp-production.up.railway.app'; // URL de la API en Railway
   
   constructor(private http: HttpClient) {}
-  
+
   // Método para validar el usuario
   validateUser(correo: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { correo, password });
