@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatabaseService {
-  // Cambia la URL base de la API a la de tu backend en Vercel
-  private apiUrl = 'https://duoc-asistencia.vercel.app/api'; // URL base de la API en Vercel
+  // Cambia la URL base de la API a la de tu backend local
+  private apiUrl = 'http://localhost:3000'; // URL base de la API en localhost (cambia el puerto si es necesario)
   
   constructor(private http: HttpClient) {}
   

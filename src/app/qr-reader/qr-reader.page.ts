@@ -24,41 +24,53 @@ export class QrReaderPage implements OnInit, OnDestroy {
    */
   startScanner() {
     const videoElement = document.getElementById('video') as HTMLVideoElement;
-
-    // Obtener los dispositivos de video disponibles
-    navigator.mediaDevices.enumerateDevices()
-      .then(devices => {
-        // Filtrar los dispositivos de tipo 'videoinput'
-        const videoDevices = devices.filter(device => device.kind === 'videoinput');
-        const firstDeviceId = videoDevices[0]?.deviceId; // Obtener el primer dispositivo de video disponible
-
-        if (!firstDeviceId) {
-          console.error('No se encontraron dispositivos de video.');
-          alert('No se pudo acceder a la cámara. Verifica los permisos.');
-          return;
-        }
-
-        // Usar el primer dispositivo de video encontrado
-        this.codeReader.decodeFromVideoDevice(firstDeviceId, videoElement, (result, error) => {
-          if (result) {
-            // En lugar de acceder directamente a `result.text`, usa `result.getText()` para obtener el contenido
-            const qrContent = result.getText() || 'Sin contenido';
-            console.log('QR Detectado:', qrContent);
-            alert(`Código QR leído: ${qrContent}`);
-            this.stopScanner();  // Detener el escaneo después de leer el QR
-          }
-          if (error) {
-            console.warn('Error durante el escaneo (esperado):', error.message);
-          }
-        });
+  
+    // Verifica si ya tenemos acceso a la cámara
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        // Si el usuario da permiso, configuramos el flujo de video
+        this.currentStream = stream;
+        videoElement.srcObject = stream;
+  
+        // Obtener los dispositivos de video disponibles
+        navigator.mediaDevices.enumerateDevices()
+          .then(devices => {
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+            const firstDeviceId = videoDevices[0]?.deviceId; // Obtener el primer dispositivo de video disponible
+  
+            if (!firstDeviceId) {
+              console.error('No se encontraron dispositivos de video.');
+              alert('No se pudo acceder a la cámara. Verifica los permisos.');
+              return;
+            }
+  
+            // Usar el primer dispositivo de video encontrado
+            this.codeReader.decodeFromVideoDevice(firstDeviceId, videoElement, (result, error) => {
+              if (result) {
+                const qrContent = result.getText() || 'Sin contenido';
+                console.log('QR Detectado:', qrContent);
+                alert(`Código QR leído: ${qrContent}`);
+                this.stopScanner();  // Detener el escaneo después de leer el QR
+              }
+              if (error) {
+                console.warn('Error durante el escaneo (esperado):', error.message);
+              }
+            });
+          })
+          .catch(err => {
+            console.error('Error al obtener dispositivos de video:', err);
+            alert('No se pudo acceder a la cámara. Verifica los permisos.');
+          });
+  
+        this.scanning = true;
       })
       .catch(err => {
-        console.error('Error al obtener dispositivos de video:', err);
-        alert('No se pudo acceder a la cámara. Verifica los permisos.');
+        // Si el usuario niega el permiso
+        console.error('Permiso denegado o error al acceder a la cámara:', err);
+        alert('Se requiere permiso para acceder a la cámara. Por favor, habilita los permisos de la cámara en tu navegador.');
       });
-
-    this.scanning = true;
   }
+  
 
   /**
    * Detiene el escaneo y libera la cámara
