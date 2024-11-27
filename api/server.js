@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-
+app.use('/api', require('./routes'));
 // Importar las rutas
 const authRoutes = require('../Routes/authRoutes');
 const registroRoutes = require('../Routes/registroRoutes');
