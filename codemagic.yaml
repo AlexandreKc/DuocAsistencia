@@ -1,23 +1,13 @@
 workflows:
-  android_build:
-    name: Build Android app
-    environment:
-      vars:
-        ANDROID_VERSION: "stable"  # Establece tus variables de entorno si es necesario
+  android:
+    name: Build Android App
+    source: main  # Nombre de la rama que deseas usar, cambia si es necesario
     actions:
-      - action: build_android
+      - action: build
         build_type: release
         keystore:
-          file: $CM_KEYSTORE_FILE  # Ruta al archivo keystore subida a Codemagic
+          file: $CM_KEYSTORE_FILE  # Ruta al archivo keystore subido a Codemagic
           password: $CM_KEYSTORE_PASSWORD
           alias: $CM_KEY_ALIAS
           key_password: $CM_KEY_PASSWORD
-      - action: upload_to_play_store  # Si deseas subirlo automáticamente a Google Play
-
-# Configuración de triggers
-trigger:
-  # Se activará en push a la rama main
-  events:
-    - push:
-        branches:
-          - main
+      - action: upload_to_play_store  # Solo si deseas subirlo a Google Play
