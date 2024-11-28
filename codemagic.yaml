@@ -6,7 +6,7 @@ workflows:
     # Definimos el trigger que activará este flujo de trabajo
     triggering:
       event: 
-      push              # Esto significa que el flujo se ejecutará cuando haya un 'push' en el repositorio
+       - push              # Esto significa que el flujo se ejecutará cuando haya un 'push' en el repositorio
       branch: main             # Este flujo se activará solo para la rama 'main'
 
     environment:
