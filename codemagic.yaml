@@ -1,13 +1,14 @@
 workflows:
   android_build:
     name: Build Android app
-    triggers:
-      - event: push
-        branch: main
+    trigger:
+      # Definimos el trigger para la rama principal (main)
+      event: push
+      branch: main
     environment:
       vars:
         ANDROID_VERSION: "stable"
-    # Aquí van las acciones directamente sin "actions"
+    # Definimos las acciones directamente dentro de un array
     actions:
       - install_dependencies
       - build_android:
