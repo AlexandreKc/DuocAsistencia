@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'  # Agregar la distribución, como 'adoptopenjdk'
+          distribution: 'temurin'  # Usando 'temurin' como distribución compatible
 
       # Construir la APK
       - name: Build APK
