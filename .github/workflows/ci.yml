@@ -29,6 +29,10 @@ jobs:
       - name: Navigate to android directory
         run: cd android
 
+            # Dar permisos de ejecución al script gradlew
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+
       # Navegar al directorio 'android' y construir la APK
       - name: Build APK
         run: |
