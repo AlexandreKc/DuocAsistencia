@@ -29,13 +29,16 @@ jobs:
       - name: Navigate to android directory
         run: cd android
 
-      # Construir la APK
+      # Navegar al directorio 'android' y construir la APK
       - name: Build APK
-        run: ./gradlew assembleRelease \
-          -PkeystoreFile=/tmp/my-release-key.jks \
-          -PkeyAlias=${{ secrets.KEY_ALIAS }} \
-          -PkeyPassword=${{ secrets.KEY_PASSWORD }} \
-          -PstorePassword=${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          cd android
+          ./gradlew assembleRelease \
+            -PkeystoreFile=/tmp/my-release-key.jks \
+            -PkeyAlias=${{ secrets.KEY_ALIAS }} \
+            -PkeyPassword=${{ secrets.KEY_PASSWORD }} \
+            -PstorePassword=${{ secrets.KEYSTORE_PASSWORD }}
+
 
       # Subir el APK como artefacto
       - name: Upload APK as artifact
