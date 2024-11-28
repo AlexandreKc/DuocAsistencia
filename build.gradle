@@ -1,12 +1,12 @@
-// build.gradle (en la raíz del proyecto)
+// build.gradle (root project)
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4' // Verifica que esta sea la versión correcta para tu proyecto
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21' // Si usas Kotlin, si no elimina esta línea
+        classpath 'com.android.tools.build:gradle:7.2.0'
+        // otras dependencias
     }
 }
 

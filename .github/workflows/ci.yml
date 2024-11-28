@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     branches:
-      - main  # O la rama que prefieras
+      - main
 
 jobs:
   build:
@@ -23,7 +23,11 @@ jobs:
 
       # Dar permisos de ejecución al script gradlew
       - name: Grant execute permission to gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x ./android/gradlew
+
+      # Navegar al directorio 'android' para ejecutar gradle
+      - name: Navigate to android directory
+        run: cd android
 
       # Construir la APK
       - name: Build APK
