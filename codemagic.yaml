@@ -1,13 +1,13 @@
 workflows:
   android:
     name: Build Android App
-    source: main  # Nombre de la rama que deseas usar, cambia si es necesario
-    actions:
-      - action: build
-        build_type: release
-        keystore:
-          file: $CM_KEYSTORE_FILE  # Ruta al archivo keystore subido a Codemagic
-          password: $CM_KEYSTORE_PASSWORD
-          alias: $CM_KEY_ALIAS
-          key_password: $CM_KEY_PASSWORD
-      - action: upload_to_play_store  # Solo si deseas subirlo a Google Play
+    # Este es el paso para la compilación en release
+    steps:
+      - name: Install dependencies
+        run: flutter pub get  # Asegúrate de que estés utilizando el gestor adecuado (flutter, npm, etc.)
+      
+      - name: Build release APK
+        run: flutter build apk --release  # Usa el comando adecuado dependiendo de tu proyecto
+      
+      - name: Upload to Play Store (si deseas automatizar este paso)
+        run: flutter pub run fastlane android beta  # O cualquier comando que suba la app
