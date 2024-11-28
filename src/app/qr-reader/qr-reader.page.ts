@@ -24,27 +24,31 @@ export class QrReaderPage implements OnInit, OnDestroy {
    */
   startScanner() {
     const videoElement = document.getElementById('video') as HTMLVideoElement;
-  
+
     // Verifica si ya tenemos acceso a la cámara
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         // Si el usuario da permiso, configuramos el flujo de video
         this.currentStream = stream;
         videoElement.srcObject = stream;
-  
+
         // Obtener los dispositivos de video disponibles
         navigator.mediaDevices.enumerateDevices()
           .then(devices => {
             const videoDevices = devices.filter(device => device.kind === 'videoinput');
-            const firstDeviceId = videoDevices[0]?.deviceId; // Obtener el primer dispositivo de video disponible
-  
+
+            // Intentamos encontrar la cámara trasera
+            const backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back') || device.deviceId.startsWith('0'));
+
+            const firstDeviceId = backCamera?.deviceId || videoDevices[0]?.deviceId; // Usa la cámara trasera si está disponible, de lo contrario usa la primera cámara
+
             if (!firstDeviceId) {
               console.error('No se encontraron dispositivos de video.');
               alert('No se pudo acceder a la cámara. Verifica los permisos.');
               return;
             }
-  
-            // Usar el primer dispositivo de video encontrado
+
+            // Usar el dispositivo de video encontrado (preferentemente la cámara trasera)
             this.codeReader.decodeFromVideoDevice(firstDeviceId, videoElement, (result, error) => {
               if (result) {
                 const qrContent = result.getText() || 'Sin contenido';
@@ -61,7 +65,7 @@ export class QrReaderPage implements OnInit, OnDestroy {
             console.error('Error al obtener dispositivos de video:', err);
             alert('No se pudo acceder a la cámara. Verifica los permisos.');
           });
-  
+
         this.scanning = true;
       })
       .catch(err => {
@@ -70,7 +74,6 @@ export class QrReaderPage implements OnInit, OnDestroy {
         alert('Se requiere permiso para acceder a la cámara. Por favor, habilita los permisos de la cámara en tu navegador.');
       });
   }
-  
 
   /**
    * Detiene el escaneo y libera la cámara
