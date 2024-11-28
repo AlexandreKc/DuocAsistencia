@@ -1,21 +1,28 @@
 workflows:
+  # Definimos un flujo de trabajo llamado 'android_build'
   android_build:
-    name: Build Android app
-    trigger:
-      # Definimos el trigger para la rama principal (main)
-      event: push
-      branch: main
+    name: Build de assistapp # Nombre que le damos al flujo de trabajo
+    
+    # Definimos el trigger que activará este flujo de trabajo
+    triggering:
+      event: 
+      push              # Esto significa que el flujo se ejecutará cuando haya un 'push' en el repositorio
+      branch: main             # Este flujo se activará solo para la rama 'main'
+
     environment:
       vars:
-        ANDROID_VERSION: "stable"
-    # Definimos las acciones directamente dentro de un array
+        ANDROID_VERSION: "stable"   # Definimos una variable de entorno llamada ANDROID_VERSION con el valor "stable". Puedes usar esta variable en las acciones.
+    
+    # Aquí van las acciones a ejecutar en el flujo de trabajo
     actions:
-      - install_dependencies
-      - build_android:
-          build_type: release
-          keystore:
-            file: $CM_KEYSTORE_FILE   # Ruta al archivo keystore subida a Codemagic
-            password: $CM_KEYSTORE_PASSWORD
-            alias: $CM_KEY_ALIAS
-            key_password: $CM_KEY_PASSWORD
-      - upload_to_play_store  # Subir automáticamente a Google Play
+      - install_dependencies  # Esta acción instala todas las dependencias del proyecto (como los paquetes de npm)
+      
+      - build_android:        # Acción para construir el APK de Android
+          build_type: release # Construir un APK en modo 'release', para distribución
+          keystore:           # Aquí configuramos la firma de la app (para generar un APK firmado)
+            file: $CM_KEYSTORE_FILE    # Ruta al archivo keystore (subido previamente a Codemagic)
+            password: $CM_KEYSTORE_PASSWORD   # Contraseña de tu archivo keystore
+            alias: $CM_KEY_ALIAS         # Alias de la clave dentro del keystore
+            key_password: $CM_KEY_PASSWORD  # Contraseña de la clave (dentro del keystore)
+      
+      - upload_to_play_store   # Esta acción sube el APK generado automáticamente a Google Play Store (si está configurado)
