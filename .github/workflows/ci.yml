@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+        distribution: 'adoptopenjdk'  # Distribución recomendada
 
       # Copia el archivo keystore desde la raíz del repositorio
       - name: Copy keystore
