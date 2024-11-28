@@ -21,6 +21,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'  # Usando 'temurin' como distribución compatible
 
+      # Instalar Gradle
+      - name: Set up Gradle
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gradle
+
       # Construir la APK
       - name: Build APK
         run: ./gradlew assembleRelease \
