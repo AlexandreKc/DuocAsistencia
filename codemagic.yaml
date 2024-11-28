@@ -1,18 +1,9 @@
 workflows:
-  android:
+  android_build:
     name: Build Android app
-    # Configuración de los flujos de trabajo
-    trigger:
-      # Se puede desencadenar en base a eventos como push a una rama
-      events:
-        - push:
-            branches:
-              - main
     environment:
       vars:
-        ANDROID_VERSION: "stable"  # Si deseas establecer variables de entorno
-
-    # Acciones a tomar para construir y subir la app
+        ANDROID_VERSION: "stable"  # Establece tus variables de entorno si es necesario
     actions:
       - action: install_dependencies
       - action: build_android
@@ -23,3 +14,11 @@ workflows:
           alias: $CM_KEY_ALIAS
           key_password: $CM_KEY_PASSWORD
       - action: upload_to_play_store  # Si deseas subirlo automáticamente a Google Play
+
+# Configuración de triggers
+trigger:
+  # Se activará en push a la rama main
+  events:
+    - push:
+        branches:
+          - main
