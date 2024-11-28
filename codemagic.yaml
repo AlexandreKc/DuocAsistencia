@@ -1,19 +1,24 @@
 workflows:
-  android_build:
+  android:
     name: Build Android app
-    platform: android
-    triggers:
-      - event: push
-        branch: main
+    # Configuración de los flujos de trabajo
+    trigger:
+      # Se puede desencadenar en base a eventos como push a una rama
+      events:
+        - push:
+            branches:
+              - main
     environment:
       vars:
-        ANDROID_VERSION: "stable"
+        ANDROID_VERSION: "stable"  # Si deseas establecer variables de entorno
+
+    # Acciones a tomar para construir y subir la app
     actions:
       - action: install_dependencies
       - action: build_android
         build_type: release
         keystore:
-          file: "./my-release-key.jks"  # Ruta relativa al archivo keystore en el mismo directorio
+          file: $CM_KEYSTORE_FILE  # Ruta al archivo keystore subida a Codemagic
           password: $CM_KEYSTORE_PASSWORD
           alias: $CM_KEY_ALIAS
           key_password: $CM_KEY_PASSWORD
