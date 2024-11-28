@@ -1,0 +1,20 @@
+workflows:
+  android_build:
+    name: Build Android app
+    platform: android
+    triggers:
+      - event: push
+        branch: main
+    environment:
+      vars:
+        ANDROID_VERSION: "stable"
+    actions:
+      - action: install_dependencies
+      - action: build_android
+        build_type: release
+        keystore:
+          file: "./my-release-key.jks"  # Ruta relativa al archivo keystore en el mismo directorio
+          password: $CM_KEYSTORE_PASSWORD
+          alias: $CM_KEY_ALIAS
+          key_password: $CM_KEY_PASSWORD
+      - action: upload_to_play_store  # Si deseas subirlo automáticamente a Google Play
