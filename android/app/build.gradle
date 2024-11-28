@@ -1,8 +1,7 @@
 android {
     compileSdkVersion 33
-
     defaultConfig {
-        applicationId "com.example.app"
+        applicationId "com.example.duocasistencia"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
@@ -11,17 +10,8 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release  // Aquí se firma la APK
-            // Otros ajustes de configuración para el build release
-        }
-    }
-
-    signingConfigs {
-        release {
-            storeFile file("./my-release-key.jks") 
-            storePassword System.getenv("KEYSTORE_PASSWORD") // Contraseña del keystore
-            keyAlias System.getenv("KEY_ALIAS") // Alias de la clave
-            keyPassword System.getenv("KEY_PASSWORD") // Contraseña de la clave
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
