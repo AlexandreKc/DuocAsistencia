@@ -1,20 +1,20 @@
 workflows:
   android_build:
     name: Build Android app
-    platform: android
     triggers:
       - event: push
         branch: main
     environment:
       vars:
         ANDROID_VERSION: "stable"
+    # Aquí van las acciones directamente sin "actions"
     actions:
-      - action: install_dependencies
-      - action: build_android
-        build_type: release
-        keystore:
-          file: $CM_KEYSTORE_FILE       # Ruta al archivo keystore subida a Codemagic
-          password: $CM_KEYSTORE_PASSWORD
-          alias: $CM_KEY_ALIAS
-          key_password: $CM_KEY_PASSWORD
-      - action: upload_to_play_store  # Si deseas subirlo automáticamente a Google Play
+      - install_dependencies
+      - build_android:
+          build_type: release
+          keystore:
+            file: $CM_KEYSTORE_FILE   # Ruta al archivo keystore subida a Codemagic
+            password: $CM_KEYSTORE_PASSWORD
+            alias: $CM_KEY_ALIAS
+            key_password: $CM_KEY_PASSWORD
+      - upload_to_play_store  # Subir automáticamente a Google Play
