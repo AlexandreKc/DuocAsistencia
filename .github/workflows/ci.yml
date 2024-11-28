@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: '11'
 
-      # Copia el archivo keystore desde la raíz
+      # Copia el archivo keystore desde la raíz del repositorio
       - name: Copy keystore
         run: cp ${{ github.workspace }}/my-release-key.jks /tmp/my-release-key.jks
 
