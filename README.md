@@ -5,34 +5,21 @@ La cual es una aplicación móvil que permite a los estudiantes registrar su pro
 
 ## Requisitos previos 
 
-Tener instalado node.js y Ionic_CLI
+Telefono móvil con OS Android 7.0 o superior
 
 ## Instalación
-Clona el repositorio y luego instala las dependencias
 
-git clone DuocAsistencia
-npm install
-npm install cors
+Descarga la apk desde nuestro sitio web https://gleaming-cascaron-b1f24c.netlify.app/
 
-## Ejecutar la base de datos / Se abren dos terminales
-Un terminal para ejecutar la página y otro para la base de datos.
 
-En la terminal de la base de datos hay que hacer lo siguiente:
-cd src
-cd app
-cd database
-node server.js
+##Funcionamiento
 
-En la terminal para ejecutar la página hay que hacer lo siguiente:
-ionic serve
+Aplicación móvil dependiente de un repositorio externo que se ejecutar por medio de un servidor el cual realiza solicitudes (Este protege las credenciales). Al realizar una solicitud el servidor externo realiza
+un llamado una base de datos configurada en PhP Admin, que también es remota, Esta se encarga de devolver datos.
 
-## Errores
-Si existe algun error de mysql
-npm install mysql2 --legacy-peer-deps
+**Backend: https://github.com/AlexandreKc/Backend_assistapp - Ejecutado en RailWay
 
-si forms da error en app.ts
-npm install @angular/forms
+**Base de datos: Ejecutada en FreeMySQLHosting
 
-actualizar npm si alguna dependencia da error
-npm update
+**Pagina web: Hosteada en netlify con el repositorio https://github.com/AlexandreKc/AsistAppLandingPage (Privado)
 
