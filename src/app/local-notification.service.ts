@@ -40,18 +40,22 @@ export class LocalNotificationService {
 
   // Programa una notificación local
   async scheduleFirstLaunchNotification() {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          id: 1, // ID único
-          title: '¡Bienvenido a nuestra App!',
-          body: 'Gracias por instalar nuestra aplicación. ¡Explora todas las funciones!',
-          schedule: { at: new Date(new Date().getTime() + 5000) }, // Opcional: espera 5 segundos
-          smallIcon: 'ic_launcher',
-          extra: { data: 'Primera ejecución' },
-        }
-      ]
-    });
-    console.log('Notificación de bienvenida programada.');
+    try {
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            id: 1,
+            title: '¡Bienvenido a AsistApp!',
+            body: 'Gracias por instalar nuestra aplicación. ¡Explora todas las funciones!',
+            schedule: { at: new Date(new Date().getTime() + 15000) },
+            smallIcon: 'ic_launcher',
+            extra: { data: 'Primera ejecución' },
+          }
+        ]
+      });
+      console.log('Notificación de bienvenida programada.');
+    } catch (error) {
+      console.error('Error al programar la notificación:', error);
+    }
   }
 }
