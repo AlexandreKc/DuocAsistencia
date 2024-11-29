@@ -25,55 +25,62 @@ export class QrReaderPage implements OnInit, OnDestroy {
   startScanner() {
     const videoElement = document.getElementById('video') as HTMLVideoElement;
 
-    // Verifica si ya tenemos acceso a la cámara
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        // Si el usuario da permiso, configuramos el flujo de video
-        this.currentStream = stream;
-        videoElement.srcObject = stream;
+    // Obtener dispositivos de video disponibles
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-        // Obtener los dispositivos de video disponibles
-        navigator.mediaDevices.enumerateDevices()
-          .then(devices => {
-            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+        if (videoDevices.length === 0) {
+          console.error('No se encontraron dispositivos de video.');
+          alert('No se encontró ninguna cámara disponible.');
+          return;
+        }
 
-            // Intentamos encontrar la cámara trasera
-            const backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back') || device.deviceId.startsWith('0'));
+        // Intentar encontrar la cámara trasera
+        const backCamera = videoDevices.find(device =>
+          device.label.toLowerCase().includes('back')
+        );
 
-            const firstDeviceId = backCamera?.deviceId || videoDevices[0]?.deviceId; // Usa la cámara trasera si está disponible, de lo contrario usa la primera cámara
+        const selectedDeviceId = backCamera?.deviceId || videoDevices[videoDevices.length - 1]?.deviceId; // Elegir la trasera o la última cámara disponible
 
-            if (!firstDeviceId) {
-              console.error('No se encontraron dispositivos de video.');
-              alert('No se pudo acceder a la cámara. Verifica los permisos.');
-              return;
+        if (!selectedDeviceId) {
+          console.error('No se pudo seleccionar una cámara.');
+          alert('No se pudo acceder a la cámara. Verifica los permisos.');
+          return;
+        }
+
+        // Solicitar acceso a la cámara seleccionada
+        navigator.mediaDevices.getUserMedia({
+          video: { deviceId: { exact: selectedDeviceId } }
+        }).then(stream => {
+          this.currentStream = stream;
+          videoElement.srcObject = stream;
+
+          // Inicializar el escaneo del código QR
+          this.codeReader.decodeFromVideoDevice(selectedDeviceId, videoElement, (result, error) => {
+            if (result) {
+              const qrContent = result.getText() || 'Sin contenido';
+              console.log('QR Detectado:', qrContent);
+              alert(`Código QR leído: ${qrContent}`);
+              this.stopScanner(); // Detener el escaneo
             }
-
-            // Usar el dispositivo de video encontrado (preferentemente la cámara trasera)
-            this.codeReader.decodeFromVideoDevice(firstDeviceId, videoElement, (result, error) => {
-              if (result) {
-                const qrContent = result.getText() || 'Sin contenido';
-                console.log('QR Detectado:', qrContent);
-                alert(`Código QR leído: ${qrContent}`);
-                this.stopScanner();  // Detener el escaneo después de leer el QR
-              }
-              if (error) {
-                console.warn('Error durante el escaneo (esperado):', error.message);
-              }
-            });
-          })
-          .catch(err => {
-            console.error('Error al obtener dispositivos de video:', err);
-            alert('No se pudo acceder a la cámara. Verifica los permisos.');
+            if (error) {
+              console.warn('Error durante el escaneo (esperado):', error.message);
+            }
           });
 
-        this.scanning = true;
+          this.scanning = true;
+        }).catch(err => {
+          console.error('Error al acceder a la cámara:', err);
+          alert('No se pudo acceder a la cámara. Verifica los permisos.');
+        });
       })
       .catch(err => {
-        // Si el usuario niega el permiso
-        console.error('Permiso denegado o error al acceder a la cámara:', err);
-        alert('Se requiere permiso para acceder a la cámara. Por favor, habilita los permisos de la cámara en tu navegador.');
+        console.error('Error al enumerar dispositivos:', err);
+        alert('No se pudo obtener la lista de cámaras.');
       });
-  }
+}
+
 
   /**
    * Detiene el escaneo y libera la cámara
