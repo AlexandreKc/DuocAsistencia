@@ -4,6 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../app/menu.service';
 import { UserService } from '../app/user/datos.service';
 import { Platform } from '@ionic/angular';
+import { LocalNotificationService } from './local-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements AfterViewInit {
     private userService: UserService,
     private platform: Platform,
     private menuController: MenuController,  
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private localNotificationService: LocalNotificationService
   ) {
     this.initializeApp();
     this.userService.isUserLoggedIn().subscribe(loggedIn => {
