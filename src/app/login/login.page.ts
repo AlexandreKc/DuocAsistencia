@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { DatabaseService } from '../database/database.service'; // Importa el servicio de base de datos
 import { UserService } from '../user/datos.service'; // Importa el servicio de usuario
-
+import { LocalNotifications } from '@capacitor/local-notifications';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,7 +21,10 @@ export class LoginPage implements OnInit {
     private userService: UserService    // Inyecta el servicio de usuario
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.requestPermission();
+    this.scheduleNotification(); // Llamar a scheduleNotification al inicio
+  }
 
   // Método para mostrar alertas
   async mostrarAlerta(header: string, message: string) {
@@ -77,5 +80,30 @@ export class LoginPage implements OnInit {
       // Si no se completan los campos
       this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
     }
+  }
+    // Solicita permisos para usar notificaciones locales
+    async requestPermission() {
+      const permission = await LocalNotifications.requestPermissions();
+      if (permission.display === 'granted') {
+      } else {
+        console.error('Permiso para notificaciones locales denegado.');
+      }
+    }
+    // Programar la notificación local
+  async scheduleNotification() {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Bienvenido a AsistApp',
+          body: '¡Hola! Prueba las nuevas funciones de AsistApp',
+          id: 1,
+          schedule: {
+            at: new Date(new Date().getTime() + 10000) // Programar 10 segundos después
+          },
+          actionTypeId: '',
+          extra: null
+        }
+      ]
+    });
   }
 }
