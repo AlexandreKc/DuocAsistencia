@@ -6,7 +6,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { UserService } from '../user/datos.service';  
 import { MenuService } from '../menu.service';
-
+import { LocalNotifications } from '@capacitor/local-notifications';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -38,6 +38,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   
 
   ngOnInit() {
+    this.requestPermission();
     // Obtener los datos del usuario desde el UserService
     const userData = this.userService.getUserData();
     if (userData) {
@@ -93,5 +94,14 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     console.log('El componente está a punto de ser destruido');
+  }
+  // Solicita permisos para usar notificaciones locales
+  async requestPermission() {
+    const permission = await LocalNotifications.requestPermissions();
+    if (permission.display === 'granted') {
+      console.log('Permiso para notificaciones locales concedido.');
+    } else {
+      console.error('Permiso para notificaciones locales denegado.');
+    }
   }
 }

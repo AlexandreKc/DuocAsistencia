@@ -34,16 +34,6 @@ export class AppComponent implements AfterViewInit {
   initializeApp() {
     // Espera a que la plataforma esté lista antes de ejecutar otras acciones
     this.platform.ready().then(() => {
-      // Solicita permisos de notificaciones
-      this.localNotificationService.requestPermission()
-        .then(() => {
-          // Programa la notificación de bienvenida si es la primera vez
-          this.localNotificationService.scheduleFirstLaunchNotification();
-        })
-        .catch((error) => {
-          console.error('Error solicitando permisos para notificaciones:', error);
-        });
-  
       // Llama a la función para verificar el estado del administrador
       this.checkAdminStatus(); 
     });
