@@ -18,22 +18,30 @@ export class AsistenciasPage implements OnInit {
   ) {}
 
   ngOnInit() {
-  // Obtener el ID del usuario desde el servicio UserService
-  this.usuarioId = this.userService.getUserId();
+    // Suscribirse al estado de inicio de sesión
+    this.userService.isUserLoggedIn().subscribe(loggedIn => {
+      if (loggedIn) {
+        // Obtener el ID del usuario desde el servicio UserService
+        this.usuarioId = this.userService.getUserId();
 
-  // Verificar que usuarioId no sea null antes de hacer la consulta
-  if (this.usuarioId) {
-    // Llamar al servicio para obtener las materias
-    this.databaseService.getMaterias(this.usuarioId).subscribe(
-      (data) => {
-        this.materias = data;  // Asignar las materias obtenidas
-      },
-      (error) => {
-        console.error('Error al obtener las materias:', error);
+        // Verificar que usuarioId no sea null antes de hacer la consulta
+        if (this.usuarioId) {
+          // Llamar al servicio para obtener las materias
+          this.databaseService.getMaterias(this.usuarioId).subscribe(
+            (data) => {
+              this.materias = data;  // Asignar las materias obtenidas
+            },
+            (error) => {
+              console.error('Error al obtener las materias:', error);
+            }
+          );
+        } else {
+          console.error('ID de usuario no disponible');
+        }
+      } else {
+        // Si no está logueado, redirigir al login o mostrar un mensaje
+        console.log('Usuario no logueado');
       }
-    );
-  } else {
-    console.error('ID de usuario no disponible');
-  }
+    });
   }
 }

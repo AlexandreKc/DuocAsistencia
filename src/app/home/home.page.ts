@@ -12,7 +12,7 @@ import { MenuService } from '../menu.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy, AfterViewInit {
+export class HomePage implements OnInit, AfterViewInit {
   username: string = "";
   isAdmin: boolean = false;  // Inicializamos isAdmin en false
   id_user: number | null = null;  // Para almacenar el tipo de usuario
@@ -75,25 +75,25 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ionViewWillEnter() {
-    console.log('La vista está a punto de ser mostrada en pantalla');
+    // console.log('La vista está a punto de ser mostrada en pantalla');
     this.menuController.enable(true, 'menuId');  // Activa el menú al entrar a la página
   }
 
-  ionViewDidEnter() {
-    console.log('La vista ha cargado y es visible en la pantalla');
-  }
+  // ionViewDidEnter() {
+  //   console.log('La vista ha cargado y es visible en la pantalla');
+  // }
 
-  ionViewWillLeave() {
-    console.log('La vista saldrá de la pantalla');
-    this.menuController.enable(false, 'menuId');  // Desactiva el menú al salir de la página
-  }
+  // ionViewWillLeave() {
+  //   console.log('La vista saldrá de la pantalla');
+  //   this.menuController.enable(false, 'menuId');  // Desactiva el menú al salir de la página
+  // }
 
-  ionViewDidLeave() {
-    console.log('La vista se ha ido');
-  }
+  // ionViewDidLeave() {
+  //   console.log('La vista se ha ido');
+  // }
 
-  ngOnDestroy() {
-    console.log('El componente está a punto de ser destruido');
-  }
+  // ngOnDestroy() {
+  //   console.log('El componente está a punto de ser destruido');
+  // }
 
 }

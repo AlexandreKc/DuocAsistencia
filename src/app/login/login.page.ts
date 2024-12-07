@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { DatabaseService } from '../database/database.service'; // Importa el servicio de base de datos
 import { UserService } from '../user/datos.service'; // Importa el servicio de usuario
 import { LocalNotifications } from '@capacitor/local-notifications';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,8 +23,14 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Verificar si el usuario ya está logueado al inicio
+    if (this.userService.isUserLoggedIn()) {
+      // Si ya está logueado, redirigir al home
+      this.router.navigate(['/home']);
+    }
+
+    // Solicitar permisos para notificaciones locales
     this.requestPermission();
-    this.scheduleNotification(); // Llamar a scheduleNotification al inicio
   }
 
   // Método para mostrar alertas
@@ -42,19 +49,13 @@ export class LoginPage implements OnInit {
     this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 
+  // Método para manejar el login
   login() {
-    console.log('Correo:', this.correo);
-    console.log('Contraseña:', this.password);
-  
     if (this.correo && this.password) {
-      // Llamamos al método de validación de usuario del servicio DatabaseService
       this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {
           if (response.valid) {
-            // Verificar qué contiene la respuesta
-            console.log('Respuesta del backend:', response);
-  
-            // Si el login es válido, guardar los datos en UserService
+            // Si el login es válido, guardar los datos del usuario
             const userData = {
               nombre: response.nombre,
               id_tp_usuario: response.id_tp_usuario,
@@ -62,14 +63,11 @@ export class LoginPage implements OnInit {
               contrasena: this.password,
               id: response.id  // Asegúrate de que el id esté en la respuesta
             };
-  
-            console.log('Datos del usuario a almacenar:', userData);
-  
             this.userService.setUserData(userData);  // Guardamos los datos en el UserService
-  
-            // Redirigir a la página de home
+
+            // Redirigir automáticamente al home
             this.router.navigate(['/home'], { queryParams: { username: userData.nombre, id_Tp_Usuario: userData.id_tp_usuario } });
-  
+
             // Alerta de éxito
             this.mostrarAlerta('Ingreso con éxito', 'Has iniciado sesión correctamente.');
           } else {
@@ -88,30 +86,13 @@ export class LoginPage implements OnInit {
       this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
     }
   }
-  
-    // Solicita permisos para usar notificaciones locales
-    async requestPermission() {
-      const permission = await LocalNotifications.requestPermissions();
-      if (permission.display === 'granted') {
-      } else {
-        console.error('Permiso para notificaciones locales denegado.');
-      }
+
+  // Solicitar permisos para notificaciones locales
+  async requestPermission() {
+    const permission = await LocalNotifications.requestPermissions();
+    if (permission.display === 'granted') {
+    } else {
+      console.error('Permiso para notificaciones locales denegado.');
     }
-    // Programar la notificación local
-  async scheduleNotification() {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Bienvenido a AsistApp',
-          body: '¡Hola! Prueba las nuevas funciones de AsistApp',
-          id: 1,
-          schedule: {
-            at: new Date(new Date().getTime() + 10000) // Programar 10 segundos después
-          },
-          actionTypeId: '',
-          extra: null
-        }
-      ]
-    });
   }
 }

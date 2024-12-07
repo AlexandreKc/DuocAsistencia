@@ -41,6 +41,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
+    "dexie": "^4.0.10",
     "dotenv": "^16.4.5",
     "firebase": "^11.0.2",
     "ionicons": "^7.0.0",

@@ -4,7 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../app/menu.service';
 import { UserService } from '../app/user/datos.service';
 import { Platform } from '@ionic/angular';
-import { LocalNotificationService } from './local-notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,35 +21,35 @@ export class AppComponent implements AfterViewInit {
     private platform: Platform,
     private menuController: MenuController,  
     private cd: ChangeDetectorRef,
-    private localNotificationService: LocalNotificationService
+    private router: Router
   ) {
     this.initializeApp();
-    this.userService.isUserLoggedIn().subscribe(loggedIn => {
-      if (loggedIn) {
-        this.checkAdminStatus();
-      }
-    });
   }
-
+  
   initializeApp() {
     // Espera a que la plataforma esté lista antes de ejecutar otras acciones
     this.platform.ready().then(() => {
-      // Llama a la función para verificar el estado del administrador
-      this.checkAdminStatus(); 
+      // Cargar los datos del usuario desde el servicio
+      this.userService.loadUserData();
+      this.userService.isUserLoggedIn().subscribe(loggedIn => {
+        if (loggedIn) {
+          // Si el usuario está logueado, verifica su estado de admin
+          this.checkAdminStatus();
+        } else {
+          // Si no está logueado, asegúrate de deshabilitar el menú
+          this.menuController.enable(false);
+          console.log('Menu disabled');
+        }
+      });
     });
   }
   
-
   checkAdminStatus() {
     const userData = this.userService.getUserData();
-    console.log('User Data:', userData);
     if (userData) {
-      this.isAdmin = userData.id_tp_usuario === 2; 
-      this.menuController.enable(true);
+      this.isAdmin = userData.id_tp_usuario === 2; // Verificar si es admin
+      this.menuController.enable(true);  // Habilitar el menú
       console.log('Menu enabled');
-    } else {
-      this.menuController.enable(false);
-      console.log('Menu disabled');
     }
   }
 
@@ -59,5 +59,22 @@ export class AppComponent implements AfterViewInit {
 
   openMenu() {
     this.menuController.open();  
+  }
+
+  logout() {
+    // Limpiar los datos del usuario en el UserService
+    this.userService.clearUserData();
+
+    // Limpiar el localStorage
+    localStorage.removeItem('userData');
+
+    // Deshabilitar el menú si no hay sesión
+    this.menuController.enable(false);
+
+    // Redirigir al login
+    this.router.navigate(['/login']).then(() => {
+      // Después de redirigir, forzamos un reinicio de la página
+      window.location.reload(); // Recarga la página
+    });
   }
 }
