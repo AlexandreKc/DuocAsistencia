@@ -43,7 +43,11 @@ const routes: Routes = [
     path: 'qr-reader',
     loadChildren: () => import('./qr-reader/qr-reader.module').then(m => m.QrReaderPageModule),
     canActivate: [AuthGuard]  // Aquí se agrega el AuthGuard
+  },  {
+    path: 'asistencias',
+    loadChildren: () => import('./materias/asistencias/asistencias.module').then( m => m.AsistenciasPageModule)
   }
+
 ];
 
 @NgModule({
