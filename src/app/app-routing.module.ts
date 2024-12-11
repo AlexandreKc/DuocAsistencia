@@ -54,11 +54,6 @@ const routes: Routes = [
     loadChildren: () => import('./materias/gestion/gestion.module').then( m => m.GestionPageModule),
     canActivate: [AuthGuard]
   },
-  {
-    path: 'clases/:idMateria',
-    loadChildren: () => import('./materias/clases/clases.module').then( m => m.ClasesPageModule),
-    canActivate: [AuthGuard]
-  }
 
 
 

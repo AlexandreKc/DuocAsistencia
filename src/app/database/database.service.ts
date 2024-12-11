@@ -44,8 +44,9 @@ export class DatabaseService {
     const url = `${this.apiUrl}/crear-clase`;
     return this.http.post(url, { idMateria: idMateria }); 
   }
-  
-  getClasesByMateria(idMateria: number) {
-    return this.http.get<any[]>(`/api/clases/materia/${idMateria}`);
+  // Método para obtener las clases de una materia
+  verClases(idMateria: string): Observable<any> {
+    const url = `${this.apiUrl}/clases/materia/${idMateria}`;
+    return this.http.get(url); 
   }
 }

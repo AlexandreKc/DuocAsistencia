@@ -1,27 +1,35 @@
-/* Estilo para los botones dentro de cada item */
+.materia-item {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px; /* Separación entre materias */
+}
+.clases-list-container div h2{
+  margin-left: 0px;
+}
+
 .materia-buttons {
   display: flex;
-  flex-direction: column; 
-  gap: 10px; 
-  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 10px;
 }
 
-ion-item {
-  margin-bottom: 20px;
+.clases-list {
+  margin-top: 15px;
+  padding-left: 20px; 
+  display: block;
 }
 
-ion-label h2 {
-  font-size: 18px;
+.clase-item {
+  margin-bottom: 10px;
+}
+
+.clase-item ion-label h3 {
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
-ion-label p {
+.clase-item ion-label p {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 10px; 
-}
-
-ion-button {
-  width: 100%;
+  color: #555;
 }
