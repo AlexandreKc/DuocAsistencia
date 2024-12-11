@@ -39,11 +39,12 @@ export class DatabaseService {
   getAllMaterias(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/materias`);
   }
-  //este metodo creara una clase por la materia id
-  crearClase(idMateria: number, datosClase: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/materias/${idMateria}/clases`, datosClase);
+  // Cambiar el nombre de la propiedad a "idMateria"
+  crearClase(idMateria: string): Observable<any> {
+    const url = `${this.apiUrl}/crear-clase`;
+    return this.http.post(url, { idMateria: idMateria }); 
   }
-
+  
   getClasesByMateria(idMateria: number) {
     return this.http.get<any[]>(`/api/clases/materia/${idMateria}`);
   }
