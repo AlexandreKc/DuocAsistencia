@@ -35,4 +35,16 @@ export class DatabaseService {
   getMaterias(usuarioId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/materias/usuario/${usuarioId}`);
   }
+  // Método para displayear todas las materias a profesor.
+  getAllMaterias(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/materias`);
+  }
+  //este metodo creara una clase por la materia id
+  crearClase(idMateria: number, datosClase: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/materias/${idMateria}/clases`, datosClase);
+  }
+
+  getClasesByMateria(idMateria: number) {
+    return this.http.get<any[]>(`/api/clases/materia/${idMateria}`);
+  }
 }

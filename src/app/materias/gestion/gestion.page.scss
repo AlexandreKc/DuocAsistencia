@@ -1,0 +1,27 @@
+/* Estilo para los botones dentro de cada item */
+.materia-buttons {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+  align-items: flex-start;
+}
+
+ion-item {
+  margin-bottom: 20px;
+}
+
+ion-label h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+ion-label p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px; 
+}
+
+ion-button {
+  width: 100%;
+}

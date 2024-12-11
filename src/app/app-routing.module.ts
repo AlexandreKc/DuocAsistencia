@@ -48,7 +48,19 @@ const routes: Routes = [
     path: 'asistencias',
     loadChildren: () => import('./materias/asistencias/asistencias.module').then( m => m.AsistenciasPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'gestion',
+    loadChildren: () => import('./materias/gestion/gestion.module').then( m => m.GestionPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'clases/:idMateria',
+    loadChildren: () => import('./materias/clases/clases.module').then( m => m.ClasesPageModule),
+    canActivate: [AuthGuard]
   }
+
+
 
 ];
 

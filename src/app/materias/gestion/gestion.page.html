@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- Botón de menú hamburguesa con icono personalizado -->
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+      </ion-menu-button>
+    </ion-buttons>
+    
+    <!-- Logo y título -->
+    <ion-img class="logo-main" src="../../assets/icon/logoduoc.png" alt="logo-duoc"></ion-img>
+    <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Barra de búsqueda -->
+  <ion-searchbar 
+    placeholder="Buscar materias..." 
+    (ionInput)="filtrarMaterias($event)" 
+    debounce="500">
+  </ion-searchbar>
+
+  <!-- Lista de materias -->
+  <ion-list>
+    <ion-item *ngFor="let materia of materiasFiltradas">
+      <ion-label>
+        <h2>{{ materia.nombre }}</h2>
+        <p>{{ materia.descripcion }}</p>
+      </ion-label>
+      
+      <!-- Botones alineados verticalmente con espacio entre ellos -->
+      <div class="materia-buttons">
+        <!-- Botón para ver clases -->
+        <ion-button slot="end" color="primary" (click)="verClases(materia.id)">
+          Ver Clases
+        </ion-button>
+        
+        <!-- Botón para crear una clase -->
+        <ion-button slot="end" color="success" (click)="crearClase(materia.id)">
+          Crear Clase
+        </ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay materias filtradas -->
+  <ion-item *ngIf="materiasFiltradas.length === 0">
+    <ion-label>No se encontraron materias.</ion-label>
+  </ion-item>
+</ion-content>
