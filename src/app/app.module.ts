@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { QrCodeComponent } from './qr-code/qr-code.component'; // Asegúrate de importarlo correctamente
 
 @NgModule({
   declarations: [AppComponent, 

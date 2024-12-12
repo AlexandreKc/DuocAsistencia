@@ -6,8 +6,6 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
-import { QrCodeComponent } from '../qr-code/qr-code.component'; // Importa el componente en este módulo
-
 
 @NgModule({
   imports: [
