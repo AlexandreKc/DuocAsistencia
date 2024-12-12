@@ -12,25 +12,29 @@
 </ion-header>
 
 <ion-content>
-  <!-- Contenedor de clases que se desplegará debajo del header -->
-  <div id="materiasClasesContainer" *ngIf="materiaAbierta" class="clases-list-container">
-    <div *ngFor="let materia of materiasFiltradas">
-      <div *ngIf="materia.id === materiaAbierta">
-        <h2>Clases de {{ materia.nombre }}</h2>
-        <div *ngIf="materia.clases && materia.clases.length > 0" class="clases-list">
-          <ion-item *ngFor="let clase of materia.clases" lines="inset">
-            <ion-label>
-              <h3>{{ clase.nombre }}</h3>
-              <p>{{ clase.descripcion }}</p>
-            </ion-label>
-          </ion-item>
-        </div>
-        <div *ngIf="materia.clases && materia.clases.length === 0">
-          <ion-label>No hay clases disponibles para esta materia.</ion-label>
-        </div>
+<!-- Contenedor de clases que se desplegará debajo del header -->
+<div id="materiasClasesContainer" *ngIf="materiaAbierta" class="clases-list-container">
+  <div *ngFor="let materia of materiasFiltradas">
+    <div *ngIf="materia.id === materiaAbierta">
+      <h2>Clases de {{ materia.nombre }}</h2>
+      <div *ngIf="materia.clases && materia.clases.length > 0" class="clases-list">
+        <ion-item *ngFor="let clase of materia.clases" lines="inset">
+          <ion-label>
+            <h3>{{ clase.nombre }}</h3>
+            <p>{{ clase.descripcion }}</p>
+          </ion-label>
+          <!-- Botón Ver información -->
+          <ion-button slot="end" (click)="verInformacionClase(clase)">
+            Ver información
+          </ion-button>
+        </ion-item>
+      </div>
+      <div *ngIf="materia.clases && materia.clases.length === 0">
+        <ion-label>No hay clases disponibles para esta materia.</ion-label>
       </div>
     </div>
   </div>
+</div>
 
   <ion-searchbar 
     placeholder="Buscar materias..." 

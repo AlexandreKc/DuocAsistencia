@@ -33,3 +33,21 @@
   font-size: 14px;
   color: #555;
 }
+.clases-list-container {
+  margin: 0;
+  padding: 0;
+  text-align: left; 
+}
+
+#materiasClasesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.clases-list ion-item {
+  width: 100%; 
+}

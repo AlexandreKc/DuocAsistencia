@@ -1,0 +1,34 @@
+<meta name="mobile-web-app-capable" content="yes">
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- Botón de menú hamburguesa con icono personalizado -->
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+      </ion-menu-button>
+    </ion-buttons>
+
+    <!-- Logo y título -->
+    <ion-img class="logo-main" src="../../assets/icon/logoduoc.png" alt="logo-duoc"></ion-img>
+    <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Mostrar un mensaje mientras se cargan los datos -->
+  <ion-spinner *ngIf="alumnos.length === 0" name="dots"></ion-spinner>
+  
+  <!-- Mostrar la lista de alumnos -->
+  <ion-list *ngIf="alumnos.length > 0">
+    <ion-card *ngFor="let alumno of alumnos">
+      <ion-card-header>
+        <ion-card-title>{{ alumno.nombre }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Correo:</strong> {{ alumno.correo }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- Mensaje si no hay alumnos disponibles -->
+  <ion-alert *ngIf="alumnos.length === 0" header="Sin alumnos" message="No se encontraron alumnos para esta materia." [buttons]="['OK']"></ion-alert>
+</ion-content>

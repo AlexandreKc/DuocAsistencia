@@ -49,4 +49,8 @@ export class DatabaseService {
     const url = `${this.apiUrl}/clases/materia/${idMateria}`;
     return this.http.get(url); 
   }
+  //Obtener alumnos de materia
+  getAlumnosDeMateria(idMateria: string) {
+    return this.http.get<any>(`${this.apiUrl}/materias/${idMateria}/alumnos`);
+  }
 }
