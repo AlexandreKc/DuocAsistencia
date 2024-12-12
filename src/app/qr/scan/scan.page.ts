@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { QRScanner } from '@ionic-native/qr-scanner/ngx'; // Importar QRScanner
-import { DatabaseService } from '../../database/database.service'; // Tu servicio de base de datos
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { DatabaseService } from '../../database/database.service';
 
 @Component({
   selector: 'app-scanner',
-  templateUrl: './scanner.page.html',
-  styleUrls: ['./scanner.page.scss'],
+  templateUrl: './scan.page.html',  // Asegúrate que la ruta del template sea la correcta
+  styleUrls: ['./scan.page.scss'], // Asegúrate que la ruta de los estilos sea la correcta
 })
 export class ScannerPage implements OnInit {
+  isScanning: boolean = false;  // Define isScanning
+  scanResult: string | null = null;  // Define scanResult
+
   constructor(
-    private qrScanner: QRScanner, // Inyectamos el QRScanner
+    private qrScanner: QRScanner,
     private database: DatabaseService
   ) {}
 
@@ -18,15 +21,18 @@ export class ScannerPage implements OnInit {
   }
 
   startScanning() {
+    this.isScanning = true; // Establece isScanning como true cuando comiences a escanear
     this.qrScanner.prepare().then((status) => {
       if (status.authorized) {
         this.qrScanner.scan().subscribe({
           next: (scanResult: string) => {
-            const qrData = scanResult; 
-            this.handleScanResult(qrData);
+            this.isScanning = false;  // Deja de escanear después de obtener el resultado
+            this.scanResult = scanResult; // Guarda el resultado del escaneo
+            this.handleScanResult(scanResult);
           },
           error: (err) => {
             console.error('Error al escanear el QR', err);
+            this.isScanning = false; // Detén el escaneo en caso de error
           }
         });
       } else {
@@ -34,15 +40,13 @@ export class ScannerPage implements OnInit {
       }
     });
   }
-  
+
   handleScanResult(qrData: string) {
-    // Extraemos los valores de id_clase e id_usuario del QR
     const params = new URLSearchParams(qrData);
     const idClase = params.get('id_clase');
     const idUsuario = params.get('id_usuario');
 
     if (idClase && idUsuario) {
-      // Llamar al backend para actualizar la base de datos
       this.updateAsistencia(idClase, idUsuario);
     } else {
       console.error('QR no contiene los parámetros esperados');
@@ -50,7 +54,6 @@ export class ScannerPage implements OnInit {
   }
 
   updateAsistencia(idClase: string, idUsuario: string) {
-    // Llamamos a tu servicio de base de datos para actualizar el id_tp_asistencia
     this.database.updateAsistencia(idClase, idUsuario).subscribe(
       (response) => {
         console.log('Asistencia actualizada con éxito:', response);
