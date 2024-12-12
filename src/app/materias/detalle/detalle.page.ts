@@ -24,7 +24,7 @@ export class DetallePage implements OnInit {
       if (this.idMateria) {
         this.cargarAlumnos();
       } else {
-        console.error('idMateria no está definido en los queryParams.');
+        console.error('Error al recibir ID materia, Posiblemente por QueryParams.');
       }
     });
   }

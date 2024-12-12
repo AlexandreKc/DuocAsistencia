@@ -14,6 +14,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <p *ngIf="alumnos.length === 0">Esta clase no tiene alumnos asignados.</p>
   <ion-spinner *ngIf="alumnos.length === 0" name="dots"></ion-spinner>
   
   <ion-list *ngIf="alumnos.length > 0">
