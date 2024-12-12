@@ -44,6 +44,12 @@ const routes: Routes = [
     loadChildren: () => import('./materias/detalle/detalle.module').then( m => m.DetallePageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'scan',
+    loadChildren: () => import('./qr/scan/scan.module').then( m => m.ScanPageModule),
+    canActivate: [AuthGuard]
+  },
+
 
 
 

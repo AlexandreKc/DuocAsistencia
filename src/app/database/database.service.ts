@@ -53,4 +53,15 @@ export class DatabaseService {
   getAlumnosDeMateria(idMateria: string) {
     return this.http.get<any>(`${this.apiUrl}/materias/${idMateria}/alumnos`);
   }
+  // Método para obtener los alumnos de una clase
+  getAlumnosPorClase(idClase: number): Observable<any> {
+    const url = `${this.apiUrl}/clases/${idClase}/alumnos`;
+    return this.http.get(url);
+  }
+  // Método para actualizar la asistencia
+  updateAsistencia(idClase: string, idUsuario: string): Observable<any> {
+    const url = `${this.apiUrl}/update-asistencia`;
+    return this.http.post(url, { id_clase: idClase, id_usuario: idUsuario });
+  }
+  
 }

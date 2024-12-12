@@ -1,10 +1,10 @@
-<meta name="mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes" />
 <ion-header [translucent]="true">
   <ion-toolbar>
     <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
       </ion-menu-button>
     </ion-buttons>
 
@@ -13,20 +13,49 @@
     <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <p *ngIf="alumnos.length === 0">Esta clase no tiene alumnos asignados.</p>
-  <ion-spinner *ngIf="alumnos.length === 0" name="dots"></ion-spinner>
-  
-  <ion-list *ngIf="alumnos.length > 0">
+  <!-- Botón Generar QR -->
+  <div class="generar-qr-container">
+    <ion-button expand="full" (click)="generarQR()">
+      Generar QR
+    </ion-button>
+    <div *ngIf="qrCode">
+      <img [src]="qrCode" alt="QR Code" />
+    </div>
+  </div>
+
+  <!-- Indicador de carga -->
+  <div *ngIf="loading" class="spinner-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando alumnos...</p>
+  </div>
+
+  <!-- Mensaje de "sin alumnos" -->
+  <div *ngIf="!loading && alumnos.length === 0" class="no-alumnos">
+    <p>No se encontraron alumnos para esta materia.</p>
+  </div>
+
+  <!-- Lista de alumnos -->
+  <ion-list *ngIf="!loading && alumnos.length > 0">
     <ion-card *ngFor="let alumno of alumnos">
       <ion-card-header>
         <ion-card-title>{{ alumno.nombre }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p><strong>Correo:</strong> {{ alumno.correo }}</p>
+        <p>
+          <strong>Estado:</strong>
+          <span 
+            [ngClass]="alumno.id_tp_asistencia === 1 ? 'presente' : 'ausente'">
+            <ion-icon 
+              [name]="alumno.id_tp_asistencia === 1 ? 'checkmark-circle-outline' : 'close-circle-outline'" 
+              [ngClass]="alumno.id_tp_asistencia === 1 ? 'icono-presente' : 'icono-ausente'">
+            </ion-icon>
+            {{ alumno.id_tp_asistencia === 1 ? 'Presente' : 'Ausente' }}
+          </span>
+        </p>
       </ion-card-content>
     </ion-card>
   </ion-list>
-
-  <ion-alert *ngIf="alumnos.length === 0" header="Sin alumnos" message="No se encontraron alumnos para esta materia." [buttons]="['OK']"></ion-alert>
 </ion-content>
