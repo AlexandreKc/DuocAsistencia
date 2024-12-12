@@ -14,10 +14,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <!-- Mostrar un mensaje mientras se cargan los datos -->
   <ion-spinner *ngIf="alumnos.length === 0" name="dots"></ion-spinner>
   
-  <!-- Mostrar la lista de alumnos -->
   <ion-list *ngIf="alumnos.length > 0">
     <ion-card *ngFor="let alumno of alumnos">
       <ion-card-header>
@@ -29,6 +27,5 @@
     </ion-card>
   </ion-list>
 
-  <!-- Mensaje si no hay alumnos disponibles -->
   <ion-alert *ngIf="alumnos.length === 0" header="Sin alumnos" message="No se encontraron alumnos para esta materia." [buttons]="['OK']"></ion-alert>
 </ion-content>
