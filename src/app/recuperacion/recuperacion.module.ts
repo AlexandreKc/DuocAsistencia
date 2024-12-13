@@ -14,7 +14,6 @@ import { RecuperacionPage } from './recuperacion.page';
     FormsModule,
     IonicModule,
     RecuperacionPageRoutingModule
-  ],
-  declarations: [RecuperacionPage]
+  ]
 })
 export class RecuperacionPageModule {}

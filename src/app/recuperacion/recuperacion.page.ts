@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Import para mostrar alertas
 import { DatabaseService } from '../database/database.service'; // Import del servicio de base de datos
-
 @Component({
   selector: 'app-recuperacion',
   templateUrl: './recuperacion.page.html',
   styleUrls: ['./recuperacion.page.scss'],
+  standalone: true, 
 })
 export class RecuperacionPage {
   correo: string = '';
@@ -14,7 +14,7 @@ export class RecuperacionPage {
   constructor(
     private router: Router,
     private databaseService: DatabaseService, // Servicio de base de datos para verificar el correo
-    private alertController: AlertController
+    private alertController: AlertController,
   ) {}
 
   onSubmit() {

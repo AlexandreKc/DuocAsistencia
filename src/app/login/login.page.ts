@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { DatabaseService } from '../database/database.service'; // Importa el servicio de base de datos
 import { UserService } from '../user/datos.service'; // Importa el servicio de usuario
-import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-login',
@@ -28,9 +27,6 @@ export class LoginPage implements OnInit {
       // Si ya está logueado, redirigir al home
       this.router.navigate(['/home']);
     }
-
-    // Solicitar permisos para notificaciones locales
-    this.requestPermission();
   }
 
   // Método para mostrar alertas
@@ -87,12 +83,4 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // Solicitar permisos para notificaciones locales
-  async requestPermission() {
-    const permission = await LocalNotifications.requestPermissions();
-    if (permission.display === 'granted') {
-    } else {
-      console.error('Permiso para notificaciones locales denegado.');
-    }
-  }
 }
