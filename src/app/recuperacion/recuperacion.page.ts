@@ -6,7 +6,6 @@ import { DatabaseService } from '../database/database.service'; // Import del se
   selector: 'app-recuperacion',
   templateUrl: './recuperacion.page.html',
   styleUrls: ['./recuperacion.page.scss'],
-  standalone: true, 
 })
 export class RecuperacionPage {
   correo: string = '';

@@ -8,7 +8,6 @@ import { AlertController } from '@ionic/angular';
   selector: 'app-cambiar-contrasena',
   templateUrl: './cambiar-contrasena.page.html',
   styleUrls: ['./cambiar-contrasena.page.scss'],
-  standalone: true, 
 })
 export class CambiarContrasenaPage  {
 
