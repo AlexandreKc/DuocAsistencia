@@ -1,0 +1,10 @@
+//fix letras invisibles?
+ion-label {
+    font-size: 1em;
+    color: var(--ion-color-dark, #000); /* Asegura un color oscuro legible */
+    white-space: normal; /* Permite el salto de línea en textos largos */
+  }
+  
+  ion-checkbox {
+    --size: 20px; /* Ajusta el tamaño del checkbox */
+  }

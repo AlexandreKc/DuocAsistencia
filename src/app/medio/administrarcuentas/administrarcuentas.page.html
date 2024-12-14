@@ -4,7 +4,7 @@
     <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
       </ion-menu-button>
     </ion-buttons>
 
@@ -25,41 +25,79 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let usuario of usuariosFiltrados">
+        <ion-item *ngFor="let usuario of usuariosFiltrados" lines="full">
           <ion-label>
-            <h2>{{ usuario.nombre }}</h2>
-            <p>Correo: {{ usuario.correo }}</p>
-            <p>Tipo Usuario: {{ obtenerRol(usuario.id_tp_usuario) }}</p>
+            <h2 style="margin: 0; font-size: 1.2em; font-weight: bold;">{{ usuario.nombre }}</h2>
+            <p style="margin: 0; font-size: 0.9em;">Correo: {{ usuario.correo }}</p>
+            <p style="margin: 0; font-size: 0.9em;">Tipo Usuario: {{ obtenerRol(usuario.id_tp_usuario) }}</p>
           </ion-label>
-          <!-- Botón para eliminar -->
-          <ion-button slot="end" color="danger" (click)="eliminarUsuario(usuario.id)">Eliminar</ion-button>
-          <!-- Botón para asignar materias -->
-          <ion-button slot="end" color="primary" (click)="abrirAsignacionMaterias(usuario)">Asignar Materias</ion-button>
+          <!-- Contenedor de botones -->
+          <ion-grid slot="end" style="text-align: center;">
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="primary" (click)="abrirModalAsignarMaterias(usuario)">
+                  Asignar Materias
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="danger" (click)="eliminarUsuario(usuario.id)">
+                  Eliminar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
-</ion-content>
 
-<!-- Modal de asignación de materias -->
-<ion-modal [isOpen]="mostrarModal" (didDismiss)="cerrarModal()">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Asignar Materias</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="cerrarModal()">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let materia of materiasDisponibles">
-          <ion-label>{{ materia.nombre }}</ion-label>
-          <ion-checkbox slot="end" [(ngModel)]="materia.seleccionada"></ion-checkbox>
+  <!-- Modal para asignar materias -->
+  <ion-modal [isOpen]="mostrarModal" (didDismiss)="cerrarModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Asignar Materias</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <!-- Campo de búsqueda -->
+        <ion-item>
+          <ion-input
+            placeholder="Buscar materia por nombre"
+            [(ngModel)]="busquedaMateria"
+            (ionInput)="filtrarMaterias()"
+            clearInput
+          ></ion-input>
         </ion-item>
-      </ion-list>
-      <ion-button expand="block" color="success" (click)="asignarMaterias()">Asignar Materias</ion-button>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+  
+        <!-- Lista de materias filtradas -->
+        <ion-list>
+          <ion-item *ngFor="let materia of materiasFiltradas; let i = index" lines="full">
+            <ion-label style="font-size: 1em; color: white;">
+              {{ materia.nombre }}
+            </ion-label>
+            <ion-checkbox
+              slot="end"
+              [checked]="materiasFiltradas[i].seleccionada"
+              (ionChange)="onCheckboxChange($event, i)"
+            ></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+  
+      <!-- Botón fijo en la parte inferior -->
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button expand="block" color="success" (click)="asignarMateriasSeleccionadas()">
+            Asignar Materias
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</ion-content>

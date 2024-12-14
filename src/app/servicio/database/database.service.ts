@@ -84,5 +84,9 @@ export class DatabaseService {
   deleteUsuario(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/usuarios/${id}`);
   }
-  
+  //metodo para asignar materias
+  asignarMaterias(usuarioId: number, materias: number[]): Observable<any> {
+    const payload = { usuarioId, materias };
+    return this.http.post(`${this.apiUrl}/asignar-materias`, payload);
+  }
 }

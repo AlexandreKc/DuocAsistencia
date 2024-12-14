@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSharedModule } from 'src/app/shared.module';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
+
 @Component({
   selector: 'app-administrarcuentas',
   templateUrl: './administrarcuentas.page.html',
@@ -11,13 +12,21 @@ import { DatabaseService } from 'src/app/servicio/database/database.service';
   imports: [CommonModule, FormsModule, IonicSharedModule]
 })
 export class AdministrarcuentasPage implements OnInit {
-  usuarios: any[] = []; // Aquí se almacenan los usuarios
+  usuarios: any[] = []; 
+  usuariosFiltrados: any[] = []; 
+  busqueda: string = '';
+
+  // Variables para asignar materias
+  mostrarModal: boolean = false;
+  usuarioSeleccionado: any = null;
+  materiasDisponibles: any[] = [];
 
   constructor(private databaseService: DatabaseService) {}
-  busqueda: string = '';
-  usuariosFiltrados: any[] = []; 
-    ngOnInit() {
+  materiasFiltradas: any[] = []; 
+  busquedaMateria: string = ''; 
+  ngOnInit() {
     this.cargarUsuarios();
+    this.cargarMaterias(); // Cargar las materias disponibles al iniciar
   }
 
   cargarUsuarios() {
@@ -32,19 +41,17 @@ export class AdministrarcuentasPage implements OnInit {
       },
     });
   }
+
   filtrarUsuarios() {
     if (this.busqueda.trim() === '') {
-      // Si no hay búsqueda, mostrar todos los usuarios
       this.usuariosFiltrados = this.usuarios;
     } else {
-      // Filtrar usuarios por correo
       this.usuariosFiltrados = this.usuarios.filter((usuario) =>
         usuario.correo.toLowerCase().includes(this.busqueda.toLowerCase())
       );
     }
   }
 
-  
   eliminarUsuario(id: number) {
     console.log('Intentando eliminar usuario con ID:', id);
   
@@ -62,6 +69,7 @@ export class AdministrarcuentasPage implements OnInit {
       console.log('Eliminación cancelada por el usuario.');
     }
   }
+
   obtenerRol(idTpUsuario: number): string {
     switch (idTpUsuario) {
       case 1:
@@ -69,9 +77,69 @@ export class AdministrarcuentasPage implements OnInit {
       case 2:
         return 'Administrador';
       default:
-        return 'Desconocido'; // Opcional, para manejar valores inesperados
+        return 'Desconocido';
     }
   }
-  
-}
 
+
+  cargarMaterias() {
+    this.databaseService.getAllMaterias().subscribe({
+      next: (data) => {
+        this.materiasDisponibles = data.map((materia) => ({
+          ...materia,
+          seleccionada: false, // Inicializa el estado de selección
+        }));
+        this.materiasFiltradas = [...this.materiasDisponibles]; // Inicializa la lista filtrada
+      },
+      error: (err) => console.error('Error al cargar materias:', err),
+    });
+  }
+  filtrarMaterias() {
+    const busqueda = this.busquedaMateria.toLowerCase();
+    this.materiasFiltradas = this.materiasDisponibles.filter((materia) =>
+      materia.nombre.toLowerCase().includes(busqueda)
+    );
+  }
+
+
+  // Método para abrir el modal y asignar materias
+  abrirModalAsignarMaterias(usuario: any) {
+    this.usuarioSeleccionado = usuario;
+    // Reiniciar las selecciones
+    this.materiasDisponibles.forEach(m => m.seleccionada = false);
+    this.mostrarModal = true;
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.usuarioSeleccionado = null;
+  }
+
+  asignarMateriasSeleccionadas() {
+    if (!this.usuarioSeleccionado) return;
+
+    const materiasAAsignar = this.materiasDisponibles
+      .filter(m => m.seleccionada)
+      .map(m => m.id); // Suponiendo que la materia tiene un campo "id"
+
+    if (materiasAAsignar.length === 0) {
+      alert('Debes seleccionar al menos una materia.');
+      return;
+    }
+
+    this.databaseService.asignarMaterias(this.usuarioSeleccionado.id, materiasAAsignar).subscribe({
+      next: (response) => {
+        console.log('Materias asignadas con éxito:', response);
+        alert('Materias asignadas correctamente.');
+        this.cerrarModal();
+      },
+      error: (err) => {
+        console.error('Error al asignar materias:', err);
+        alert('Hubo un error al asignar las materias.');
+      }
+    });
+  }
+  onCheckboxChange(event: any, index: number) {
+    this.materiasDisponibles[index].seleccionada = event.detail.checked;
+  }
+}

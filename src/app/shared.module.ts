@@ -4,7 +4,7 @@ import {
   IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, 
   IonList, IonItem, IonIcon, IonLabel, IonCard, IonCardContent, IonInput, IonButton ,
   IonText, IonCardTitle, IonCardHeader, IonImg, IonMenuButton, IonButtons, IonSearchbar,
-  IonSpinner
+  IonSpinner, IonModal, IonCol, IonRow, IonGrid, IonCheckbox, IonFooter
   
 } from '@ionic/angular/standalone';
 import { HttpClientModule } from '@angular/common/http';
@@ -37,7 +37,13 @@ import * as allIcons from 'ionicons/icons';
     IonMenuButton,
     IonButtons,
     IonSearchbar,
-    IonSpinner
+    IonSpinner,
+    IonModal,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonCheckbox,
+    IonFooter
   ],
   exports: [
     CommonModule, 
@@ -64,7 +70,13 @@ import * as allIcons from 'ionicons/icons';
     IonMenuButton,
     IonButtons,
     IonSearchbar,
-    IonSpinner
+    IonSpinner,
+    IonModal,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonCheckbox,
+    IonFooter
   ]
 })
 export class IonicSharedModule {
