@@ -43,8 +43,14 @@ export const routes: Routes = [
     loadComponent: () => import('./medio/escanear/escanear.page').then( m => m.EscanearPage)
   },
   {
+    path: 'conteoasistencia',
+    loadComponent: () => import('./medio/conteoasistencia/conteoasistencia.page').then( m => m.ConteoasistenciaPage)
+  },
+  {
     path: '**',
     redirectTo: '/login',
   },
+
+
 
 ];

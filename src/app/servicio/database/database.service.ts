@@ -32,8 +32,8 @@ export class DatabaseService {
     return this.http.post(`${this.apiUrl}/cambiar-contrasena`, body);
   }
   // Método para obtener las materias de un usuario
-  getMaterias(usuarioId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/materias/usuario/${usuarioId}`);
+  getMaterias(usuarioId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/materias/usuario/${usuarioId}`);
   }
   // Método para displayear todas las materias a profesor.
   getAllMaterias(): Observable<any[]> {
@@ -63,5 +63,17 @@ export class DatabaseService {
     const url = `${this.apiUrl}/update-asistencia`;
     const headers = { 'Content-Type': 'application/json' }; // Encabezados explícitos
     return this.http.post(url, { id_clase: idClase, id_usuario: idUsuario }, { headers });
+  }
+  // Método para obtener el conteo de asistencia
+  getConteoAsistencia(usuarioId: string, materiaId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/conteo-asistencia/${usuarioId}`, {
+      params: { materiaId },
+    });
+  }
+  // Método para obtener las clases faltantes
+  getClasesFaltantes(usuarioId: string, materiaId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/clases-faltantes/${usuarioId}`, {
+      params: { materiaId },
+    });
   }
 }

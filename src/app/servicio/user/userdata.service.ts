@@ -53,7 +53,7 @@ export class UserdataService {
     const storedData = localStorage.getItem('userData');
     if (storedData) {
       this.userData = JSON.parse(storedData);
-      this.userId = this.userData.id; // Asegurarse de que el ID también se extrae de los datos
+      this.userId = this.userData.id; 
       this.userLoggedIn.next(true);
     }
   }
