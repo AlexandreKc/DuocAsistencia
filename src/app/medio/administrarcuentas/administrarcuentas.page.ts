@@ -43,5 +43,25 @@ export class AdministrarcuentasPage implements OnInit {
       );
     }
   }
+
+  
+  eliminarUsuario(id: number) {
+    console.log('Intentando eliminar usuario con ID:', id);
+  
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario y todas sus relaciones?')) {
+      this.databaseService.deleteUsuario(id).subscribe({
+        next: () => {
+          console.log(`Usuario con ID ${id} eliminado junto con sus relaciones.`);
+          this.cargarUsuarios();
+        },
+        error: (err) => {
+          console.error('Error al eliminar usuario:', err);
+        },
+      });
+    } else {
+      console.log('Eliminación cancelada por el usuario.');
+    }
+  }
+  
 }
 

@@ -31,8 +31,7 @@
             <p>Correo: {{ usuario.correo }}</p>
             <p>Tipo Usuario: {{ usuario.id_tp_usuario }}</p>
           </ion-label>
-          <ion-button slot="end" color="danger" >Eliminar</ion-button>
-          <!-- (click)="eliminarUsuario(usuario.id)" -->
+          <ion-button slot="end" color="danger" (click)="eliminarUsuario(usuario.id)">Eliminar</ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>

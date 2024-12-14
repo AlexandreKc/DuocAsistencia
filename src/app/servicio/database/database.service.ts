@@ -80,4 +80,9 @@ export class DatabaseService {
   getUsuarios(): Observable<any> {
     return this.http.get(`${this.apiUrl}/usuarios`);
   }
+  //metodo para eliminar usuario
+  deleteUsuario(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/usuarios/${id}`);
+  }
+  
 }

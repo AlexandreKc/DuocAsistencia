@@ -60,17 +60,7 @@ crearClase(idMateria: string) {
       const { message, nombreClase } = response;
       console.log('Clase creada:', nombreClase);
       
-      const materia = this.materiasFiltradas.find((m) => m.id === idMateria);
-      if (materia) {
-        if (!materia.clases) {
-          materia.clases = []; 
-        }
-        materia.clases.push({
-          nombre: nombreClase,
-          descripcion: '',
-        });
-      }
-      
+      // Mostrar la notificación de éxito
       const toast = await this.toastController.create({
         message: message,
         duration: 2000, 
@@ -78,6 +68,23 @@ crearClase(idMateria: string) {
         position: 'bottom', 
       });
       toast.present();
+
+      // Si la materia abierta es la misma donde se creó la clase, recargar las clases
+      if (this.materiaAbierta === idMateria) {
+        this.verClases(idMateria); // Recargar clases visibles
+      } else {
+        // Actualizar solo localmente si no está visible
+        const materia = this.materiasFiltradas.find((m) => m.id === idMateria);
+        if (materia) {
+          if (!materia.clases) {
+            materia.clases = []; 
+          }
+          materia.clases.push({
+            nombre: nombreClase,
+            descripcion: '',
+          });
+        }
+      }
     },
     async (error) => {
       console.error('Error al crear la clase:', error);
