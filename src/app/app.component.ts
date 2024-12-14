@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel } from '@ionic/angular/standalone';
-import { AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular/standalone';
@@ -9,53 +8,46 @@ import { MenuserviceService } from './servicio/menu/menuservice.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicSharedModule } from './shared.module';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
   imports: [
     CommonModule,
-    IonApp, 
-    IonRouterOutlet, 
-    IonMenu, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    IonList, 
-    IonItem, 
-    IonIcon, 
-    IonLabel,
+    IonApp,
+    IonRouterOutlet,
     RouterLink,
     IonicSharedModule,
     RouterOutlet
   ],
 })
-export class AppComponent  {
-  //implements AfterViewInit
+export class AppComponent implements OnInit {
   isAdmin: boolean = false;
   showMenu: boolean = false;
-  menuItems: any[] = [];
 
   constructor(
     private menuService: MenuserviceService,
     private userService: UserdataService,
     private platform: Platform,
-    private menuController: MenuController,  
+    private menuController: MenuController,
     private cd: ChangeDetectorRef,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.userService.loadUserData();
-      this.userService.isUserLoggedIn().subscribe(loggedIn => {
+      this.userService.isUserLoggedIn().subscribe((loggedIn) => {
         if (loggedIn) {
           this.checkAdminStatus();
         } else {
           this.menuController.enable(false);
-          console.log('Menu disabled');
+          console.log('Menú desactivado');
         }
       });
     });
@@ -64,23 +56,22 @@ export class AppComponent  {
   checkAdminStatus() {
     const userData = this.userService.getUserData();
     if (userData) {
-      this.isAdmin = userData.id_tp_usuario === 2;
+      this.isAdmin = userData.id_tp_usuario === 2; // Verificar si es administrador
+      console.log('Usuario administrador:', this.isAdmin);
       this.menuController.enable(true);
-      console.log('Menu enabled');
+      this.cd.detectChanges(); // Forzar la detección de cambios
+    } else {
+      this.isAdmin = false;
+      this.cd.detectChanges();
     }
   }
 
-  NgAfterViewInit() {
-   this.menuController.enable(this.showMenu);
-   }
-
   openMenu() {
-    this.menuController.open();  
+    this.menuController.open();
   }
 
   logout() {
     this.userService.clearUserData();
-    localStorage.removeItem('userData');
     this.menuController.enable(false);
     this.router.navigate(['/login']).then(() => {
       window.location.reload();

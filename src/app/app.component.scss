@@ -1,0 +1,22 @@
+/* Clases para menú lateral */
+ion-menu {
+    --width: 250px;
+  }
+  
+  ion-toolbar {
+    --background: #3880ff;
+    --color: white;
+  }
+  
+  /* Clases para el enlace activo */
+  .active-link {
+    font-weight: bold;
+    color: #3880ff;
+  }
+  
+  /* Estilo para el cierre de sesión */
+  .texto-cerrar-ses {
+    color: red;
+    font-weight: bold;
+  }
+  

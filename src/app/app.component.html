@@ -1,4 +1,5 @@
 <ion-app>
+  <!-- Menú lateral -->
   <ion-menu contentId="main-content" side="start">
     <ion-header>
       <ion-toolbar>
@@ -7,15 +8,16 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item routerLink="/home">Inicio</ion-item>
-        <ion-item routerLink="/scan">Registrar asistencia</ion-item>
-        <ion-item routerLink="/asistencias">Asistencias</ion-item>
-        <ion-item *ngIf="isAdmin" routerLink="#">Administrar cuentas</ion-item>
-        <ion-item *ngIf="isAdmin" routerLink="/gestion">Secciones y registro asistencia</ion-item>
+        <ion-item routerLink="/home" routerLinkActive="active-link">Inicio</ion-item>
+        <ion-item routerLink="/scan" routerLinkActive="active-link">Registrar asistencia</ion-item>
+        <ion-item routerLink="/asistencias" routerLinkActive="active-link">Asistencias</ion-item>
+        <ion-item *ngIf="isAdmin" routerLink="#" routerLinkActive="active-link">Administrar cuentas</ion-item>
+        <ion-item *ngIf="isAdmin" routerLink="/gestion" routerLinkActive="active-link">Secciones y registro asistencia</ion-item>
         <ion-item class="texto-cerrar-ses" (click)="logout()">Cerrar Sesión</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
 
+  <!-- Contenido principal -->
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
