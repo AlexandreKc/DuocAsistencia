@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   correo: string = "";      // Campo para el correo
   password: string = "";    // Campo para la contraseña
   passwordType: string = 'password'; // Para manejar la visibilidad de la contraseña
-
+  
   constructor(
     private router: Router,
     private alertController: AlertController,
@@ -27,11 +27,16 @@ export class LoginPage implements OnInit {
     private userService: UserdataService    // Inyecta el servicio de usuario
   ) {
   }
-
-
+  
+  
   ngOnInit() {
+    // Verificar si el usuario ya está logueado al inicio
+    if (this.userService.isUserLoggedIn()) {
+      // Si ya está logueado, redirigir al home
+      this.router.navigate(['/home']);
+    }
   }
-
+  
   // Método para mostrar alertas
   async mostrarAlerta(header: string, message: string) {
     const alert = await this.alertController.create({
@@ -39,15 +44,15 @@ export class LoginPage implements OnInit {
       message,
       buttons: ['OK']
     });
-
+    
     await alert.present();
   }
-
+  
   // Método para alternar la visibilidad de la contraseña
   togglePasswordVisibility() {
     this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
-
+  
   // Método para manejar el login
   login() {
     if (this.correo && this.password) {
@@ -63,10 +68,10 @@ export class LoginPage implements OnInit {
               id: response.id  // Asegúrate de que el id esté en la respuesta
             };
             this.userService.setUserData(userData);  // Guardamos los datos en el UserService
-
+            
             // Redirigir automáticamente al home
             this.router.navigate(['/home'], { queryParams: { username: userData.nombre, id_Tp_Usuario: userData.id_tp_usuario } });
-
+            
             // Alerta de éxito
             this.mostrarAlerta('Ingreso con éxito', 'Has iniciado sesión correctamente.');
           } else {
@@ -85,5 +90,5 @@ export class LoginPage implements OnInit {
       this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
     }
   }
-
+  
 }
