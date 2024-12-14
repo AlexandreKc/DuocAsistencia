@@ -43,7 +43,7 @@ export class DetallePage implements OnInit, OnDestroy {
         // Configurar el intervalo para recargar los alumnos cada 30 segundos
         this.intervalId = setInterval(() => {
           this.cargarAlumnos();
-        }, 15000); 
+        }, 30000); 
       } else {
         this.error = 'ID de la materia no recibido. Verifica los parámetros.';
         console.error(this.error);
