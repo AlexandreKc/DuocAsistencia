@@ -1,0 +1,164 @@
+//importe de font 
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap');
+
+
+// Ajustar el padding del ion-item y la alineación
+.input-item {
+  display: flex;
+  align-items: center; // Alinear íconos e inputs verticalmente
+  --padding-start: 0px; // Eliminar padding
+  --inner-padding-start: 0px;
+  
+  ion-icon {
+    font-size: 22px; // Tamaño del ícono
+    margin-right: 10px; // Separación del input
+  }
+  ion-label {
+    color: black !important; // Color fijo del label que no cambiará
+    transition: none !important; // Desactivar cualquier transición
+  
+    &:focus {
+      color: black !important; // Mantener el mismo color al enfocar
+    }
+  }
+
+  ion-label {
+    margin-left: 10px; // Mantener el label centrado al inicio
+    &.sc-ion-label-md-h {
+      transform: translateX(10px); // Alinear cuando flota
+    }
+  }
+}
+// Estilos para los botones
+.boton-login, .boton-recuperar {
+  margin-top: 10px; // Espacio entre botones
+}
+
+//Ocultar bg de los inputs
+.input-item {
+  background: transparent !important; /* Eliminar el fondo */
+  --background: transparent; /*background transparente */
+}
+
+.input-escribir {
+  background: transparent; /* fondo del input transparente */
+}
+.login-content{
+  --background: transparent;
+}
+//Ajustes para titulo
+.titulo{
+  margin-top: 50px;
+  margin-bottom: 15px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+}
+//cuerpo
+ion-content{
+  background:url('../../../assets/icon/background_1.png');
+  background-position: -20px relative;
+  background-size: cover;
+  --backdrop-filter: blur(5px);
+}
+//titulo
+.titulo {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 45px;
+  padding-bottom: 20px;
+  color: white;
+  margin-top: 30px;
+  padding-top: 10px;
+  background-color: rgba(177, 177, 205, 0.8); /* Color semitransparente (50% de opacidad) */
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  box-shadow: 
+    0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
+    4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
+    -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
+  margin-bottom: 0px;
+}
+//container del registro
+.form-container {
+  margin: auto;
+  margin-bottom: 40px;
+  border-radius: 0px;
+  background-color: #eeeeee;
+  width: 100%;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  box-shadow: 
+  0 4px 10px rgba(0, 0, 0, 0.1),  /* Sombra abajo */
+  4px 0 10px rgba(0, 0, 0, 0.1),  /* Sombra derecha */
+  -4px 0 10px rgba(0, 0, 0, 0.1); /* Sombra izquierda */
+  background-color: rgba(177, 177, 205, 0.5); /* Color semitransparente (50% de opacidad) */
+  padding-bottom: 15px;
+}
+//inputs
+.input-item {
+  background-color: white !important;
+  display: flex; 
+  align-items: center;
+  margin-top: 25px;
+  border-radius: 15px;
+
+  ion-icon {
+    padding-left: 15px;
+    margin-top: 30px;
+    margin-right: 8px;
+    color: black;
+  }
+
+  ion-label {
+    padding-top: 10px;
+    margin-bottom: 0;
+    margin-left: 0px;
+  }
+
+  ion-input {
+    margin-left: 20px;
+    flex: 1; 
+    border-radius: 5px; 
+    box-shadow: none;
+    width: 100%;
+    color: black;
+    
+    position: relative; // Necesario para el pseudo-elemento
+    padding-bottom: 10px; // Espacio para la línea
+    
+    &::after {
+      content: '';
+      display: block;
+      height: 2px; // Altura de la línea
+      margin-bottom: 5px;
+      background-color: black; // Color de la línea
+      position: absolute;
+      bottom: 0; // Coloca la línea en la parte inferior
+      left: 0;
+      right: 0;
+    }
+  }
+}
+//botones colores
+.custom-button1{
+  --background:  #43B02A !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+.custom-button2{
+  --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
+  --color: white; /* Cambia el color del texto si es necesario */
+  --border-radius: 10px; 
+}
+//ajuste espaciado botones
+ion-button{
+  padding-top: 5px;
+}
+ion-label.required::after {
+  content: "*";
+  color: red; 
+  margin-left: 2px; 
+  font-size: 0.8em; 
+  vertical-align: middle;
+}

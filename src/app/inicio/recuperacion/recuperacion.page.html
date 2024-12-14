@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="container">
+    <ion-title class="text-center titulo"><span class="white-text">Recuperación</span></ion-title>
+
+    <!-- Tarjeta para el formulario de recuperación -->
+    <ion-card class="login-card">
+      <ion-card-content>
+        <!-- Formulario para la recuperación de contraseña -->
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <!-- Input para el correo con icono -->
+          <ion-item lines="none" class="input-item">
+            <ion-icon name="mail-outline" slot="start"></ion-icon> <!-- Icono del correo -->
+            <ion-label position="floating" class="txt-lb required">Correo</ion-label>
+            <ion-input
+              type="email"
+              name="correo"
+              [(ngModel)]="correo"
+              minlength="12"
+              maxlength="70"
+              required
+              #correoInput="ngModel">
+            </ion-input>
+          </ion-item>
+
+          <!-- Mensajes de error de validación del correo -->
+          <ion-text color="danger" *ngIf="correoInput.invalid && (correoInput.dirty || correoInput.touched)">
+            <p *ngIf="correoInput.errors?.['required']">El correo es requerido.</p>
+            <p *ngIf="correoInput.errors?.['minlength']">El correo debe tener al menos 12 caracteres.</p>
+            <p *ngIf="correoInput.errors?.['maxlength']">El correo no debe exceder los 70 caracteres.</p>
+            <p *ngIf="correoInput.errors?.['email']">Por favor, ingresa un correo válido.</p>
+          </ion-text>
+
+          <!-- Botón para recuperar la contraseña -->
+          <ion-button expand="block" shape="round" class="custom-button1" type="submit" [disabled]="loginForm.invalid">
+            Recuperar Contraseña
+          </ion-button>
+
+          <!-- Botón para volver al login -->
+          <ion-button expand="block" shape="round" class="boton-recuperar custom-button2" href="/login">Volver al Login</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
