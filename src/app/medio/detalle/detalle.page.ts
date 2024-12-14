@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
@@ -12,26 +12,38 @@ import * as QRCode from 'qrcode';
   templateUrl: './detalle.page.html',
   styleUrls: ['./detalle.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonicSharedModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonicSharedModule],
 })
-export class DetallePage implements OnInit {
+export class DetallePage implements OnInit, OnDestroy {
   idMateria: string | null = null;
+  idClase: string | null = null; // Variable para almacenar idClase
   alumnos: any[] = [];
   loading: boolean = false;
-  error: string | null = null; 
+  error: string | null = null;
   qrCode: string | null = null;
-  idUsuario: string | null = null;
-  constructor(
-    private route: ActivatedRoute,
-    private database: DatabaseService
-  ) {}
+  intervalId: any; // Variable para almacenar el ID del intervalo
+
+  constructor(private route: ActivatedRoute, private database: DatabaseService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.idMateria = params['idMateria']; 
+      this.idMateria = params['idMateria']; // Obtener idMateria de los queryParams
+      this.idClase = params['idClase']; // Obtener idClase de los queryParams
+
+      if (this.idClase) {
+        this.generarQR(); // Generar QR con idClase
+      } else {
+        this.error = 'ID de la clase no recibido. Verifica los parámetros.';
+        console.error(this.error);
+      }
 
       if (this.idMateria) {
-        this.cargarAlumnos();
+        this.cargarAlumnos(); // Cargar alumnos relacionados a idMateria
+
+        // Configurar el intervalo para recargar los alumnos cada 30 segundos
+        this.intervalId = setInterval(() => {
+          this.cargarAlumnos();
+        }, 15000); 
       } else {
         this.error = 'ID de la materia no recibido. Verifica los parámetros.';
         console.error(this.error);
@@ -39,26 +51,41 @@ export class DetallePage implements OnInit {
     });
   }
 
-  cargarAlumnos() {
-    this.loading = true; 
-    this.error = null; 
-
-    this.database.getAlumnosDeMateria(this.idMateria!).subscribe(
-      (response) => {
-        this.alumnos = response.alumnos || [];
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Error al cargar alumnos:', error);
-        this.error = 'No se pudieron cargar los alumnos. Intenta nuevamente.';
-        this.loading = false; 
-      }
-    );
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
+
+  cargarAlumnos() {
+    this.loading = true;
+    this.error = null;
+  
+    if (this.idClase) { // Asegurarte de que tienes un idClase disponible
+      this.database.getAlumnosPorClase(parseInt(this.idClase)).subscribe(
+        (response) => {
+          this.alumnos = response.alumnos || [];
+          console.log('Alumnos actualizados (por clase):', this.alumnos);
+          this.loading = false;
+        },
+        (error) => {
+          console.error('Error al cargar alumnos por clase:', error);
+          this.error = 'No se pudieron cargar los alumnos. Intenta nuevamente.';
+          this.loading = false;
+        }
+      );
+    } else {
+      console.error('No se recibió idClase para cargar alumnos.');
+      this.error = 'ID de la clase no definido.';
+      this.loading = false;
+    }
+  }
+
   generarQR() {
-    if (this.idMateria && this.idUsuario) { // Asegúrate de que ambos valores existan
-      const qrData = `id_clase:${this.idMateria}&id_usuario:${this.idUsuario}`;
-      
+    if (this.idClase) { // Usar idClase para generar el QR
+      const qrData = JSON.stringify({ id_clase: this.idClase });
+      console.log('Datos para el QR:', qrData);
+
       QRCode.toDataURL(qrData, (err, url) => {
         if (err) {
           console.error('Error al generar el QR:', err);

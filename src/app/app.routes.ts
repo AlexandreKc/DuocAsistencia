@@ -39,7 +39,12 @@ export const routes: Routes = [
     loadComponent: () => import('./medio/detalle/detalle.page').then(m => m.DetallePage)
   },
   {
+    path: 'escanear',
+    loadComponent: () => import('./medio/escanear/escanear.page').then( m => m.EscanearPage)
+  },
+  {
     path: '**',
     redirectTo: '/login',
-  }
+  },
+
 ];

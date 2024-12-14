@@ -58,10 +58,10 @@ export class DatabaseService {
     const url = `${this.apiUrl}/clases/${idClase}/alumnos`;
     return this.http.get(url);
   }
-  // Método para actualizar la asistencia
+  //metodo para updatear la asistencia
   updateAsistencia(idClase: string, idUsuario: string): Observable<any> {
     const url = `${this.apiUrl}/update-asistencia`;
-    return this.http.post(url, { id_clase: idClase, id_usuario: idUsuario });
+    const headers = { 'Content-Type': 'application/json' }; // Encabezados explícitos
+    return this.http.post(url, { id_clase: idClase, id_usuario: idUsuario }, { headers });
   }
-  
 }
