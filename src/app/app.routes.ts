@@ -47,10 +47,11 @@ export const routes: Routes = [
     loadComponent: () => import('./medio/conteoasistencia/conteoasistencia.page').then( m => m.ConteoasistenciaPage)
   },
   {
+    path: 'administrarcuentas',
+    loadComponent: () => import('./medio/administrarcuentas/administrarcuentas.page').then( m => m.AdministrarcuentasPage)
+  },
+  {
     path: '**',
     redirectTo: '/login',
   },
-
-
-
 ];

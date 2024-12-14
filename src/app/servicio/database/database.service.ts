@@ -76,4 +76,8 @@ export class DatabaseService {
       params: { materiaId },
     });
   }
+  //metodo para obtener todos los usuarios
+  getUsuarios(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios`);
+  }
 }

@@ -81,6 +81,18 @@ export class HomePage implements OnInit, AfterViewInit {
       console.error('No se pudo encontrar un elemento con la clase .texto-desvanecido');
     }
   }
+  navigateToGestion() {
+    this.router.navigate(['/gestion']);
+  }
+  navigateToAsistencia() {
+    this.router.navigate(['/conteoasistencia']);
+  }
+  navigateToEscanear() {
+    this.router.navigate(['/escanear']);
+  }
+  navigateToAdmin() {
+    this.router.navigate(['/administrarcuentas']);
+  }
 
   ionViewWillEnter() {
     // console.log('La vista está a punto de ser mostrada en pantalla');

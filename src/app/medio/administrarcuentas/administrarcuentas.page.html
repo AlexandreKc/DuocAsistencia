@@ -1,0 +1,35 @@
+<meta name="mobile-web-app-capable" content="yes">
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- Botón de menú hamburguesa con icono personalizado -->
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+      </ion-menu-button>
+    </ion-buttons>
+
+    <!-- Logo y título -->
+    <ion-img class="logo-main" src="../../../assets/icon/logoduoc.png" alt="logo-duoc"></ion-img>
+    <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Usuarios Registrados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let usuario of usuarios">
+          <ion-label>
+            <h2>{{ usuario.nombre }}</h2>
+            <p>Correo: {{ usuario.correo }}</p>
+            <p>Tipo Usuario: {{ usuario.id_tp_usuario }}</p>
+          </ion-label>
+          <ion-button slot="end" color="danger" >Eliminar</ion-button>
+          <!-- (click)="eliminarUsuario(usuario.id)" -->
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -25,7 +25,7 @@
       </ion-card-header>
       <ion-card-content>
         <p>Aquí podrás registrar tu asistencia (Acceso a cámara requerido)</p>
-        <ion-button expand="full" routerLink="/scan">Registrar asistencia</ion-button>
+        <ion-button expand="full" (click)="navigateToEscanear()">Registrar asistencia</ion-button>
       </ion-card-content>
     </ion-card>
     
@@ -35,7 +35,7 @@
       </ion-card-header>
       <ion-card-content>
         <p>Aquí podrás ver tu asistencia en las materias</p>
-        <ion-button expand="full" routerLink="/asistencias">Asistencias</ion-button>
+        <ion-button expand="full" (click)="navigateToAsistencia()">Asistencias</ion-button>
       </ion-card-content>
     </ion-card>
 
@@ -46,7 +46,7 @@
       </ion-card-header>
       <ion-card-content>
         <p>Aquí podrás modificar otras cuentas de usuario para definir roles</p>
-        <ion-button expand="full">Administrar</ion-button>
+        <ion-button expand="full" (click)="navigateToAdmin()">Administrar</ion-button>
       </ion-card-content>
     </ion-card>
 
@@ -56,7 +56,7 @@
       </ion-card-header>
       <ion-card-content>
         <p>Aquí podrás ver las secciones y generar los respectivos QR</p>
-        <ion-button expand="full" routerLink="/gestion">Gestionar asistencia</ion-button>
+        <ion-button expand="full" (click)="navigateToGestion()">Gestionar asistencia</ion-button>
       </ion-card-content>
     </ion-card>
     
