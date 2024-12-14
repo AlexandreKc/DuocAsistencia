@@ -16,11 +16,16 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Usuarios Registrados</ion-card-title>
+      <ion-input
+        placeholder="Buscar por correo"
+        [(ngModel)]="busqueda"
+        (ionInput)="filtrarUsuarios()"
+        clearInput
+      ></ion-input>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let usuario of usuarios">
+        <ion-item *ngFor="let usuario of usuariosFiltrados">
           <ion-label>
             <h2>{{ usuario.nombre }}</h2>
             <p>Correo: {{ usuario.correo }}</p>
