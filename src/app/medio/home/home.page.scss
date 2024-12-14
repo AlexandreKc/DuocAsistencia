@@ -1,0 +1,74 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
+//Desde aqui mis modificaciones
+.logo-main{
+  height: 45px;
+  margin-right: 25px;
+}
+.tit-asis{
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: #c3c6c8!important;
+}
+
+ion-card{
+  background-color:#8bb8e89f;
+}
+
+ion-toolbar{
+  --background: #072757;
+  --color: white;
+}
+
+//cuerpo
+ion-content {
+  --background: url('../../../assets/icon/background_1.png');
+  background-repeat: no-repeat !important; 
+  background-size: cover; 
+  background-position: -20% center; 
+  height: 100vh; 
+  padding: 20px;
+  overflow-y: hidden;
+  }
+//modificaciones main
+.tit-bienv{
+  margin-top: 25px !important;
+  margin-left: auto !important;
+  color: #1A1A1A;
+  font-size: 25px; 
+}
+.texto-cerrar-ses{
+  color: red;
+}
+ion-card-title{
+  color: #073170;
+  font-size: 20px;
+}
+
+//fix para colores modo blanco
+@media (prefers-color-scheme: light) {
+  ion-card-title{
+    color: white;
+  }
+  .texto-boton{
+    color: black;
+  }
+
+}
+//para la animacion
+.texto-desvanecido{
+  opacity: 0;
+  text-align: center;
+}
+//espaciado botones
+ion-button{
+  margin-top: 20px;
+  background-color: #307FE2;
+  color: white;
+}
+
+//ion-card ajustes
+ion-card{
+  border-radius: 15px;
+}

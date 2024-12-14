@@ -1,13 +1,64 @@
+<meta name="mobile-web-app-capable" content="yes">
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <!-- Botón de menú hamburguesa con icono personalizado -->
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+      </ion-menu-button>
+    </ion-buttons>
+
+    <!-- Logo y título -->
+    <ion-img class="logo-main" src="../../../assets/icon/logoduoc.png" alt="logo-duoc"></ion-img>
+    <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!-- Contenido principal con el id que coincide con el contentId del menú -->
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <h2 class="tit-bienv texto-desvanecido">¡Bienvenido/a {{ username }}!</h2>
+  
+  <div class="container">
+    <!-- Tarjetas de acciones -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registrar asistencia</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Aquí podrás registrar tu asistencia (Acceso a cámara requerido)</p>
+        <ion-button expand="full" routerLink="/scan">Registrar asistencia</ion-button>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Revisar asistencia</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Aquí podrás ver tu asistencia en las materias</p>
+        <ion-button expand="full" routerLink="/asistencias">Asistencias</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Opciones para administradores -->
+    <ion-card *ngIf="isAdmin">
+      <ion-card-header>
+        <ion-card-title>Administrar cuentas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Aquí podrás modificar otras cuentas de usuario para definir roles</p>
+        <ion-button expand="full">Administrar</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="isAdmin">
+      <ion-card-header>
+        <ion-card-title>Secciones y generación de QR</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Aquí podrás ver las secciones y generar los respectivos QR</p>
+        <ion-button expand="full" routerLink="/gestion">Gestionar asistencia</ion-button>
+      </ion-card-content>
+    </ion-card>
+    
+  </div>
 </ion-content>

@@ -47,43 +47,43 @@ export class AppComponent  {
   ) {
   }
 
-  // initializeApp() {
-  //   this.platform.ready().then(() => {
-  //     this.userService.loadUserData();
-  //     this.userService.isUserLoggedIn().subscribe(loggedIn => {
-  //       if (loggedIn) {
-  //         this.checkAdminStatus();
-  //       } else {
-  //         this.menuController.enable(false);
-  //         console.log('Menu disabled');
-  //       }
-  //     });
-  //   });
-  // }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.userService.loadUserData();
+      this.userService.isUserLoggedIn().subscribe(loggedIn => {
+        if (loggedIn) {
+          this.checkAdminStatus();
+        } else {
+          this.menuController.enable(false);
+          console.log('Menu disabled');
+        }
+      });
+    });
+  }
 
-  // checkAdminStatus() {
-  //   const userData = this.userService.getUserData();
-  //   if (userData) {
-  //     this.isAdmin = userData.id_tp_usuario === 2;
-  //     this.menuController.enable(true);
-  //     console.log('Menu enabled');
-  //   }
-  // }
+  checkAdminStatus() {
+    const userData = this.userService.getUserData();
+    if (userData) {
+      this.isAdmin = userData.id_tp_usuario === 2;
+      this.menuController.enable(true);
+      console.log('Menu enabled');
+    }
+  }
 
   NgAfterViewInit() {
-  //  this.menuController.enable(this.showMenu);
+   this.menuController.enable(this.showMenu);
    }
 
-  // openMenu() {
-  //   this.menuController.open();  
-  // }
+  openMenu() {
+    this.menuController.open();  
+  }
 
-  // logout() {
-  //   this.userService.clearUserData();
-  //   localStorage.removeItem('userData');
-  //   this.menuController.enable(false);
-  //   this.router.navigate(['/login']).then(() => {
-  //     window.location.reload();
-  //   });
-  // }
+  logout() {
+    this.userService.clearUserData();
+    localStorage.removeItem('userData');
+    this.menuController.enable(false);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
+  }
 }
