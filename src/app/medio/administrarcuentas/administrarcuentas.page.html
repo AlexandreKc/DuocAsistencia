@@ -29,7 +29,7 @@
           <ion-label>
             <h2>{{ usuario.nombre }}</h2>
             <p>Correo: {{ usuario.correo }}</p>
-            <p>Tipo Usuario: {{ usuario.id_tp_usuario }}</p>
+            <p>Tipo Usuario: {{ obtenerRol(usuario.id_tp_usuario) }}</p>
           </ion-label>
           <ion-button slot="end" color="danger" (click)="eliminarUsuario(usuario.id)">Eliminar</ion-button>
         </ion-item>

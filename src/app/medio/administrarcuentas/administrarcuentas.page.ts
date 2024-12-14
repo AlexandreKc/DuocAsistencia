@@ -62,6 +62,16 @@ export class AdministrarcuentasPage implements OnInit {
       console.log('Eliminación cancelada por el usuario.');
     }
   }
+  obtenerRol(idTpUsuario: number): string {
+    switch (idTpUsuario) {
+      case 1:
+        return 'Estudiante';
+      case 2:
+        return 'Administrador';
+      default:
+        return 'Desconocido'; // Opcional, para manejar valores inesperados
+    }
+  }
   
 }
 

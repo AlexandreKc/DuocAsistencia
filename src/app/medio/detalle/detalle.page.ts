@@ -41,9 +41,7 @@ export class DetallePage implements OnInit, OnDestroy {
         this.cargarAlumnos(); // Cargar alumnos relacionados a idMateria
 
         // Configurar el intervalo para recargar los alumnos cada 30 segundos
-        this.intervalId = setInterval(() => {
-          this.cargarAlumnos();
-        }, 30000); 
+        this.startInterval();
       } else {
         this.error = 'ID de la materia no recibido. Verifica los parámetros.';
         console.error(this.error);
@@ -52,8 +50,23 @@ export class DetallePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.clearInterval(); // Detener el intervalo cuando se destruya el componente
+  }
+
+  startInterval() {
+    this.clearInterval(); // Asegurarte de que no hay intervalos duplicados
+
+    this.intervalId = setInterval(() => {
+      if (this.idClase) { // Solo ejecutar si hay una clase activa
+        this.cargarAlumnos();
+      }
+    }, 30000);
+  }
+
+  clearInterval() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
+      this.intervalId = null; // Reiniciar el valor
     }
   }
 

@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSharedModule } from 'src/app/shared.module';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { UserdataService } from '../../servicio/user/userdata.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-escanear',
@@ -13,21 +14,18 @@ import { UserdataService } from '../../servicio/user/userdata.service';
   standalone: true,
   imports: [CommonModule, FormsModule, IonicSharedModule],
 })
-export class EscanearPage implements AfterViewInit {
+export class EscanearPage implements AfterViewInit, OnDestroy {
   qrResult: string | null = null;
-  idUsuario: string | null = null; // Agregar la propiedad idUsuario
+  idUsuario: string | null = null;
+  html5QrCode: Html5Qrcode | null = null;
 
   constructor(
     private databaseService: DatabaseService,
-    private userdataService: UserdataService
+    private userdataService: UserdataService,
+    private toastController: ToastController
   ) {}
 
-  ngAfterViewInit(): void {
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    const verbose = false;
-    const scanner = new Html5QrcodeScanner('reader', config, verbose);
-
-    // Obtener el ID del usuario logueado
+  async ngAfterViewInit(): Promise<void> {
     this.idUsuario = this.userdataService.getUserId()?.toString() || null;
 
     if (!this.idUsuario) {
@@ -35,50 +33,98 @@ export class EscanearPage implements AfterViewInit {
       return;
     }
 
-    scanner.render(
-      (decodedText) => {
-        console.log('QR Escaneado:', decodedText);
+    try {
+      const devices = await Html5Qrcode.getCameras();
 
-        try {
-          const data = JSON.parse(decodedText); // Decodifica el QR
-          const idClase = data.id_clase;
+      if (devices && devices.length > 0) {
+        const backCamera = devices.find((device) =>
+          device.label.toLowerCase().includes('back')
+        );
 
-          console.log('ID Usuario:', this.idUsuario);
+        const cameraId = backCamera ? backCamera.id : devices[0].id;
 
-          if (idClase && this.idUsuario) {
-            // Llamar al método para actualizar la asistencia
-            this.updateAsistencia(idClase, this.idUsuario); 
-          } else {
-            console.error('Datos incompletos: idClase o idUsuario no encontrados.');
-            alert('No se pudo registrar la asistencia. Verifique sus datos.');
+        this.html5QrCode = new Html5Qrcode('reader');
+        await this.html5QrCode.start(
+          { deviceId: { exact: cameraId } }, // Configurar la cámara trasera
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          (decodedText) => {
+            this.handleScanSuccess(decodedText);
+          },
+          (error) => {
+            console.warn('No se pudo escanear el QR:', error);
           }
-        } catch (error) {
-          console.error('Error al interpretar el contenido del QR:', error);
-          alert('Código QR inválido.');
-        }
-
-        scanner.clear();
-      },
-      (error) => {
-        console.error('Error al escanear el QR:', error);
+        );
+      } else {
+        console.error('No se encontraron cámaras.');
+        alert('No se pudo acceder a la cámara.');
       }
-    );
+    } catch (error) {
+      console.error('Error al inicializar las cámaras:', error);
+    }
   }
 
-  updateAsistencia(idClase: string, idUsuario: string): void {
+  ngOnDestroy(): void {
+    if (this.html5QrCode) {
+      this.html5QrCode.stop().then(() => {
+        console.log('Escaneo detenido.');
+      }).catch((err) => {
+        console.error('Error al detener el escaneo:', err);
+      });
+    }
+  }
+
+  async handleScanSuccess(decodedText: string): Promise<void> {
+    console.log('QR Escaneado:', decodedText);
+
+    try {
+      const data = JSON.parse(decodedText);
+      const idClase = data.id_clase;
+
+      if (idClase && this.idUsuario) {
+        await this.updateAsistencia(idClase, this.idUsuario); // Registrar la asistencia
+      } else {
+        console.error('Datos incompletos: idClase o idUsuario no encontrados.');
+        alert('No se pudo registrar la asistencia. Verifique sus datos.');
+      }
+    } catch (error) {
+      console.error('Error al interpretar el contenido del QR:', error);
+      alert('Código QR inválido.');
+    }
+
+    // Detener el escaneo tras leer un código
+    if (this.html5QrCode) {
+      this.html5QrCode.stop();
+    }
+  }
+
+  async updateAsistencia(idClase: string, idUsuario: string): Promise<void> {
     console.log('Llamando a updateAsistencia con:', { idClase, idUsuario });
-    
+
     this.databaseService.updateAsistencia(idClase, idUsuario).subscribe(
-      (response) => {
+      async (response) => {
         console.log('Respuesta del servidor:', response);
-        alert('Asistencia registrada con éxito');
+
+        // Mostrar un toast al registrar la asistencia
+        const toast = await this.toastController.create({
+          message: 'Asistencia registrada con éxito',
+          duration: 2000,
+          color: 'success',
+          position: 'bottom',
+        });
+        toast.present();
       },
-      (error) => {
+      async (error) => {
         console.error('Error en el servidor:', error);
-        alert('Hubo un error al registrar la asistencia.');
+
+        // Mostrar un toast si ocurre un error
+        const toast = await this.toastController.create({
+          message: 'Hubo un error al registrar la asistencia',
+          duration: 2000,
+          color: 'danger',
+          position: 'bottom',
+        });
+        toast.present();
       }
     );
   }
-
-  
 }
