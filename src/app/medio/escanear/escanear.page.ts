@@ -18,6 +18,7 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
   qrResult: string | null = null;
   idUsuario: string | null = null;
   html5QrCode: Html5Qrcode | null = null;
+  scanning: boolean = false; // Control para evitar múltiples lecturas
 
   constructor(
     private databaseService: DatabaseService,
@@ -48,7 +49,10 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
           { deviceId: { exact: cameraId } }, // Configurar la cámara trasera
           { fps: 10, qrbox: { width: 250, height: 250 } },
           (decodedText) => {
-            this.handleScanSuccess(decodedText);
+            if (!this.scanning) {
+              this.scanning = true;
+              this.handleScanSuccess(decodedText);
+            }
           },
           (error) => {
             console.warn('No se pudo escanear el QR:', error);
@@ -64,13 +68,20 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.stopScanning();
+  }
+
+  async stopScanning(): Promise<void> {
     if (this.html5QrCode) {
-      this.html5QrCode.stop().then(() => {
-        console.log('Escaneo detenido.');
-      }).catch((err) => {
+      try {
+        await this.html5QrCode.stop();
+        console.log('Escaneo detenido correctamente.');
+      } catch (err) {
         console.error('Error al detener el escaneo:', err);
-      });
+      }
     }
+    this.html5QrCode = null;
+    this.scanning = false; // Reinicia el control
   }
 
   async handleScanSuccess(decodedText: string): Promise<void> {
@@ -91,10 +102,8 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
       alert('Código QR inválido.');
     }
 
-    // Detener el escaneo tras leer un código
-    if (this.html5QrCode) {
-      this.html5QrCode.stop();
-    }
+    // Detener el escaneo tras leer un código y permitir una nueva lectura
+    this.scanning = false;
   }
 
   async updateAsistencia(idClase: string, idUsuario: string): Promise<void> {

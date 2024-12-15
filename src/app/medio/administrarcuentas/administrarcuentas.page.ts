@@ -3,143 +3,219 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicSharedModule } from 'src/app/shared.module';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-administrarcuentas',
   templateUrl: './administrarcuentas.page.html',
   styleUrls: ['./administrarcuentas.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicSharedModule]
+  imports: [CommonModule, FormsModule, IonicSharedModule],
 })
 export class AdministrarcuentasPage implements OnInit {
-  usuarios: any[] = []; 
-  usuariosFiltrados: any[] = []; 
+  usuarios: any[] = [];
+  usuariosFiltrados: any[] = [];
   busqueda: string = '';
-
-  // Variables para asignar materias
-  mostrarModal: boolean = false;
+  mostrarModalEliminar: boolean = false; 
+  materiasParaAsignar: any[] = [];
+  materiasParaRemover: any[] = [];
+  mostrarModalAsignar: boolean = false;
+  mostrarModalRemover: boolean = false;
   usuarioSeleccionado: any = null;
-  materiasDisponibles: any[] = [];
+  busquedaMateria: string = '';
 
-  constructor(private databaseService: DatabaseService) {}
-  materiasFiltradas: any[] = []; 
-  busquedaMateria: string = ''; 
+  constructor(private databaseService: DatabaseService, private toastController: ToastController) {}
+
   ngOnInit() {
     this.cargarUsuarios();
-    this.cargarMaterias(); // Cargar las materias disponibles al iniciar
   }
 
   cargarUsuarios() {
     this.databaseService.getUsuarios().subscribe({
       next: (data) => {
         this.usuarios = data;
-        this.usuariosFiltrados = data; 
-        console.log('Usuarios cargados:', this.usuarios);
+        this.usuariosFiltrados = data;
       },
-      error: (err) => {
-        console.error('Error al cargar usuarios:', err);
-      },
+      error: (err) => console.error('Error al cargar usuarios:', err),
     });
   }
 
   filtrarUsuarios() {
-    if (this.busqueda.trim() === '') {
-      this.usuariosFiltrados = this.usuarios;
-    } else {
-      this.usuariosFiltrados = this.usuarios.filter((usuario) =>
-        usuario.correo.toLowerCase().includes(this.busqueda.toLowerCase())
-      );
-    }
+    const busqueda = this.busqueda.toLowerCase();
+    this.usuariosFiltrados = this.usuarios.filter((usuario) =>
+      usuario.correo.toLowerCase().includes(busqueda)
+    );
   }
 
-  eliminarUsuario(id: number) {
-    console.log('Intentando eliminar usuario con ID:', id);
-  
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario y todas sus relaciones?')) {
-      this.databaseService.deleteUsuario(id).subscribe({
-        next: () => {
-          console.log(`Usuario con ID ${id} eliminado junto con sus relaciones.`);
-          this.cargarUsuarios();
-        },
-        error: (err) => {
-          console.error('Error al eliminar usuario:', err);
-        },
-      });
-    } else {
-      console.log('Eliminación cancelada por el usuario.');
+  abrirModalAsignarMaterias(usuario: any) {
+    this.usuarioSeleccionado = usuario;
+    this.databaseService.getAllMaterias().subscribe({
+      next: (data) => {
+        this.materiasParaAsignar = data.map((materia) => ({
+          ...materia,
+          seleccionada: false,
+        }));
+        this.mostrarModalAsignar = true;
+      },
+      error: (err) => console.error('Error al cargar materias para asignar:', err),
+    });
+  }
+
+  cerrarModalAsignar() {
+    this.mostrarModalAsignar = false;
+    this.usuarioSeleccionado = null;
+  }
+
+  abrirModalRemoverMaterias(usuario: any) {
+    this.usuarioSeleccionado = usuario;
+    this.databaseService.getMaterias(usuario.id).subscribe({
+      next: (data) => {
+        this.materiasParaRemover = data.map((materia) => ({
+          ...materia,
+          seleccionada: false,
+        }));
+        this.mostrarModalRemover = true;
+      },
+      error: (err) => console.error('Error al cargar materias asignadas:', err),
+    });
+  }
+
+  cerrarModalRemover() {
+    this.mostrarModalRemover = false;
+    this.usuarioSeleccionado = null;
+  }
+
+  filtrarMateriasParaAsignar() {
+    const busqueda = this.busquedaMateria.toLowerCase();
+    this.materiasParaAsignar = this.materiasParaAsignar.filter((materia) =>
+      materia.nombre.toLowerCase().includes(busqueda)
+    );
+  }
+
+  filtrarMateriasParaRemover() {
+    const busqueda = this.busquedaMateria.toLowerCase();
+    this.materiasParaRemover = this.materiasParaRemover.filter((materia) =>
+      materia.nombre.toLowerCase().includes(busqueda)
+    );
+  }
+
+  async mostrarToast(mensaje: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      color: color,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
+  async asignarMateriasSeleccionadas() {
+    const materiasSeleccionadas = this.materiasParaAsignar
+      .filter((materia) => materia.seleccionada)
+      .map((materia) => materia.id);
+
+    if (!materiasSeleccionadas.length) {
+      await this.mostrarToast('Debes seleccionar al menos una materia.', 'warning');
+      return;
     }
+
+    this.databaseService.asignarMaterias(this.usuarioSeleccionado.id, materiasSeleccionadas).subscribe({
+      next: async () => {
+        await this.mostrarToast('Materias asignadas correctamente.');
+        this.cerrarModalAsignar();
+      },
+      error: async (err) => {
+        console.error('Error al asignar materias:', err);
+        await this.mostrarToast('Error al asignar materias.', 'danger');
+      },
+    });
+  }
+
+  async removerMateriasSeleccionadas() {
+    // Depuración: Verificar el contenido de materiasParaRemover
+    console.log('Contenido de materiasParaRemover:', this.materiasParaRemover);
+  
+    // Ajusta el atributo que contiene el ID de la materia
+    const materiasSeleccionadas = this.materiasParaRemover
+      .filter((materia) => materia.seleccionada)
+      .map((materia) => materia.materia_id); // Cambia a materia.materia_id si es necesario
+  
+    // Depuración: Verificar las materias seleccionadas
+    console.log('Materias seleccionadas para remover (IDs):', materiasSeleccionadas);
+  
+    if (!materiasSeleccionadas.length) {
+      await this.mostrarToast('Debes seleccionar al menos una materia.', 'warning');
+      return;
+    }
+  
+    // Depuración: Verificar el payload antes de enviarlo
+    const payload = {
+      usuarioId: this.usuarioSeleccionado.id,
+      materiasSeleccionadas,
+    };
+    console.log('Payload enviado al servicio:', payload);
+  
+    this.databaseService.removerMaterias(payload.usuarioId, payload.materiasSeleccionadas).subscribe({
+      next: async (response) => {
+        console.log('Respuesta del servidor al remover materias:', response); // Depuración
+        await this.mostrarToast('Materias removidas correctamente.');
+        this.cerrarModalRemover();
+      },
+      error: async (err) => {
+        console.error('Error al remover materias:', err); // Depuración de errores
+        await this.mostrarToast('Error al remover materias.', 'danger');
+      },
+    });
+  }
+  
+  
+  onCheckboxChangeAsignar(event: any, index: number) {
+    this.materiasParaAsignar[index].seleccionada = event.detail.checked;
+  }
+
+  onCheckboxChangeRemover(event: any, index: number) {
+    this.materiasParaRemover[index].seleccionada = event.detail.checked;
   }
 
   obtenerRol(idTpUsuario: number): string {
     switch (idTpUsuario) {
       case 1:
-        return 'Estudiante';
+        return 'Alumno';
       case 2:
         return 'Administrador';
       default:
         return 'Desconocido';
     }
   }
-
-
-  cargarMaterias() {
-    this.databaseService.getAllMaterias().subscribe({
-      next: (data) => {
-        this.materiasDisponibles = data.map((materia) => ({
-          ...materia,
-          seleccionada: false, // Inicializa el estado de selección
-        }));
-        this.materiasFiltradas = [...this.materiasDisponibles]; // Inicializa la lista filtrada
-      },
-      error: (err) => console.error('Error al cargar materias:', err),
-    });
-  }
-  filtrarMaterias() {
-    const busqueda = this.busquedaMateria.toLowerCase();
-    this.materiasFiltradas = this.materiasDisponibles.filter((materia) =>
-      materia.nombre.toLowerCase().includes(busqueda)
-    );
-  }
-
-
-  // Método para abrir el modal y asignar materias
-  abrirModalAsignarMaterias(usuario: any) {
-    this.usuarioSeleccionado = usuario;
-    // Reiniciar las selecciones
-    this.materiasDisponibles.forEach(m => m.seleccionada = false);
-    this.mostrarModal = true;
-  }
-
-  cerrarModal() {
-    this.mostrarModal = false;
-    this.usuarioSeleccionado = null;
-  }
-
-  asignarMateriasSeleccionadas() {
-    if (!this.usuarioSeleccionado) return;
-
-    const materiasAAsignar = this.materiasDisponibles
-      .filter(m => m.seleccionada)
-      .map(m => m.id); // Suponiendo que la materia tiene un campo "id"
-
-    if (materiasAAsignar.length === 0) {
-      alert('Debes seleccionar al menos una materia.');
+  //para eliminacion de cuentas
+  async eliminarCuentaUsuario() {
+    if (!this.usuarioSeleccionado) {
+      await this.mostrarToast('No se seleccionó un usuario.', 'warning');
       return;
     }
 
-    this.databaseService.asignarMaterias(this.usuarioSeleccionado.id, materiasAAsignar).subscribe({
-      next: (response) => {
-        console.log('Materias asignadas con éxito:', response);
-        alert('Materias asignadas correctamente.');
-        this.cerrarModal();
+    this.databaseService.deleteUsuario(this.usuarioSeleccionado.id).subscribe({
+      next: async () => {
+        await this.mostrarToast('Cuenta eliminada correctamente.');
+        this.cerrarModalEliminar();
+        this.cargarUsuarios(); // Refresca la lista de usuarios
       },
-      error: (err) => {
-        console.error('Error al asignar materias:', err);
-        alert('Hubo un error al asignar las materias.');
-      }
+      error: async (err) => {
+        console.error('Error al eliminar cuenta:', err);
+        await this.mostrarToast('Error al eliminar la cuenta.', 'danger');
+      },
     });
   }
-  onCheckboxChange(event: any, index: number) {
-    this.materiasDisponibles[index].seleccionada = event.detail.checked;
-  }
+
+    abrirModalEliminarCuenta(usuario: any) {
+      this.usuarioSeleccionado = usuario;
+      this.mostrarModalEliminar = true;
+    }
+
+    cerrarModalEliminar() {
+      this.mostrarModalEliminar = false;
+      this.usuarioSeleccionado = null;
+    }
+
+
 }

@@ -89,4 +89,11 @@ export class DatabaseService {
     const payload = { usuarioId, materias };
     return this.http.post(`${this.apiUrl}/asignar-materias`, payload);
   }
+  //remover materias
+  removerMaterias(usuarioId: number, materiasIds: number[]): Observable<any> {
+    const url = `${this.apiUrl}/remover-materias`; // Suponiendo que tienes un endpoint para esto
+    const body = { usuarioId, materiasIds };
+    return this.http.post(url, body);
+  }
+  
 }

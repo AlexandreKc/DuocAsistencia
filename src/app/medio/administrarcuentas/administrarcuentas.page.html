@@ -4,7 +4,7 @@
     <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
       </ion-menu-button>
     </ion-buttons>
 
@@ -14,6 +14,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <!-- Lista de usuarios -->
   <ion-card>
     <ion-card-header>
       <ion-input
@@ -31,7 +32,6 @@
             <p style="margin: 0; font-size: 0.9em;">Correo: {{ usuario.correo }}</p>
             <p style="margin: 0; font-size: 0.9em;">Tipo Usuario: {{ obtenerRol(usuario.id_tp_usuario) }}</p>
           </ion-label>
-          <!-- Contenedor de botones -->
           <ion-grid slot="end" style="text-align: center;">
             <ion-row>
               <ion-col>
@@ -42,8 +42,15 @@
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-button expand="block" color="danger" (click)="eliminarUsuario(usuario.id)">
-                  Eliminar
+                <ion-button expand="block" color="warning" (click)="abrirModalRemoverMaterias(usuario)">
+                  Remover Materias
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="danger" (click)="abrirModalEliminarCuenta(usuario)">
+                  Eliminar Cuenta
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -53,44 +60,37 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Modal para asignar materias -->
-  <ion-modal [isOpen]="mostrarModal" (didDismiss)="cerrarModal()">
+  <!-- Modal para Asignar Materias -->
+  <ion-modal [isOpen]="mostrarModalAsignar" (didDismiss)="cerrarModalAsignar()">
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-title>Asignar Materias</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+            <ion-button (click)="cerrarModalAsignar()">Cerrar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <!-- Campo de búsqueda -->
         <ion-item>
           <ion-input
             placeholder="Buscar materia por nombre"
             [(ngModel)]="busquedaMateria"
-            (ionInput)="filtrarMaterias()"
+            (ionInput)="filtrarMateriasParaAsignar()"
             clearInput
           ></ion-input>
         </ion-item>
-  
-        <!-- Lista de materias filtradas -->
         <ion-list>
-          <ion-item *ngFor="let materia of materiasFiltradas; let i = index" lines="full">
-            <ion-label style="font-size: 1em; color: white;">
-              {{ materia.nombre }}
-            </ion-label>
+          <ion-item *ngFor="let materia of materiasParaAsignar; let i = index" lines="full">
+            <ion-label style="font-size: 1em; color: white;">{{ materia.nombre }}</ion-label>
             <ion-checkbox
               slot="end"
-              [checked]="materiasFiltradas[i].seleccionada"
-              (ionChange)="onCheckboxChange($event, i)"
+              [checked]="materiasParaAsignar[i].seleccionada"
+              (ionChange)="onCheckboxChangeAsignar($event, i)"
             ></ion-checkbox>
           </ion-item>
         </ion-list>
       </ion-content>
-  
-      <!-- Botón fijo en la parte inferior -->
       <ion-footer>
         <ion-toolbar>
           <ion-button expand="block" color="success" (click)="asignarMateriasSeleccionadas()">
@@ -100,4 +100,74 @@
       </ion-footer>
     </ng-template>
   </ion-modal>
+
+  <!-- Modal para Remover Materias -->
+  <ion-modal [isOpen]="mostrarModalRemover" (didDismiss)="cerrarModalRemover()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Remover Materias</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cerrarModalRemover()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item>
+          <ion-input
+            placeholder="Buscar materia por nombre"
+            [(ngModel)]="busquedaMateria"
+            (ionInput)="filtrarMateriasParaRemover()"
+            clearInput
+          ></ion-input>
+        </ion-item>
+        <ion-list>
+          <ion-item *ngFor="let materia of materiasParaRemover; let i = index" lines="full">
+            <ion-label style="font-size: 1em; color: white;">{{ materia.nombre }}</ion-label>
+            <ion-checkbox
+              slot="end"
+              [checked]="materiasParaRemover[i].seleccionada"
+              (ionChange)="onCheckboxChangeRemover($event, i)"
+            ></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button expand="block" color="danger" (click)="removerMateriasSeleccionadas()">
+            Remover Materias
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+  <!-- Modal de confirmación para eliminar cuenta -->
+<ion-modal [isOpen]="mostrarModalEliminar" (didDismiss)="cerrarModalEliminar()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Confirmar Eliminación</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModalEliminar()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <p style="text-align: center; padding: 20px;">
+        ¿Estás seguro de que deseas eliminar la cuenta de <strong>{{ usuarioSeleccionado?.nombre }}</strong>?<br />
+        Esta acción no se puede deshacer.
+      </p>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button expand="block" color="danger" (click)="eliminarCuentaUsuario()">
+          Sí, Eliminar Cuenta
+        </ion-button>
+        <ion-button expand="block" color="light" (click)="cerrarModalEliminar()">
+          Cancelar
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
 </ion-content>
