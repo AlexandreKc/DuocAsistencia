@@ -36,19 +36,23 @@ export const routes: Routes = [
   },
   {
     path: 'detalle',
-    loadComponent: () => import('./medio/detalle/detalle.page').then(m => m.DetallePage)
+    loadComponent: () => import('./medio/detalle/detalle.page').then(m => m.DetallePage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'escanear',
-    loadComponent: () => import('./medio/escanear/escanear.page').then( m => m.EscanearPage)
+    loadComponent: () => import('./medio/escanear/escanear.page').then( m => m.EscanearPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'conteoasistencia',
-    loadComponent: () => import('./medio/conteoasistencia/conteoasistencia.page').then( m => m.ConteoasistenciaPage)
+    loadComponent: () => import('./medio/conteoasistencia/conteoasistencia.page').then( m => m.ConteoasistenciaPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'administrarcuentas',
-    loadComponent: () => import('./medio/administrarcuentas/administrarcuentas.page').then( m => m.AdministrarcuentasPage)
+    loadComponent: () => import('./medio/administrarcuentas/administrarcuentas.page').then( m => m.AdministrarcuentasPage),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

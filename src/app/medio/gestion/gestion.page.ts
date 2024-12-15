@@ -18,7 +18,7 @@ export class GestionPage implements OnInit {
   materias: any[] = []; 
   materiasFiltradas: any[] = []; 
   clases: any[] = []; 
-  materiaAbierta: string | null = null;  // Para rastrear qué materia tiene las clases visibles
+  materiaAbierta: string | null = null;  
   
   constructor(
     private database: DatabaseService,
@@ -69,11 +69,9 @@ crearClase(idMateria: string) {
       });
       toast.present();
 
-      // Si la materia abierta es la misma donde se creó la clase, recargar las clases
       if (this.materiaAbierta === idMateria) {
-        this.verClases(idMateria); // Recargar clases visibles
+        this.verClases(idMateria); 
       } else {
-        // Actualizar solo localmente si no está visible
         const materia = this.materiasFiltradas.find((m) => m.id === idMateria);
         if (materia) {
           if (!materia.clases) {

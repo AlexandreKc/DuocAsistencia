@@ -4,7 +4,7 @@
     <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon> <!-- Icono del menú -->
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
       </ion-menu-button>
     </ion-buttons>
 
@@ -13,41 +13,44 @@
     <ion-title slot="end" class="tit-asis">ASISTAPP</ion-title>
   </ion-toolbar>
 </ion-header>
-<div *ngIf="error" class="error-message">
-  {{ error }}
-</div>
 
-<div *ngIf="loading" class="loading-message">
-  <p>Cargando materias y asistencias...</p>
-</div>
+<ion-content>
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
 
-<div *ngIf="!loading && materias.length" class="materias-container">
-  <div *ngFor="let materia of materias" class="materia-card">
-    <h2>{{ materia.materia_nombre }}</h2>
-    <p>{{ materia.descripcion }}</p>
-    <div class="asistencias-info">
-      <p><strong>Clases asistidas:</strong> {{ conteos[materia.materia_id]?.asistencias || 0 }}</p>
-      <p><strong>Total de clases:</strong> {{ conteos[materia.materia_id]?.totalClases || 0 }}</p>
+  <div *ngIf="loading" class="loading-message">
+    <p>Cargando materias y asistencias...</p>
+  </div>
+
+  <div *ngIf="!loading && materias.length" class="materias-container">
+    <div *ngFor="let materia of materias" class="materia-card">
+      <h2 style="color: black; font-weight: bold;">{{ materia.nombre }}</h2>
+      <p>{{ materia.descripcion }}</p>
+      <div class="asistencias-info">
+        <p><strong>Clases asistidas:</strong> {{ conteos[materia.materia_id]?.asistencias || 0 }}</p>
+        <p><strong>Total de clases:</strong> {{ conteos[materia.materia_id]?.totalClases || 0 }}</p>
+      </div>
+      <button class="btn-faltantes" (click)="verClasesFaltantes(materia)">
+        ¿En qué clases estas ausente?
+      </button>
     </div>
-    <button class="btn-faltantes" (click)="verClasesFaltantes(materia)">
-      Ver clases faltantes
-    </button>
   </div>
-</div>
 
-<!-- Modal -->
-<div *ngIf="mostrarModal" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Clases en las que estas ausente: {{ materiaSeleccionada?.materia_nombre }}</h3>
-    <ul>
-      <li *ngFor="let clase of clasesFaltantes">
-        {{ clase.clase_nombre }} - {{ clase.fecha_creacion | date: 'shortDate' }}
-      </li>
-    </ul>
-    <button class="btn-cerrar" (click)="cerrarModal()">Cerrar</button>
+  <!-- Modal -->
+  <div *ngIf="mostrarModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Clases en las que estas ausente: </h3>
+      <ul>
+        <li *ngFor="let clase of clasesFaltantes">
+          {{ clase.clase_nombre }} - {{ clase.fecha_creacion | date: 'shortDate' }}
+        </li>
+      </ul>
+      <button class="btn-cerrar" (click)="cerrarModal()">Cerrar</button>
+    </div>
   </div>
-</div>
 
-<div *ngIf="!loading && !materias.length && !error" class="no-materias-message">
-  <p>No se encontraron materias asociadas.</p>
-</div>
+  <div *ngIf="!loading && !materias.length && !error" class="no-materias-message">
+    <p>No se encontraron materias asociadas.</p>
+  </div>
+</ion-content>

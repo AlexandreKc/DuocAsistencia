@@ -42,9 +42,10 @@ export class ConteoasistenciaPage implements OnInit {
 
   cargarMaterias() {
     this.loading = true;
-
+  
     this.databaseService.getMaterias(Number(this.idUsuario)).subscribe(
       (response) => {
+        console.log('Respuesta de materias:', response); // Agregado para depurar
         if (response?.length) {
           this.materias = response;
           this.cargarConteosAsistencia();
@@ -60,6 +61,7 @@ export class ConteoasistenciaPage implements OnInit {
       }
     );
   }
+  
 
   cargarConteosAsistencia() {
     if (!this.materias.length || !this.idUsuario) {
