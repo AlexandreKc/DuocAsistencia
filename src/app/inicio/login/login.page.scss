@@ -8,16 +8,16 @@
   color: #FFB800;
   margin-top: 50px;
   padding-top: 10px;
-  background-color: rgba(177, 177, 205, 0.7); /* Color semitransparente (50% de opacidad) */
+  background-color: rgba(177, 177, 205, 0.7); 
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   box-shadow: 
-    0 -4px 10px rgba(0, 0, 0, 0.1),  /* Sombra arriba */
-    4px 0 10px rgba(0, 0, 0, 0.1),   /* Sombra derecha */
-    -4px 0 10px rgba(0, 0, 0, 0.1);  /* Sombra izquierda */
+    0 -4px 10px rgba(0, 0, 0, 0.1), 
+    4px 0 10px rgba(0, 0, 0, 0.1), 
+    -4px 0 10px rgba(0, 0, 0, 0.1); 
+  align-items: center;
+  text-align: center;
 }
-
-
 
 //configuración del input
 ion-input{
@@ -109,7 +109,7 @@ ion-card-content ion-input{
 }
 ion-item {
   --background-color: rgba(177, 177, 205, 0.4); 
-  --border-radius: 15px; /* Ajusta el radio del borde si es necesario */
+  --border-radius: 15px; 
 }
 .txt-lb{
   font-size: 15px;
@@ -117,8 +117,8 @@ ion-item {
   font-weight: 500;
 }
 ion-input{
-  border-color: transparent; /* Elimina el borde del input */
-  border-bottom: 1px solid black; /* Cambia el color y el grosor como desees */
+  border-color: transparent; 
+  border-bottom: 1px solid black; 
   margin-bottom: 8px;
 }
 ion-icon{
@@ -130,10 +130,10 @@ ion-icon{
 }
 //boton ver contraseña
 .boton-contra {
-  position: absolute; /* O usa fixed si deseas que se mantenga en su lugar al hacer scroll */
-  top: 10%; /* Ajusta la posición vertical */
-  right: 11px; /* Ajusta la posición horizontal */
-  z-index: 10; /* Asegúrate de que esté sobre otros elementos */
+  position: absolute;
+  top: 10%; 
+  right: 11px;
+  z-index: 10;
   --background:none;
   --border: none;
   --box-shadow: none;
@@ -144,24 +144,24 @@ ion-button {
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.10); /* Aumenta el tamaño del botón */
+    transform: scale(1.10);
   }
 }
 
 //colores botones
 .custom-button1 {
-  --background:  #AC4FC6 !important; /* Cambia este valor al color hexadecimal que desees */
-  --color: white; /* Cambia el color del texto si es necesario */
+  --background:  #AC4FC6 !important;
+  --color: white; 
   --border-radius: 10px; 
 }
 .custom-button2 {
-  --background:   #E87722 !important; /* Cambia este valor al color hexadecimal que desees */
-  --color: white !important; /* Cambia el color del texto si es necesario */
+  --background:   #E87722 !important;
+  --color: white !important; 
   --border-radius: 10px; 
 }
 .custom-button3 {
-  --background:  #307FE2 !important; /* Cambia este valor al color hexadecimal que desees */
-  --color: white !important; /* Cambia el color del texto si es necesario */
+  --background:  #307FE2 !important;
+  --color: white !important; 
   --border-radius: 10px; 
 }
 //ajuste tamaño boton
