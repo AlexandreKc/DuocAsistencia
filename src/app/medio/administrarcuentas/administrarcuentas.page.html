@@ -33,27 +33,17 @@
             <p style="margin: 0; font-size: 0.9em;">Tipo Usuario: {{ obtenerRol(usuario.id_tp_usuario) }}</p>
           </ion-label>
           <ion-grid slot="end" style="text-align: center;">
-            <ion-row>
-              <ion-col>
-                <ion-button expand="block" color="primary" (click)="abrirModalAsignarMaterias(usuario)">
-                  Asignar Materias
-                </ion-button>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-button expand="block" color="warning" (click)="abrirModalRemoverMaterias(usuario)">
-                  Remover Materias
-                </ion-button>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-button expand="block" color="danger" (click)="abrirModalEliminarCuenta(usuario)">
-                  Eliminar Cuenta
-                </ion-button>
-              </ion-col>
-            </ion-row>
+            <div class="button-container"> <!-- Agregar contenedor para agrupación de botones -->
+              <ion-button expand="block" (click)="abrirModalAsignarMaterias(usuario)">
+                Asignar Materias
+              </ion-button>
+              <ion-button expand="block"  (click)="abrirModalRemoverMaterias(usuario)">
+                Remover Materias
+              </ion-button>
+              <ion-button expand="block" color="danger"  (click)="abrirModalEliminarCuenta(usuario)">
+                Eliminar Cuenta
+              </ion-button>
+            </div>
           </ion-grid>
         </ion-item>
       </ion-list>

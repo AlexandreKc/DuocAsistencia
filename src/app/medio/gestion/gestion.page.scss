@@ -51,4 +51,38 @@
   .clases-list ion-item {
     width: 100%; 
   }
+  .logo-main {
+    height: 45px;
+    margin-right: 25px;
+  }
+  
+  .tit-asis {
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #c3c6c8 !important;
+  }
+  
+  ion-card {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto de profundidad */
+    font-family: 'Merriweather', serif; /* Aplicar Merriweather a las tarjetas */
+  }
+  
+  ion-toolbar {
+    --background: #072757;
+    --color: white;
+  }
+  
+  // Cuerpo
+  ion-content {
+    --background: url('../../../assets/icon/background_1.png');
+    background-repeat: no-repeat !important; 
+    background-size: cover; 
+    background-position: -20% center; 
+    height: 100vh; 
+    padding: 20px;
+    overflow-y: hidden;
+  }
   

@@ -1,10 +1,62 @@
-//fix letras invisibles?
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+// Fix letras invisibles
 ion-label {
-    font-size: 1em;
-    color: var(--ion-color-dark, #000); /* Asegura un color oscuro legible */
-    white-space: normal; /* Permite el salto de línea en textos largos */
-  }
-  
-  ion-checkbox {
-    --size: 20px; /* Ajusta el tamaño del checkbox */
-  }
+  font-size: 1em;
+  color: var(--ion-color-dark, #000); /* Asegura un color oscuro legible */
+  white-space: normal; /* Permite el salto de línea en textos largos */
+}
+
+ion-checkbox {
+  --size: 20px; /* Ajusta el tamaño del checkbox */
+}
+
+.logo-main {
+  height: 45px;
+  margin-right: 25px;
+}
+
+.tit-asis {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: #c3c6c8 !important;
+}
+
+ion-card {
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto de profundidad */
+  font-family: 'Merriweather', serif; /* Aplicar Merriweather a las tarjetas */
+}
+
+ion-toolbar {
+  --background: #072757;
+  --color: white;
+}
+
+// Cuerpo
+ion-content {
+  --background: url('../../../assets/icon/background_1.png');
+  background-repeat: no-repeat !important; 
+  background-size: cover; 
+  background-position: -20% center; 
+  height: 100vh; 
+  padding: 20px;
+  overflow-y: hidden;
+}
+
+//botones
+ion-button {
+  font-size: 10px; /* Tamaño de fuente */
+  background-color: #307FE2;
+  color: white;
+}
+
+.button-container {
+  display: flex; /* Usar flexbox para alinear botones */
+  flex-direction: column; 
+  align-items: center; /* Centrar botones si es necesario */
+}
+

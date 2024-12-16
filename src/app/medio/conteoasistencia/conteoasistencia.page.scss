@@ -8,7 +8,7 @@
 }
 
 .materia-card {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff77; 
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra más visible */
   padding: 20px;
@@ -23,7 +23,7 @@
 
 .materia-card h2 {
   font-size: 20px;
-  color: #000; /* Título en negro puro */
+  color: #072757; 
   margin: 10px 0; /* Separación superior e inferior */
 }
 
@@ -123,7 +123,6 @@
   background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
 }
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet');
-//Desde aqui mis modificaciones
 .logo-main{
   height: 45px;
   margin-right: 25px;
@@ -133,10 +132,6 @@
   font-weight: 900;
   font-size: 15px;
   color: #c3c6c8!important;
-}
-
-ion-card{
-  background-color:#8bb8e89f;
 }
 
 ion-toolbar{
