@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthGuard } from './authguard.service';  // Asegúrate de que el nombre del archivo y clase coincidan
+import { AuthGuard } from './authguard.service'; 
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
