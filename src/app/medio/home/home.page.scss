@@ -12,6 +12,12 @@
   color: #c3c6c8!important;
 }
 
+p{
+  color: white;
+  font-size: 17px;
+  text-align: justify;
+}
+
 ion-card{
   background-color:#8bb8e89f;
 }
@@ -44,6 +50,8 @@ ion-content {
 ion-card-title{
   color: #073170;
   font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 }
 
 //fix para colores modo blanco
@@ -71,4 +79,37 @@ ion-button{
 //ion-card ajustes
 ion-card{
   border-radius: 15px;
+}
+
+/* Clima */
+.weather-info {
+  background-color: #8bb8e871;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  text-align: center;
+}
+
+.weather-info h2 {
+  color: #073170;
+  text-align: center;
+  font-weight: bold;
+}
+
+.weather-info p {
+  font-size: 1.2rem;
+  color: #0288d1;
+  text-align: center;
+}
+
+.weather-info ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.weather-info li {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  text-align: center;
 }

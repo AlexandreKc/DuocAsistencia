@@ -18,6 +18,23 @@
   <h2 class="tit-bienv texto-desvanecido">¡Bienvenido/a {{ username }}!</h2>
   
   <div class="container">
+    <!-- API CLIMA -->
+    <div *ngIf="weatherData" class="weather-info">
+      <h2>El tiempo en {{city}}</h2>
+
+      <!-- Ícono de clima -->
+      <ion-icon [name]="getWeatherIcon()" size="large"></ion-icon>
+
+      <p>Temperatura: {{ weatherData.temperature }}</p>
+      <p>Viento: {{ weatherData.wind }}</p>
+  
+      <h3>Pronóstico:</h3>
+      <ul>
+        <li *ngFor="let forecast of weatherData.forecast">
+          Día {{ forecast.day }}: {{ forecast.temperature }}, Viento: {{ forecast.wind }}
+        </li>
+      </ul>
+    </div>
     <!-- Tarjetas de acciones -->
     <ion-card>
       <ion-card-header>

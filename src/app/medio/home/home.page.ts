@@ -13,6 +13,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { MenuserviceService } from 'src/app/servicio/menu/menuservice.service';
 import { IonicSharedModule } from 'src/app/shared.module';
+import { WeatherService } from 'src/app/servicio/APIclima/weather.service.spec';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -26,6 +27,8 @@ export class HomePage implements OnInit, AfterViewInit {
   id_user: number | null = null;  // Para almacenar el tipo de usuario
   correo: string = "";  // Para almacenar el correo del usuario
   contrasena: string = "" //almacenar la contraseña
+  weatherData: any;  // Para almacenar los datos del clima
+  city: string = 'Puerto Montt';  // Ciudad por defecto
 
 
   openMenu() {
@@ -40,7 +43,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private menuController: MenuController,
     private menuService: MenuserviceService,
-    private userService: UserdataService  // Añadir UserService al constructor
+    private userService: UserdataService,  // Añadir UserService al constructor
+    private weatherService: WeatherService
   ) {}
 
   
@@ -49,6 +53,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
     // Obtener los datos del usuario desde el UserService
     const userData = this.userService.getUserData();
+    this.getWeather(this.city);
     if (userData) {
       this.username = userData.nombre;
       this.id_user = userData.id_tp_usuario;
@@ -60,6 +65,31 @@ export class HomePage implements OnInit, AfterViewInit {
     } else {
       console.error('No se pudo recuperar la información del usuario');
     }
+  }
+
+  getWeather(city: string) {
+    this.weatherService.getWeather(city).subscribe(
+      data => {
+        this.weatherData = data;  // Almacena los datos obtenidos
+      },
+      error => {
+        console.error('Error fetching weather data:', error);  // Maneja errores
+      }
+    );
+  }
+  // Función para determinar el ícono del clima
+  getWeatherIcon() {
+    if (this.weatherData) {
+      const description = this.weatherData.description.toLowerCase();
+      if (description.includes('cloudy') || description.includes('nublado')) {
+        return 'cloud'; // Ícono de nube
+      } else if (description.includes('rain') || description.includes('lluvia')) {
+        return 'rainy'; // Ícono de lluvia
+      } else if (description.includes('sun') || description.includes('soleado')) {
+        return 'sunny'; // Ícono de sol
+      }
+    }
+    return 'partly-sunny'; // Ícono por defecto si no se encuentra una descripción
   }
   
   ngAfterViewInit() {

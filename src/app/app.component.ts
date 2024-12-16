@@ -8,6 +8,7 @@ import { MenuserviceService } from './servicio/menu/menuservice.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicSharedModule } from './shared.module';
+import { WeatherService } from './servicio/APIclima/weather.service.spec'; // Asegúrate de que WeatherService esté configurado
 
 @Component({
   selector: 'app-root',
@@ -25,18 +26,23 @@ import { IonicSharedModule } from './shared.module';
 export class AppComponent implements OnInit {
   isAdmin: boolean = false;
   showMenu: boolean = false;
-
+  weatherData: any;
+  city: string = 'Puerto Montt'; // Ciudad por defecto
+  username: string = 'Usuario'; // Nombre de usuario (esto puede ser dinámico)
+  
   constructor(
     private menuService: MenuserviceService,
     private userService: UserdataService,
     private platform: Platform,
     private menuController: MenuController,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private weatherService: WeatherService // Servicio del clima
   ) {}
 
   ngOnInit() {
     this.initializeApp();
+    this.loadWeatherData(); // Cargar datos del clima cuando la app inicie
   }
 
   initializeApp() {
@@ -76,5 +82,28 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']).then(() => {
       window.location.reload();
     });
+  }
+
+  // Función para cargar los datos del clima
+  loadWeatherData() {
+    this.weatherService.getWeather(this.city).subscribe(data => {
+      this.weatherData = data;
+      console.log(this.weatherData); // Verifica los datos recibidos
+    });
+  }
+
+  // Función para determinar el ícono del clima
+  getWeatherIcon() {
+    if (this.weatherData) {
+      const description = this.weatherData.description.toLowerCase();
+      if (description.includes('cloudy') || description.includes('nublado')) {
+        return 'cloud'; // Ícono de nube
+      } else if (description.includes('rain') || description.includes('lluvia')) {
+        return 'rainy'; // Ícono de lluvia
+      } else if (description.includes('sun') || description.includes('soleado')) {
+        return 'sunny'; // Ícono de sol
+      }
+    }
+    return 'partly-sunny'; // Ícono por defecto si no se encuentra una descripción
   }
 }
