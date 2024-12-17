@@ -18,7 +18,8 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
   qrResult: string | null = null;
   idUsuario: string | null = null;
   html5QrCode: Html5Qrcode | null = null;
-  scanning: boolean = false; // Control para evitar múltiples lecturas
+  scanning: boolean = false; 
+  private isActive: boolean = true;
 
   constructor(
     private databaseService: DatabaseService,
@@ -28,34 +29,37 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
 
   async ngAfterViewInit(): Promise<void> {
     this.idUsuario = this.userdataService.getUserId()?.toString() || null;
-
+    this.isActive = true; // Página activa
+  
     if (!this.idUsuario) {
       console.error('No se pudo obtener el ID del usuario logueado.');
       return;
     }
-
+  
     try {
       const devices = await Html5Qrcode.getCameras();
-
+  
       if (devices && devices.length > 0) {
         const backCamera = devices.find((device) =>
           device.label.toLowerCase().includes('back')
         );
-
+  
         const cameraId = backCamera ? backCamera.id : devices[0].id;
-
+  
         this.html5QrCode = new Html5Qrcode('reader');
         await this.html5QrCode.start(
           { deviceId: { exact: cameraId } }, // Configurar la cámara trasera
           { fps: 10, qrbox: { width: 250, height: 250 } },
           (decodedText) => {
-            if (!this.scanning) {
+            if (this.isActive && !this.scanning) {
               this.scanning = true;
               this.handleScanSuccess(decodedText);
             }
           },
           (error) => {
-            console.warn('No se pudo escanear el QR:', error);
+            if (this.isActive) {
+              console.warn('No se pudo escanear el QR:', error);
+            }
           }
         );
       } else {
@@ -63,16 +67,19 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
         alert('No se pudo acceder a la cámara.');
       }
     } catch (error) {
-      console.error('Error al inicializar las cámaras:', error);
+      if (this.isActive) {
+        console.error('Error al inicializar las cámaras:', error);
+      }
     }
   }
-
+  
   ngOnDestroy(): void {
+    this.isActive = false; 
     this.stopScanning();
   }
 
   async stopScanning(): Promise<void> {
-    if (this.html5QrCode) {
+    if (this.html5QrCode && this.html5QrCode.isScanning) {
       try {
         await this.html5QrCode.stop();
         console.log('Escaneo detenido correctamente.');
@@ -81,9 +88,9 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
       }
     }
     this.html5QrCode = null;
-    this.scanning = false; // Reinicia el control
+    this.scanning = false;
   }
-
+  
   async handleScanSuccess(decodedText: string): Promise<void> {
     console.log('QR Escaneado:', decodedText);
 
