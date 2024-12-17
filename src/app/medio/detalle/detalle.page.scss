@@ -5,9 +5,10 @@ ion-list {
 
 /* Estilo para el nombre de los alumnos */
 ion-card-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #333;
+    text-align: center;
 }
 
 /* Estilo para el contenido de la tarjeta */
@@ -22,14 +23,14 @@ ion-card-content {
 /* Estilo para el texto de los correos */
 ion-card-content p {
     color: #555;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 /* Estilo del texto para estado presente */
 .presente {
     color: green;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
 }
@@ -38,7 +39,7 @@ ion-card-content p {
 .ausente {
     color: red;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
 }
@@ -106,9 +107,13 @@ ion-content {
 }
 /* Estilo para el contenedor del botón */
 .generar-qr-container {
-    padding: 15px;
-    margin-top: 20px; 
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 50vh;
 }
+
 
 /* Estilo del botón Generar QR */
 ion-button {
@@ -139,7 +144,7 @@ ion-button:hover {
     background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto de profundidad */
-    font-family: 'Merriweather', serif; /* Aplicar Merriweather a las tarjetas */
+    font-family: 'Roboto', sans-serif;
   }
   
   ion-toolbar {
@@ -164,3 +169,26 @@ ion-button:hover {
     height: 300px;
     width: auto;
   }
+
+  ion-list {
+    background-color: transparent;
+  }
+
+
+  ion-card-content p {
+    display: flex; /* Usa Flexbox */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Estilo para el <strong> */
+ion-card-content p strong {
+    margin-right: 5px; /* Agrega un espacio entre el texto "Estado:" y el icono */
+}
+
+/* Asegúrate de que el <span> tenga un margen apropiado si es necesario */
+ion-card-content p span {
+    display: flex; /* Esto asegura que el icono y el texto estén alineados */
+    align-items: center; /* Alinea el icono y el texto */
+}

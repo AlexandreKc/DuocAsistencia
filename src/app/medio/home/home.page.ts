@@ -28,7 +28,7 @@ export class HomePage implements OnInit, AfterViewInit {
   correo: string = "";  // Para almacenar el correo del usuario
   contrasena: string = "" //almacenar la contraseña
   weatherData: any;  // Para almacenar los datos del clima
-  city: string = 'Puerto Montt';  // Ciudad por defecto
+  city: string = 'Llanquihue';  // Ciudad por defecto
 
 
   openMenu() {

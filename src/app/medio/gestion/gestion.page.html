@@ -16,9 +16,9 @@
 <div id="materiasClasesContainer" *ngIf="materiaAbierta" class="clases-list-container">
   <div *ngFor="let materia of materiasFiltradas">
     <div *ngIf="materia.id === materiaAbierta">
-      <h2>Clases de {{ materia.nombre }}</h2>
+      <h2 style="font-weight:bold">Clases de {{ materia.nombre }}</h2>
       <div *ngIf="materia.clases && materia.clases.length > 0" class="clases-list">
-        <ion-item *ngFor="let clase of materia.clases" lines="inset">
+        <ion-item *ngFor="let clase of materia.clases" lines="inset" class="item">
           <ion-label>
             <h3>{{ clase.nombre }}</h3>
             <p>{{ clase.descripcion }}</p>
@@ -36,17 +36,18 @@
   </div>
 </div>
 
-  <ion-searchbar 
+<ion-card>
+  <ion-searchbar style="border-radius: 10px;"
     placeholder="Buscar materias..." 
     (ionInput)="filtrarMaterias($event)" 
     debounce="500">
   </ion-searchbar>
 
-  <ion-list>
+  <ion-list class="custom-list">
     <ion-item *ngFor="let materia of materiasFiltradas" lines="none" class="materia-item">
       <ion-label>
-        <h2>{{ materia.nombre }}</h2>
-        <p>{{ materia.descripcion }}</p>
+        <h2 style="padding-right: 15px">{{ materia.nombre }}</h2>
+        <p style="text-align:justify ; padding-right: 15px">{{ materia.descripcion }}</p>
       </ion-label>
 
       <div class="materia-buttons">
@@ -60,8 +61,10 @@
       </div>
     </ion-item>
   </ion-list>
+</ion-card>
 
-  <ion-item *ngIf="materiasFiltradas.length === 0">
+  <ion-item *ngIf="materiasFiltradas.length === 0" class="item">
     <ion-label>No se encontraron materias.</ion-label>
   </ion-item>
+
 </ion-content>

@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   isAdmin: boolean = false;
   showMenu: boolean = false;
   weatherData: any;
-  city: string = 'Puerto Montt'; // Ciudad por defecto
+  city: string = 'Llanquihue'; // Ciudad por defecto
   username: string = 'Usuario'; // Nombre de usuario (esto puede ser dinámico)
   
   constructor(
@@ -104,6 +104,6 @@ export class AppComponent implements OnInit {
         return 'sunny'; // Ícono de sol
       }
     }
-    return 'partly-sunny'; // Ícono por defecto si no se encuentra una descripción
+    return 'partly-sunny';
   }
 }

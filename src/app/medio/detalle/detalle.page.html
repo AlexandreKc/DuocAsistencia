@@ -17,7 +17,7 @@
 <ion-content>
   <!-- Botón Generar QR -->
   <div class="generar-qr-container">
-    <ion-button expand="full" (click)="generarQR()">
+    <ion-button expand="full" (click)="generarQR()" style="padding-bottom: 10px;">
       Generar QR
     </ion-button>
     <div *ngIf="qrCode">
@@ -26,15 +26,18 @@
   </div>
 
   <!-- Indicador de carga -->
-  <div *ngIf="loading" class="spinner-container">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Cargando alumnos...</p>
-  </div>
+    <div *ngIf="loading" class="spinner-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p style="text-align: center; color: black; font-weight:bold">Cargando alumnos...</p>
+    </div>
 
   <!-- Mensaje de "sin alumnos" -->
-  <div *ngIf="!loading && alumnos.length === 0" class="no-alumnos">
-    <p>No se encontraron alumnos para esta materia.</p>
-  </div>
+   <ion-card>
+    <div *ngIf="!loading && alumnos.length === 0" class="no-alumnos">
+      <p style="text-align: center; color: red; font-weight:bold">No se encontraron alumnos para esta materia.</p>
+    </div>
+   </ion-card>
+  
 
   <!-- Lista de alumnos -->
   <ion-list *ngIf="!loading && alumnos.length > 0">

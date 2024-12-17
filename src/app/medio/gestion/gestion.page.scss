@@ -3,9 +3,7 @@
     width: 100%;
     margin-bottom: 20px; /* Separación entre materias */
   }
-  .clases-list-container div h2{
-    margin-left: 0px;
-  }
+  
   
   .materia-buttons {
     display: flex;
@@ -16,8 +14,8 @@
   
   .clases-list {
     margin-top: 15px;
-    padding-left: 20px; 
     display: block;
+    padding: 10px;
   }
   
   .clase-item {
@@ -39,18 +37,30 @@
     text-align: left; 
   }
   
+  // #materiasClasesContainer {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: flex-start; 
+  //   width: 100%;
+  //   padding: 0;
+  //   margin: 0;
+  // }
+
   #materiasClasesContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    width: 100%;
+    display: flex; /* Activa Flexbox */
+    flex-direction: column; /* Organiza el contenido verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    text-align: center; /* Asegura que el texto también esté centrado */
+    width: 100%; /* Asegura que ocupe el ancho completo */
+    margin: 0; 
     padding: 0;
-    margin: 0;
   }
   
   .clases-list ion-item {
     width: 100%; 
   }
+  
   .logo-main {
     height: 45px;
     margin-right: 25px;
@@ -86,3 +96,18 @@
     overflow-y: hidden;
   }
   
+  ion-list {
+    background-color: transparent;
+  }
+
+  .custom-list{
+    margin: 10px;
+  }
+
+  .item {
+    --background: #ffffff;
+    --ion-item-background: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }

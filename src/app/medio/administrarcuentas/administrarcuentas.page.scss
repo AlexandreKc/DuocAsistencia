@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+:root {
+  --ion-background-color: rgba(255, 255, 255, 0.5);
+}
+
 // Fix letras invisibles
 ion-label {
   font-size: 1em;
-  color: var(--ion-color-dark, #000); /* Asegura un color oscuro legible */
-  white-space: normal; /* Permite el salto de línea en textos largos */
+  color: var(--ion-color-dark, #000);
+  white-space: normal;
 }
 
 ion-checkbox {
-  --size: 20px; /* Ajusta el tamaño del checkbox */
+  --size: 20px;
 }
 
 .logo-main {
@@ -25,10 +30,10 @@ ion-checkbox {
 }
 
 ion-card {
-  background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto de profundidad */
-  font-family: 'Merriweather', serif; /* Aplicar Merriweather a las tarjetas */
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  font-family: "Roboto", sans-serif;
 }
 
 ion-toolbar {
@@ -45,18 +50,63 @@ ion-content {
   height: 100vh; 
   padding: 20px;
   overflow-y: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
 }
+
 
 //botones
 ion-button {
-  font-size: 10px; /* Tamaño de fuente */
+  font-size: 10px;
   background-color: #307FE2;
   color: white;
 }
 
 .button-container {
-  display: flex; /* Usar flexbox para alinear botones */
+  display: flex;
   flex-direction: column; 
-  align-items: center; /* Centrar botones si es necesario */
+  align-items: center;
+}
+
+.boton{
+  border-radius: 10px;
+  width: 90px;
+}
+
+ion-card-content{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+ion-list {
+  background-color: transparent;
+}
+
+.custom-list{
+  margin: 10px;
+}
+
+.item {
+  --background: #ffffff;
+  --ion-item-background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.boton-cerrar{
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+
+.boton-abajo {
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  width: 300px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
