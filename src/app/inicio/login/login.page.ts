@@ -7,6 +7,7 @@ import { AlertController } from '@ionic/angular'
 import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { UserdataService } from 'src/app/servicio/user/userdata.service';
 import { IonicSharedModule } from 'src/app/shared.module';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +55,7 @@ export class LoginPage implements OnInit {
   }
   
   // Método para manejar el login
-  login() {
+  async login() {
     if (this.correo && this.password) {
       this.database.validateUser(this.correo, this.password).subscribe(
         async (response: any) => {
@@ -65,30 +66,52 @@ export class LoginPage implements OnInit {
               id_tp_usuario: response.id_tp_usuario,
               correo: this.correo,
               contrasena: this.password,
-              id: response.id  // Asegúrate de que el id esté en la respuesta
+              id: response.id, // Asegúrate de que el id esté en la respuesta
             };
-            this.userService.setUserData(userData);  // Guardamos los datos en el UserService
-            
+            this.userService.setUserData(userData); // Guardamos los datos en el UserService
+  
+            // Toast de éxito
+            await Toast.show({
+              text: 'Sesión iniciada correctamente.',
+              duration: 'short',
+              position: 'bottom',
+            });
+  
             // Redirigir automáticamente al home
-            this.router.navigate(['/home'], { queryParams: { username: userData.nombre, id_Tp_Usuario: userData.id_tp_usuario } });
-            
-            // Alerta de éxito
-            this.mostrarAlerta('Ingreso con éxito', 'Has iniciado sesión correctamente.');
+            this.router.navigate(['/home'], {
+              queryParams: {
+                username: userData.nombre,
+                id_Tp_Usuario: userData.id_tp_usuario,
+              },
+            });
           } else {
             // Si las credenciales son incorrectas
-            this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
+            await Toast.show({
+              text: 'Correo o contraseña incorrectos.',
+              duration: 'short',
+              position: 'bottom',
+            });
           }
         },
         async (error) => {
-          // Si ocurre un error, muestra alerta de servidor desconectado
+          // Si ocurre un error, muestra toast de servidor desconectado
           console.error('Error en el servidor:', error);
-          this.mostrarAlerta('Error', 'Error al iniciar sesión, servidor desconectado');
+          await Toast.show({
+            text: 'Error al iniciar sesión, servidor desconectado.',
+            duration: 'short',
+            position: 'bottom',
+          });
         }
       );
     } else {
       // Si no se completan los campos
-      this.mostrarAlerta('Error', 'Por favor, completa todos los campos correctamente.');
+      await Toast.show({
+        text: 'Por favor, completa todos los campos correctamente.',
+        duration: 'short',
+        position: 'bottom',
+      });
     }
   }
+  
   
 }

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { AlertController } from '@ionic/angular';
 import { IonicSharedModule } from 'src/app/shared.module';
+import { Toast } from '@capacitor/toast';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.page.html',
@@ -27,39 +28,63 @@ export class RegistroPage {
   
   async registrarse() {
     if (this.contrasena !== this.confirmarContrasena) {
-      this.presentAlert('Error', 'Las contraseñas no coinciden.');
+      await Toast.show({
+        text: 'Las contraseñas no coinciden.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
     
     // Validar correo y contraseña
     if (this.correo.length < 12 || this.correo.length > 70) {
-      this.presentAlert('Error', 'El correo debe tener entre 12 y 70 caracteres.');
+      await Toast.show({
+        text: 'El correo debe tener entre 12 y 70 caracteres.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
     
     if (this.contrasena.length < 6 || this.contrasena.length > 15) {
-      this.presentAlert('Error', 'La contraseña debe tener entre 6 y 15 caracteres.');
+      await Toast.show({
+        text: 'La contraseña debe tener entre 6 y 15 caracteres.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
+  
     // Crear nuevo usuario
     const nuevoUsuario = {
       nombre: this.nombre,
       correo: this.correo,
       contrasena: this.contrasena,
-      id_tp_usuario: 2 // Ejemplo de tipo de usuario predeterminado (puedes cambiarlo)
+      id_tp_usuario: 2, // Ejemplo de tipo de usuario predeterminado
     };
     
     this.dbService.registrarUsuario(nuevoUsuario).subscribe(
-      (response) => {
-        this.presentAlert('Éxito', 'Usuario registrado con éxito.');
-        this.router.navigate(['/login']);
+      async (response) => {
+        // Toast de éxito
+        await Toast.show({
+          text: 'Usuario registrado con éxito.',
+          duration: 'short',
+          position: 'bottom',
+        });
+        this.router.navigate(['/login']); // Redirigir a /login
       },
-      (error) => {
-        this.presentAlert('Error de datos', 'Datos inválidos o sin rellenar, por favor verifica los campos.');
+      async (error) => {
+        // Toast de error
+        await Toast.show({
+          text: 'Datos inválidos o sin rellenar, por favor verifica los campos.',
+          duration: 'short',
+          position: 'bottom',
+        });
         console.error(error);
       }
     );
   }
+  
   
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({

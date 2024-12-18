@@ -7,6 +7,8 @@ import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { AlertController } from '@ionic/angular';
 import { IonicSharedModule } from 'src/app/shared.module';
 import { NgForm } from '@angular/forms';
+import { Toast } from '@capacitor/toast';
+
 @Component({
   selector: 'app-cambiar-contrasena',
   templateUrl: './cambiar-contrasena.page.html',
@@ -37,23 +39,36 @@ export class CambiarContrasenaPage  {
       this.databaseService.cambiarContrasena(this.correo, this.newpassword).subscribe(
         async (response) => {
           // Manejo de respuesta exitosa
-          await this.mostrarAlert('Contraseña cambiada exitosamente.');
+          await Toast.show({
+            text: 'Contraseña cambiada exitosamente.',
+            duration: 'short',
+            position: 'bottom',
+          });
           form.reset(); // Limpia el formulario
           this.router.navigate(['/login']); // Redirige al login
         },
         async (error) => {
           // Manejo de errores del servidor
           const errorMessage = error.error?.message || 'Error al cambiar la contraseña. Intente nuevamente.';
-          await this.mostrarAlert(errorMessage);
+          await Toast.show({
+            text: errorMessage,
+            duration: 'short',
+            position: 'bottom',
+          });
         }
       );
     } else {
-      // aparecerá si las contraseñas no coinciden o si el formulario no es válido.
+      // Mostrar error si las contraseñas no coinciden o si el formulario no es válido
       const errorMessage = form.invalid ? 'Formulario inválido.' : 'Las contraseñas no coinciden.';
-      await this.mostrarAlert(errorMessage);
+      await Toast.show({
+        text: errorMessage,
+        duration: 'short',
+        position: 'bottom',
+      });
       console.log(errorMessage);
     }
   }
+  
 
   async mostrarAlert(mensaje: string) {
     const alert = await this.alertController.create({

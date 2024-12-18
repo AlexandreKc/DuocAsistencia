@@ -6,6 +6,7 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { UserdataService } from '../../servicio/user/userdata.service';
 import { ToastController } from '@ionic/angular';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-escanear',
@@ -115,32 +116,29 @@ export class EscanearPage implements AfterViewInit, OnDestroy {
 
   async updateAsistencia(idClase: string, idUsuario: string): Promise<void> {
     console.log('Llamando a updateAsistencia con:', { idClase, idUsuario });
-
+  
     this.databaseService.updateAsistencia(idClase, idUsuario).subscribe(
       async (response) => {
         console.log('Respuesta del servidor:', response);
-
-        // Mostrar un toast al registrar la asistencia
-        const toast = await this.toastController.create({
-          message: 'Asistencia registrada con éxito',
-          duration: 2000,
-          color: 'success',
-          position: 'bottom',
+  
+        // Mostrar un toast con Capacitor al registrar la asistencia
+        await Toast.show({
+          text: 'Asistencia registrada con éxito',
+          duration: 'short', // 'short' (2-3 segundos) o 'long' (aprox. 5 segundos)
+          position: 'bottom', // Opciones: 'top', 'center', 'bottom'
         });
-        toast.present();
       },
       async (error) => {
         console.error('Error en el servidor:', error);
-
-        // Mostrar un toast si ocurre un error
-        const toast = await this.toastController.create({
-          message: 'Hubo un error al registrar la asistencia',
-          duration: 2000,
-          color: 'danger',
+  
+        // Mostrar un toast con Capacitor si ocurre un error
+        await Toast.show({
+          text: 'Hubo un error al registrar la asistencia',
+          duration: 'short',
           position: 'bottom',
         });
-        toast.present();
       }
     );
   }
+  
 }

@@ -140,30 +140,30 @@
     </ng-template>
   </ion-modal>
   <!-- Modal de confirmación para eliminar cuenta -->
-<ion-modal [isOpen]="mostrarModalEliminar" (didDismiss)="cerrarModalEliminar()">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Confirmar Eliminación</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="cerrarModalEliminar()" class="boton-cerrar">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <p style="text-align: center; padding: 40px; font-size: 20px; margin-top: 170px">
-        ¿Estás seguro de que deseas eliminar la cuenta de <strong>{{ usuarioSeleccionado?.nombre }}</strong>?<br />
-        Esta acción no se puede deshacer.
-      </p>
-      <div>
-        <ion-button expand="block" color="danger" (click)="eliminarCuentaUsuario()" class="boton-abajo">
-          Sí, Eliminar Cuenta
-        </ion-button>
-        <ion-button expand="block" color="light" (click)="cerrarModalEliminar()" class="boton-abajo">
-          Cancelar
-        </ion-button>
-      </div>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+  <ion-modal [isOpen]="mostrarModalEliminar" (didDismiss)="cerrarModalEliminar()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Confirmar Eliminación</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cerrarModalEliminar()" class="boton-cerrar">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <p style="text-align: center; padding: 40px; font-size: 20px; margin-top: 170px">
+          ¿Estás seguro de que deseas eliminar la cuenta de <strong>{{ usuarioSeleccionado?.nombre }}</strong>?<br />
+          Esta acción no se puede deshacer.
+        </p>
+        <div>
+          <ion-button expand="block" color="danger" (click)="eliminarCuentaUsuario()" class="boton-abajo">
+            Sí, Eliminar Cuenta
+          </ion-button>
+          <ion-button expand="block" color="light" (click)="cerrarModalEliminar()" class="boton-abajo">
+            Cancelar
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

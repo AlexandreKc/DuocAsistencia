@@ -7,6 +7,7 @@ import { DatabaseService } from 'src/app/servicio/database/database.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Toast } from '@capacitor/toast';
 @Component({
   selector: 'app-gestion',
   templateUrl: './gestion.page.html',
@@ -59,23 +60,21 @@ crearClase(idMateria: string) {
     async (response) => {
       const { message, nombreClase } = response;
       console.log('Clase creada:', nombreClase);
-      
-      // Mostrar la notificación de éxito
-      const toast = await this.toastController.create({
-        message: message,
-        duration: 2000, 
-        color: 'success', 
-        position: 'bottom', 
+
+      // Mostrar la notificación de éxito con Capacitor Toast
+      await Toast.show({
+        text: message,
+        duration: 'short', // 'short' (2-3 segundos) o 'long' (aprox. 5 segundos)
+        position: 'bottom', // Opciones: 'top', 'center', 'bottom'
       });
-      toast.present();
 
       if (this.materiaAbierta === idMateria) {
-        this.verClases(idMateria); 
+        this.verClases(idMateria);
       } else {
         const materia = this.materiasFiltradas.find((m) => m.id === idMateria);
         if (materia) {
           if (!materia.clases) {
-            materia.clases = []; 
+            materia.clases = [];
           }
           materia.clases.push({
             nombre: nombreClase,
@@ -86,17 +85,17 @@ crearClase(idMateria: string) {
     },
     async (error) => {
       console.error('Error al crear la clase:', error);
-      
-      const toast = await this.toastController.create({
-        message: 'Hubo un error al crear la clase',
-        duration: 2000,
-        color: 'danger', 
-        position: 'bottom', 
+
+      // Mostrar la notificación de error con Capacitor Toast
+      await Toast.show({
+        text: 'Hubo un error al crear la clase',
+        duration: 'short',
+        position: 'bottom',
       });
-      toast.present();
     }
   );
 }
+
 
 verClases(idMateria: string) {
   // Si la materia seleccionada es la misma que la abierta, cerramos su vista

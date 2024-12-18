@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicSharedModule } from 'src/app/shared.module';
 import { DatabaseService } from 'src/app/servicio/database/database.service';
-import { ToastController } from '@ionic/angular';
-
+import { ToastController, ModalController } from '@ionic/angular';
+import { Toast } from '@capacitor/toast';
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-administrarcuentas',
   templateUrl: './administrarcuentas.page.html',
   styleUrls: ['./administrarcuentas.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicSharedModule],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class AdministrarcuentasPage implements OnInit {
   usuarios: any[] = [];
   usuariosFiltrados: any[] = [];
   busqueda: string = '';
-  mostrarModalEliminar: boolean = false; 
+  mostrarModalEliminar: boolean = false;
   materiasParaAsignar: any[] = [];
   materiasParaRemover: any[] = [];
   mostrarModalAsignar: boolean = false;
@@ -24,7 +25,12 @@ export class AdministrarcuentasPage implements OnInit {
   usuarioSeleccionado: any = null;
   busquedaMateria: string = '';
 
-  constructor(private databaseService: DatabaseService, private toastController: ToastController) {}
+  constructor(
+    private databaseService: DatabaseService,
+    private toastController: ToastController,
+    private modalController: ModalController,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.cargarUsuarios();
@@ -61,9 +67,15 @@ export class AdministrarcuentasPage implements OnInit {
     });
   }
 
-  cerrarModalAsignar() {
+  async cerrarModalAsignar() {
     this.mostrarModalAsignar = false;
     this.usuarioSeleccionado = null;
+
+    // Si el modal no se cierra correctamente, forzar el cierre con ModalController
+    const modal = await this.modalController.getTop();
+    if (modal) {
+      await modal.dismiss();
+    }
   }
 
   abrirModalRemoverMaterias(usuario: any) {
@@ -80,10 +92,23 @@ export class AdministrarcuentasPage implements OnInit {
     });
   }
 
-  cerrarModalRemover() {
+  async cerrarModalRemover() {
     this.mostrarModalRemover = false;
     this.usuarioSeleccionado = null;
+
+    // Si el modal no se cierra correctamente, forzar el cierre con ModalController
+    const modal = await this.modalController.getTop();
+    if (modal) {
+      await modal.dismiss();
+    }
   }
+
+  abrirModalEliminarCuenta(usuario: any) {
+    this.usuarioSeleccionado = usuario;
+    this.mostrarModalEliminar = true;
+  }
+
+  
 
   filtrarMateriasParaAsignar() {
     const busqueda = this.busquedaMateria.toLowerCase();
@@ -115,60 +140,73 @@ export class AdministrarcuentasPage implements OnInit {
       .map((materia) => materia.id);
 
     if (!materiasSeleccionadas.length) {
-      await this.mostrarToast('Debes seleccionar al menos una materia.', 'warning');
+      await Toast.show({
+        text: 'Debes seleccionar al menos una materia.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
 
     this.databaseService.asignarMaterias(this.usuarioSeleccionado.id, materiasSeleccionadas).subscribe({
       next: async () => {
-        await this.mostrarToast('Materias asignadas correctamente.');
+        await Toast.show({
+          text: 'Materias asignadas correctamente.',
+          duration: 'short',
+          position: 'bottom',
+        });
         this.cerrarModalAsignar();
       },
       error: async (err) => {
         console.error('Error al asignar materias:', err);
-        await this.mostrarToast('Error al asignar materias.', 'danger');
+        await Toast.show({
+          text: 'Error al asignar materias.',
+          duration: 'short',
+          position: 'bottom',
+        });
       },
     });
   }
 
   async removerMateriasSeleccionadas() {
-    // Depuración: Verificar el contenido de materiasParaRemover
-    console.log('Contenido de materiasParaRemover:', this.materiasParaRemover);
-  
-    // Ajusta el atributo que contiene el ID de la materia
     const materiasSeleccionadas = this.materiasParaRemover
       .filter((materia) => materia.seleccionada)
-      .map((materia) => materia.materia_id); // Cambia a materia.materia_id si es necesario
-  
-    // Depuración: Verificar las materias seleccionadas
-    console.log('Materias seleccionadas para remover (IDs):', materiasSeleccionadas);
-  
+      .map((materia) => materia.materia_id);
+
     if (!materiasSeleccionadas.length) {
-      await this.mostrarToast('Debes seleccionar al menos una materia.', 'warning');
+      await Toast.show({
+        text: 'Debes seleccionar al menos una materia.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
-  
-    // Depuración: Verificar el payload antes de enviarlo
+
     const payload = {
       usuarioId: this.usuarioSeleccionado.id,
       materiasSeleccionadas,
     };
-    console.log('Payload enviado al servicio:', payload);
-  
+
     this.databaseService.removerMaterias(payload.usuarioId, payload.materiasSeleccionadas).subscribe({
-      next: async (response) => {
-        console.log('Respuesta del servidor al remover materias:', response); // Depuración
-        await this.mostrarToast('Materias removidas correctamente.');
+      next: async () => {
+        await Toast.show({
+          text: 'Materias removidas correctamente.',
+          duration: 'short',
+          position: 'bottom',
+        });
         this.cerrarModalRemover();
       },
       error: async (err) => {
-        console.error('Error al remover materias:', err); // Depuración de errores
-        await this.mostrarToast('Error al remover materias.', 'danger');
+        console.error('Error al remover materias:', err);
+        await Toast.show({
+          text: 'Error al remover materias.',
+          duration: 'short',
+          position: 'bottom',
+        });
       },
     });
   }
-  
-  
+
   onCheckboxChangeAsignar(event: any, index: number) {
     this.materiasParaAsignar[index].seleccionada = event.detail.checked;
   }
@@ -187,35 +225,51 @@ export class AdministrarcuentasPage implements OnInit {
         return 'Desconocido';
     }
   }
-  //para eliminacion de cuentas
+  async abrirModalEliminar(usuario: any) {
+    this.usuarioSeleccionado = usuario;
+    this.mostrarModalEliminar = true;
+  }
+  
+  async cerrarModalEliminar() {
+    this.mostrarModalEliminar = false;
+    this.usuarioSeleccionado = null;
+  }
+  
   async eliminarCuentaUsuario() {
     if (!this.usuarioSeleccionado) {
-      await this.mostrarToast('No se seleccionó un usuario.', 'warning');
+      await Toast.show({
+        text: 'No se seleccionó un usuario.',
+        duration: 'short',
+        position: 'bottom',
+      });
       return;
     }
-
+  
     this.databaseService.deleteUsuario(this.usuarioSeleccionado.id).subscribe({
       next: async () => {
-        await this.mostrarToast('Cuenta eliminada correctamente.');
+        // Muestra un toast de éxito
+        await Toast.show({
+          text: 'Usuario eliminado con éxito.',
+          duration: 'short',
+          position: 'bottom',
+        });
+  
+        // Cierra el modal y recarga usuarios
         this.cerrarModalEliminar();
-        this.cargarUsuarios(); // Refresca la lista de usuarios
+        this.cargarUsuarios();
       },
       error: async (err) => {
         console.error('Error al eliminar cuenta:', err);
-        await this.mostrarToast('Error al eliminar la cuenta.', 'danger');
+  
+        // Muestra un toast de error
+        await Toast.show({
+          text: 'Error al eliminar la cuenta.',
+          duration: 'short',
+          position: 'bottom',
+        });
       },
     });
   }
-
-    abrirModalEliminarCuenta(usuario: any) {
-      this.usuarioSeleccionado = usuario;
-      this.mostrarModalEliminar = true;
-    }
-
-    cerrarModalEliminar() {
-      this.mostrarModalEliminar = false;
-      this.usuarioSeleccionado = null;
-    }
-
-
+  
+  
 }
