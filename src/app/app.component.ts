@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
 import { IonicSharedModule } from './shared.module';
 import { WeatherService } from './servicio/APIclima/weather.service.spec'; // Asegúrate de que WeatherService esté configurado
 
+//Solicitud de permisos?
+import { Camera } from '@capacitor/camera';
+import { Geolocation } from '@capacitor/geolocation';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -43,6 +46,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.initializeApp();
     this.weatherData(); // Cargar datos del clima cuando la app inicie
+    this.requestPermissions(); 
   }
 
   initializeApp() {
@@ -57,6 +61,26 @@ export class AppComponent implements OnInit {
         }
       });
     });
+  }
+  private async requestPermissions() {
+    try {
+      // Solicitar permiso de cámara
+      const cameraStatus = await Camera.requestPermissions();
+      console.log('Permiso de cámara:', cameraStatus.camera);
+
+      // Solicitar permiso de ubicación
+      const locationStatus = await Geolocation.requestPermissions();
+      console.log('Permiso de ubicación:', locationStatus.location);
+
+      // Verifica si ambos permisos fueron concedidos
+      if (cameraStatus.camera === 'granted' && locationStatus.location === 'granted') {
+        console.log('Todos los permisos fueron concedidos');
+      } else {
+        console.warn('Uno o más permisos fueron denegados');
+      }
+    } catch (error) {
+      console.error('Error al solicitar permisos:', error);
+    }
   }
 
   checkAdminStatus() {
