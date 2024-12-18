@@ -93,8 +93,6 @@ Durante el proceso de testing utilizamos Jasmine para realizar diversas pruebas.
 
 ---
 <h3 style="text-align: center;">PUBLICACION DE LA APP</h3>
-**PUBLICACIÓN de la App:**(Incluye en el archivo README.md la evidencia del comando utilizado para la firma, especificando el nombre y ubicación del archivo generado.)
-
 
 
 Para publicar la aplicación, es necesario generar un archivo APK firmado. A continuación se detallan los pasos para llevar a cabo este proceso:
