@@ -2,7 +2,7 @@
 <h1 style="text-align: center;">Archivo README AsistApp</h1>
 
 <h3 style="text-align: center;">DESCRIPCIÓN</h3>
- AsistApp es una aplicación que tiene por objetivo facilitar los registros de asistencia dentro de un contexto de pandemia, donde los estudiantes utilizan mascarillas todo su horario escolar, y por ende los profesores se les complica oírlos y distinguirlos. AsistApp consiste en una aplicación móvil en la cual los docentes realizan un código QR, los alumnos deben ingresar por medio de sus cuentas personales y escanear el QR por medio de la opción de escaneo y finalmente el sistema registra la asistencia del alumno.
+ AsistApp es una aplicación que tiene por objetivo facilitar los registros de asistencia dentro de un contexto de pandemia, donde los estudiantes utilizan mascarillas todo su horario escolar, y por ende los profesores se les complica oírlos y distinguirlos. En esta aplicación móvil los docentes realizan un código QR, los alumnos deben ingresar por medio de sus cuentas personales y escanear el QR por medio de la opción de escaneo y finalmente el sistema registra la asistencia del alumno.
 
 ---
 
