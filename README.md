@@ -8,25 +8,29 @@
 
 <h3 style="text-align: center;">LIBRERÍAS</h3>
 
-1.-@ionic/angular: Para desarrollar aplicaciones utilizando Ionic.
+1.```-@ionic/angular:``` Para desarrollar aplicaciones utilizando Ionic.
 
-2.-@angular/material: Para acceder a componentes de Material Design.
+2.-```@angular/material:``` Para acceder a componentes de Material Design.
 
-3.-html5-qrcode: es una biblioteca JavaScript ligera que permite leer códigos QR utilizando la cámara de un dispositivo directamente desde el navegador.\
+3.-```html5-qrcode:``` es una biblioteca JavaScript ligera que permite leer códigos QR utilizando la cámara de un dispositivo directamente desde el navegador.\
 **Instalación:**\
-Primero se escribe en la terminal:\
-```npm install html5-qrcode```\
+Primero se escribe en la terminal:
+```bash
+npm install html5-qrcode
+```
 Luego se importa en componentes\
 ```import { Html5Qrcode } from "html5-qrcode";```
 
 **Evidencia de uso:** en escanear.page.ts
 
-![qrcode1](src/assets/icon/image.png)
+<img src="src/assets/icon/image.png" alt="alt text" width="700" />
 
-![qrcode2](src/assets/icon/image-1.png)
+<img src="src/assets/icon/image-1.png" alt="alt text" width="700" />
 
--Para instalar las librerías necesarias, usa el siguiente comando en la terminal:\
-```npm install```
+-Para instalar las librerías necesarias, usa el siguiente comando en la terminal:
+```bash
+npm install
+```
 
 ---
 
@@ -53,30 +57,35 @@ Datos Horarios (hourly):\
 ```relative_humidity_2m:``` Un array que proporciona la humedad relativa a 2 metros de altura para cada hora.
 
 **Evidencia de uso:**
+<div style="text-align: center;">
 
-![apiclima1](src/assets/icon/image-2.png)
+<img src="src/assets/icon/image-2.png" alt="alt text" width="700" />
 
-![alt text](src/assets/icon/image-3.png)
+<img src="src/assets/icon/image-3.png" alt="alt text" width="500" />
 
-![alt text](src/assets/icon/image-8.png)
+<img src="src/assets/icon/image-8.png" alt="alt text" width="400" />
+</div>
 
 ---
 <h3 style="text-align: center;">PLUGINS</h3>
 
 
 1.-capacitor/network: es un network pluging, el cual detecta el estado de la red (en linea o fuera de línea) y el tipo de conexión.\
-Se instala en la terminal:\
-```npm install @capacitor/network```\
+Se instala en la terminal:
+```bash
+npm install @capacitor/network
+```
 Evidencia de uso:
+<div style="text-align: center;">
 
-![plugin1](src/assets/icon/image-5.png)
+<img src="src/assets/icon/image-5.png" alt="alt text" width="700" />
 
-![alt text](src/assets/icon/image-6.png)
+<img src="src/assets/icon/image-6.png" alt="alt text" width="700" />
 
-![alt text](src/assets/icon/image-7.png)
-
+<img src="src/assets/icon/image-7.png" alt="alt text" width="500" />
+</div>
 ---
-<h3 style="text-align: center;">TESTING Y APK</h3>
+<h3 style="text-align: center;">TESTING</h3>
 
 
 Durante el proceso de testing utilizamos Jasmine para realizar diversas pruebas.
@@ -85,3 +94,34 @@ Durante el proceso de testing utilizamos Jasmine para realizar diversas pruebas.
 ---
 <h3 style="text-align: center;">PUBLICACION DE LA APP</h3>
 **PUBLICACIÓN de la App:**(Incluye en el archivo README.md la evidencia del comando utilizado para la firma, especificando el nombre y ubicación del archivo generado.)
+
+
+
+Para publicar la aplicación, es necesario generar un archivo APK firmado. A continuación se detallan los pasos para llevar a cabo este proceso:
+
+### 1. Generar la Clave de Firma
+
+Primero, necesitas generar una clave para firmar la aplicación. Usa el siguiente comando en la terminal:
+
+```bash
+keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-assistapp
+```
+Detalles de la Clave\
+Alias: my-assistapp\
+Contraseña: colocolo21\
+Ubicación de la Clave: Raíz del proyecto.
+
+### 2. Generar el APK
+Asegúrate de estar en la carpeta del proyecto y ejecuta los siguientes comandos en la terminal:
+
+```bash
+ionic build
+ionic cap add android
+ionic cap copy
+ionic cap open android
+```
+### 3. Firma
+
+### 4. Publicación
+
+La app puede ser encontrada por medio del siguiente enlace: 
