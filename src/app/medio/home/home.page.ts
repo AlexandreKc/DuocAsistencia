@@ -1,101 +1,128 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AfterViewInit } from '@angular/core';
-import { DatabaseService } from 'src/app/servicio/database/database.service';
-import { UserdataService } from 'src/app/servicio/user/userdata.service';
-import { EstadoserviceService } from 'src/app/servicio/estado/estadoservice.service';
 import { AnimationController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { MenuserviceService } from 'src/app/servicio/menu/menuservice.service';
 import { IonicSharedModule } from 'src/app/shared.module';
-import { WeatherService } from 'src/app/servicio/APIclima/weather.service.spec';
+import { UserdataService } from 'src/app/servicio/user/userdata.service';
+import { WeatherService } from 'src/app/servicio/APIclima/weather.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonicSharedModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonicSharedModule]
 })
 export class HomePage implements OnInit, AfterViewInit {
   username: string = "";
-  isAdmin: boolean = false;  // Inicializamos isAdmin en false
-  id_user: number | null = null;  // Para almacenar el tipo de usuario
-  correo: string = "";  // Para almacenar el correo del usuario
-  contrasena: string = "" //almacenar la contraseña
-  weatherData: any;  // Para almacenar los datos del clima
-  city: string = 'Llanquihue';  // Ciudad por defecto
-
-
-  openMenu() {
-    this.menuService.openMenu();  // Llama al servicio para abrir el menú
-  }
+  isAdmin: boolean = false;
+  id_user: number | null = null;
+  correo: string = "";
+  contrasena: string = "";
+  weatherData: any;
+  city: string = 'Puerto Montt';
 
   constructor(
-    private estadoService: EstadoserviceService,
     private router: Router,
     private route: ActivatedRoute,
     private animationCtrl: AnimationController,
     private cdr: ChangeDetectorRef,
     private menuController: MenuController,
     private menuService: MenuserviceService,
-    private userService: UserdataService,  // Añadir UserService al constructor
-    private weatherService: WeatherService
+    private userService: UserdataService,
+    private weatherService: WeatherService,
   ) {}
 
-  
-
   ngOnInit() {
-
-    // Obtener los datos del usuario desde el UserService
     const userData = this.userService.getUserData();
-    this.getWeather(this.city);
     if (userData) {
       this.username = userData.nombre;
       this.id_user = userData.id_tp_usuario;
       this.correo = userData.correo;
       this.contrasena = userData.contrasena;
-
-      // Verifica si el usuario es administrador
-      this.isAdmin = this.id_user === 2; // Ejemplo: Asumimos que el tipo 2 es administrador
+      this.isAdmin = this.id_user === 2;
     } else {
       console.error('No se pudo recuperar la información del usuario');
     }
+
+    // Llamar a la API del clima
+    this.getWeatherData();
   }
 
-  getWeather(city: string) {
-    this.weatherService.getWeather(city).subscribe(
-      data => {
-        this.weatherData = data;  // Almacena los datos obtenidos
-      },
-      error => {
-        console.error('Error fetching weather data:', error);  // Maneja errores
+//Obtener el clima
+  async getWeatherData() {
+    const params = {
+      latitude: -41.4717, // Puerto Montt
+      longitude: -72.9364,
+      hourly: ['temperature_2m', 'precipitation_probability', 'rain'],
+      daily: ['temperature_2m_max', 'temperature_2m_min'],
+      current_weather: true,
+      forecast_days: 5,
+      timezone: 'auto'
+    };
+  
+    try {
+      const response = await this.weatherService.fetchWeather(params);
+  
+      console.log('Respuesta de la API:', response);
+  
+      if (response && response.current_weather) {
+        this.weatherData = {
+          temperature: response.current_weather.temperature,
+          forecast: response.daily.time.map((time: any, index: number) => ({
+            day: new Date(time).toLocaleDateString(),
+            temperatureMax: response.daily.temperature_2m_max[index],
+            temperatureMin: response.daily.temperature_2m_min[index]
+          }))
+        };
+      } else if (response && response.daily) {
+        this.weatherData = {
+          temperature: 'No disponible (usando valores diarios)',
+          forecast: response.daily.time.map((time: any, index: number) => ({
+            day: new Date(time).toLocaleDateString(),
+            temperatureMax: response.daily.temperature_2m_max[index],
+            temperatureMin: response.daily.temperature_2m_min[index]
+          }))
+        };
+      } else {
+        console.error('La respuesta no contiene datos válidos:', response);
       }
-    );
-  }
-  // Función para determinar el ícono del clima
-  getWeatherIcon() {
-    if (this.weatherData) {
-      const description = this.weatherData.description.toLowerCase();
-      if (description.includes('cloudy') || description.includes('nublado')) {
-        return 'cloud'; // Ícono de nube
-      } else if (description.includes('rain') || description.includes('lluvia')) {
-        return 'rainy'; // Ícono de lluvia
-      } else if (description.includes('sun') || description.includes('soleado')) {
-        return 'sunny'; // Ícono de sol
-      }
+  
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Error al obtener los datos del clima:', error);
     }
-    return 'partly-sunny'; // Ícono por defecto si no se encuentra una descripción
   }
   
+  // Método para obtener el ícono del clima basado en las condiciones actuales
+  getWeatherIcon(): string {
+    if (!this.weatherData || !this.weatherData.temperature) {
+      return 'help-circle'; // Icono por defecto si no hay datos
+    }
+    const temperature = this.weatherData.temperature;
+    const forecast = this.weatherData.forecast;
+    const rainProbability = forecast?.[0]?.rainProbability || 0;
+    const isRaining = rainProbability > 50;
+
+    if (isRaining) {
+      return 'rainy';
+    } else if (temperature >= 30) {
+      return 'sunny';
+    } else if (temperature >= 20 && temperature < 30) {
+      return 'partly-sunny';
+    } else if (temperature < 20) {
+      return 'cloudy';
+    }
+    return 'cloudy'; // Ícono por defecto
+  }
+
   ngAfterViewInit() {
-    // Forzar la detección de cambios para iniciarlo
     this.cdr.detectChanges();
-    // Esto es para hacer que la animación espere para entrar
     setTimeout(() => this.animarTexto(), 30);
   }
 
@@ -107,10 +134,10 @@ export class HomePage implements OnInit, AfterViewInit {
         .duration(1500)
         .fromTo('opacity', '0', '1');
       animacion.play();
-    } else {
-      console.error('No se pudo encontrar un elemento con la clase .texto-desvanecido');
     }
   }
+
+  // Navegaciones
   navigateToGestion() {
     this.router.navigate(['/gestion']);
   }
@@ -125,25 +152,6 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   ionViewWillEnter() {
-    // console.log('La vista está a punto de ser mostrada en pantalla');
-    this.menuController.enable(true, 'menuId');  // Activa el menú al entrar a la página
+    this.menuController.enable(true, 'menuId');
   }
-
-  // ionViewDidEnter() {
-  //   console.log('La vista ha cargado y es visible en la pantalla');
-  // }
-
-  // ionViewWillLeave() {
-  //   console.log('La vista saldrá de la pantalla');
-  //   this.menuController.enable(false, 'menuId');  // Desactiva el menú al salir de la página
-  // }
-
-  // ionViewDidLeave() {
-  //   console.log('La vista se ha ido');
-  // }
-
-  // ngOnDestroy() {
-  //   console.log('El componente está a punto de ser destruido');
-  // }
-
 }

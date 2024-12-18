@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.initializeApp();
-    this.loadWeatherData(); // Cargar datos del clima cuando la app inicie
+    this.weatherData(); // Cargar datos del clima cuando la app inicie
   }
 
   initializeApp() {
@@ -84,26 +84,4 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // Función para cargar los datos del clima
-  loadWeatherData() {
-    this.weatherService.getWeather(this.city).subscribe(data => {
-      this.weatherData = data;
-      console.log(this.weatherData); // Verifica los datos recibidos
-    });
-  }
-
-  // Función para determinar el ícono del clima
-  getWeatherIcon() {
-    if (this.weatherData) {
-      const description = this.weatherData.description.toLowerCase();
-      if (description.includes('cloudy') || description.includes('nublado')) {
-        return 'cloud'; // Ícono de nube
-      } else if (description.includes('rain') || description.includes('lluvia')) {
-        return 'rainy'; // Ícono de lluvia
-      } else if (description.includes('sun') || description.includes('soleado')) {
-        return 'sunny'; // Ícono de sol
-      }
-    }
-    return 'partly-sunny';
-  }
 }

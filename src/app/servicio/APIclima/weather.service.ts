@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  private apiUrl = 'https://goweather.herokuapp.com/weather/';
+  private apiUrl = 'https://api.open-meteo.com/v1/forecast';
 
   constructor(private http: HttpClient) {}
 
-  getWeather(city: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}${city}`);
+  async fetchWeather(params: any): Promise<any> {
+    try {
+      const response = await this.http
+        .get<any>(this.apiUrl, { params })
+        .toPromise();
+      return response; // Devuelve la respuesta completa
+    } catch (error) {
+      console.error('Error en la API del clima:', error);
+      throw error;
+    }
   }
 }
