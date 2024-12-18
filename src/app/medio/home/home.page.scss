@@ -113,3 +113,33 @@ ion-card{
   margin-bottom: 5px;
   text-align: center;
 }
+
+.connection-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
+}
+
+.connection-info p {
+  margin: 0;
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: right;
+  align-items: center;
+}
+
+/* Estilo cuando está conectado */
+.connection-info.connected {
+  background-color: green;
+  color: white;
+}
+
+/* Estilo cuando está desconectado */
+.connection-info.disconnected {
+  background-color: red;
+  color: white;
+}

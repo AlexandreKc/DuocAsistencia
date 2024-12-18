@@ -1,5 +1,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <ion-header [translucent]="true">
+
+  <!-- Contenedor de conexión -->
+  <div class="connection-info" [ngClass]="{'connected': status === 'Conectado', 'disconnected': status === 'Desconectado'}">
+    <p>Estado conexión: {{ status }}</p>
+    <p>Tipo conexión: {{ connectionType }}</p>
+  </div>
+  
   <ion-toolbar>
     <!-- Botón de menú hamburguesa con icono personalizado -->
     <ion-buttons slot="start">

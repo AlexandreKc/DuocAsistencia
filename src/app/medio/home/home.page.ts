@@ -11,6 +11,8 @@ import { IonicSharedModule } from 'src/app/shared.module';
 import { UserdataService } from 'src/app/servicio/user/userdata.service';
 import { WeatherService } from 'src/app/servicio/APIclima/weather.service';
 
+import { Network, ConnectionStatus } from "@capacitor/network";//para el pluging
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -27,6 +29,9 @@ export class HomePage implements OnInit, AfterViewInit {
   weatherData: any;
   city: string = 'Puerto Montt';
 
+  status: string ="";//pluging
+  connectionType: string ="";//pluging
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,9 +41,13 @@ export class HomePage implements OnInit, AfterViewInit {
     private menuService: MenuserviceService,
     private userService: UserdataService,
     private weatherService: WeatherService,
+    private change: ChangeDetectorRef,//pluging
   ) {}
 
   ngOnInit() {
+
+    this.getNetworkStatus();//pluging
+
     const userData = this.userService.getUserData();
     if (userData) {
       this.username = userData.nombre;
@@ -52,6 +61,27 @@ export class HomePage implements OnInit, AfterViewInit {
 
     // Llamar a la API del clima
     this.getWeatherData();
+  }
+
+
+  //pluging de conexion
+  getNetworkStatus(){
+    Network.getStatus().then(
+      (status:ConnectionStatus)=>{
+        this.status = (status.connected)?
+        "Conectado":"Desconectado";
+        this.connectionType = status.connectionType;
+      })
+  }
+
+  onNetworkChanged(){
+    Network.addListener("networkStatusChange", (status)=>{
+      this.status = (status.connected)?
+      "Conectado":"Desconectado";
+      this.connectionType = status.connectionType;
+      this.change.detectChanges();
+
+    })
   }
 
 //Obtener el clima
