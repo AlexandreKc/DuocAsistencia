@@ -120,6 +120,12 @@ ionic cap open android
 ```
 ### 3. Firma
 
+Comando de generación de firma
+KEY
+ keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-assistapp
+
+
+
 ### 4. Publicación
 
 La app puede ser encontrada por medio del siguiente enlace: 
