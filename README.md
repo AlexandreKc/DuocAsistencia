@@ -2,7 +2,7 @@
 <h1 style="text-align: center;">Archivo README AsistApp</h1>
 
 <h3 style="text-align: center;">DESCRIPCIÓN</h3>
- AsistApp es una aplicación que tiene por objetivo facilitar los registros de asistencia dentro de un contexto de pandemia, donde los estudiantes utilizan mascarillas todo su horario escolar y por ende los profesores se ven dificultades al momento de oírlos y distinguirlos. Consiste en una aplicación por la cual los docentes realizan un código QR, los alumnos deben ingresar por medio de sus cuentas personales y escanear el QR por medio de la opción de escaneo y finalmente el sistema registra la asistencia del alumno.
+ AsistApp es una aplicación que tiene por objetivo facilitar los registros de asistencia dentro de un contexto de pandemia, donde los estudiantes utilizan mascarillas todo su horario escolar, y por ende los profesores se les complica oírlos y distinguirlos. AsistApp consiste en una aplicación móvil en la cual los docentes realizan un código QR, los alumnos deben ingresar por medio de sus cuentas personales y escanear el QR por medio de la opción de escaneo y finalmente el sistema registra la asistencia del alumno.
 
 ---
 
@@ -12,7 +12,7 @@
 
 2.-```@angular/material:``` Para acceder a componentes de Material Design.
 
-3.-```html5-qrcode:``` es una biblioteca JavaScript ligera que permite leer códigos QR utilizando la cámara de un dispositivo directamente desde el navegador.\
+3.-```html5-qrcode:``` es una biblioteca de JavaScript ligera que permite leer códigos QR utilizando la cámara de un dispositivo directamente desde el navegador.\
 **Instalación:**\
 Primero se escribe en la terminal:
 ```bash
@@ -70,7 +70,7 @@ Datos Horarios (hourly):\
 <h3 style="text-align: center;">PLUGINS</h3>
 
 
-1.-@capacitor/network: es un network pluging, el cual detecta el estado de la red (en linea o fuera de línea) y el tipo de conexión.\
+1.-@capacitor/network: Es un network pluging, el cual detecta el estado de la red (en línea o fuera de línea) y el tipo de conexión que tienes al ingresar a la aplicación móvil.\
 Se instala en la terminal:
 ```bash
 npm install @capacitor/network
@@ -88,7 +88,7 @@ Evidencia de uso:
 <h3 style="text-align: center;">TESTING</h3>
 
 
-Durante el proceso de testing utilizamos Jasmine para realizar diversas pruebas.
+Durante el proceso de testing utilizamos Jasmine + Karma para realizar diversas pruebas, las cuales se ven a continuación.
 ![jasmine](src/assets/icon/image-4.png)
 
 ---
