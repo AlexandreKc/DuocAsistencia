@@ -129,3 +129,5 @@ KEY
 ### 4. Publicación
 
 La app puede ser encontrada por medio del siguiente enlace: 
+
+https://gleaming-cascaron-b1f24c.netlify.app/
