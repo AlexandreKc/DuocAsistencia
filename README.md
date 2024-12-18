@@ -70,7 +70,7 @@ Datos Horarios (hourly):\
 <h3 style="text-align: center;">PLUGINS</h3>
 
 
-1.-capacitor/network: es un network pluging, el cual detecta el estado de la red (en linea o fuera de línea) y el tipo de conexión.\
+1.-@capacitor/network: es un network pluging, el cual detecta el estado de la red (en linea o fuera de línea) y el tipo de conexión.\
 Se instala en la terminal:
 ```bash
 npm install @capacitor/network
